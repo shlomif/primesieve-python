@@ -5,6 +5,11 @@ python:
   - 3.2
   - 3.3
   - 3.4
+env:
+  - LIBRARY_PATH=$HOME/lib:$LIBRARY_PATH LD_LIBRARY_PATH=$HOME/lib:$LD_LIBRARY_PATH
 install:
-  - python setup.py install
+  - pip install Cython # slow
+  - cd lib/primesieve && ./autogen.sh && ./configure --prefix=$HOME && make && make install
+  - cd ../..
+  - pip install .
 script: py.test
