@@ -33,9 +33,9 @@ Development
 [![Build Status](https://travis-ci.org/hickford/primesieve-python.svg?branch=master)](https://travis-ci.org/hickford/primesieve-python)
 
 1. Install Cython `pip install cython`
-2. Clone this repo `git clone https://github.com/hickford/primesieve-python && cd primesieve-python`
-3. Build and install primesieve `cd primesieve && ./configure && make && make install`
-4. Build and install the Python bindings `cd .. && pip install .` (or `python setup.py install`)
+2. Clone this repo `git clone --recursive https://github.com/hickford/primesieve-python && cd primesieve-python`
+3. Build and install primesieve `cd lib/primesieve && ./autogen.sh && ./configure && make && make install`
+4. Build and install the Python bindings `cd ../.. && pip install .` (or `python setup.py install`)
 5. Test `py.test`
 
 See also
