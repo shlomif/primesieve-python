@@ -6,5 +6,5 @@ def test_count():
     assert primesieve.count(10**6) == 78498
 
 def test_nth_prime():
-    assert primesieve.nth_prime(25) == 97
-    assert primesieve.nth_prime(26) == 101
+    assert primesieve.nth(25) == 97
+    assert primesieve.nth(26) == 101

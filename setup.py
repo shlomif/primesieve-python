@@ -10,5 +10,6 @@ setup(
         ["primesieve/primesieve.pyx"],
         include_dirs = ["lib/primesieve/include"],
         libraries = ["primesieve"],
+        language="c++",
         )])
 )
