@@ -30,6 +30,8 @@ Benchmarks
 Development
 ---------
 
+[![Build Status](https://travis-ci.org/hickford/primesieve-python.svg?branch=master)](https://travis-ci.org/hickford/primesieve-python)
+
 1. Install Cython `pip install cython`
 2. Clone this repo `git clone https://github.com/hickford/primesieve-python && cd primesieve-python`
 3. Build and install primesieve `cd primesieve && ./configure && make && make install`
