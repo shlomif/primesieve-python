@@ -23,6 +23,12 @@ Usage
     >>> import primesieve
     >>> primesieve.count(10**9)
     50847534
+    >>> primesieve.generate_primes(40)
+    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
+    >>> primesieve.nth_prime(10)
+    29
+    >>> primesieve.generate_n_primes(10)
+    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
 
 Benchmarks
 ---
