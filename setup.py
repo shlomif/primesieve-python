@@ -20,5 +20,6 @@ setup(
     url = "https://github.com/hickford/primesieve-python",
     license = "MIT",
     libraries = [library],
-    ext_modules = cythonize(extension)
+    ext_modules = cythonize(extension),
+    packages = ['primesieve'],
 )
