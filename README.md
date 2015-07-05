@@ -43,6 +43,10 @@ Development
 3. Install `pip install .` (this builds both the primesieve C++ library and Python extension)
 4. Test `py.test`
 
+### Windows build
+
+[![Build status](https://ci.appveyor.com/api/projects/status/4chekgdj7bqx4ivt/branch/master?svg=true)](https://ci.appveyor.com/project/hickford/primesieve-python/branch/master)
+
 See also
 ---
 
