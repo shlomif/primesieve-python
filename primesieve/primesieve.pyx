@@ -25,3 +25,12 @@ cpdef vector[uint64_t] generate_n_primes(uint64_t n):
     cdef vector[uint64_t] primes
     cpp_primesieve.generate_n_primes[uint64_t](n, &primes)
     return primes
+
+cdef class Iterator:
+    cdef cpp_primesieve.iterator _iterator # should this be pointer?
+    def __cinit__(self):
+        self._iterator = cpp_primesieve.iterator()
+    cpdef uint64_t next_prime(self):
+        return self._iterator.next_prime()
+    cpdef uint64_t previous_prime(self):
+        return self._iterator.previous_prime()
