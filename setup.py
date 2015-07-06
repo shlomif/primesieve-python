@@ -1,5 +1,4 @@
 from setuptools import setup, Extension
-from Cython.Build import cythonize
 from glob import glob
 
 library = ('primesieve', dict(
@@ -8,17 +7,25 @@ library = ('primesieve', dict(
     language="c++",
     ))
 
+try:
+    from Cython.Build import cythonize
+except ImportError:
+    cythonize = None
+
 extension = Extension(
         "primesieve",
-        ["primesieve/primesieve.pyx"],
+        ["primesieve/primesieve.pyx"] if cythonize else ["primesieve/primesieve.cpp"],
         include_dirs = ["lib/primesieve/include"],
         language="c++",
         )
+
+if cythonize:
+    extension = cythonize(extension)
 
 setup(
     name='primesieve',
     url = "https://github.com/hickford/primesieve-python",
     license = "MIT",
     libraries = [library],
-    ext_modules = cythonize(extension),
+    ext_modules = [extension],
 )
