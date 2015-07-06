@@ -10,6 +10,7 @@ library = ('primesieve', dict(
 try:
     from Cython.Build import cythonize
 except ImportError:
+    # fallback to compiled cpp
     cythonize = None
 
 extension = Extension(
@@ -19,13 +20,12 @@ extension = Extension(
         language="c++",
         )
 
-if cythonize:
-    extension = cythonize(extension)
+ext_modules = cythonize(extension) if cythonize else [extension]
 
 setup(
     name='primesieve',
     url = "https://github.com/hickford/primesieve-python",
     license = "MIT",
     libraries = [library],
-    ext_modules = [extension],
+    ext_modules = ext_modules,
 )
