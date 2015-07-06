@@ -7,9 +7,9 @@ library = ('primesieve', dict(
     language="c++",
     ))
 
-try:
+if glob("primesieve/*.pyx"):
     from Cython.Build import cythonize
-except ImportError:
+else:
     # fallback to compiled cpp
     cythonize = None
 
