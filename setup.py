@@ -26,6 +26,7 @@ setup(
     name='primesieve',
     version="0.0.1",
     url = "https://github.com/hickford/primesieve-python",
+    description="Fast prime number generator. Python bindings around C++ library primesieve",
     license = "MIT",
     libraries = [library],
     ext_modules = ext_modules,
