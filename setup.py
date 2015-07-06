@@ -24,6 +24,7 @@ ext_modules = cythonize(extension) if cythonize else [extension]
 
 setup(
     name='primesieve',
+    version="0.0.1",
     url = "https://github.com/hickford/primesieve-python",
     license = "MIT",
     libraries = [library],
