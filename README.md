@@ -13,6 +13,8 @@ Two of my favourite problems: Google Code Jam [*Expensive Dinner*](https://code.
 Installation
 ----
 
+[![PyPI](https://img.shields.io/pypi/v/nine.svg)](https://pypi.python.org/pypi/primesieve)
+
 From [PyPI](https://pypi.python.org/pypi/primesieve)
 
     pip install primesieve
