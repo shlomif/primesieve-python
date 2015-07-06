@@ -21,5 +21,4 @@ setup(
     license = "MIT",
     libraries = [library],
     ext_modules = cythonize(extension),
-    packages = ['primesieve'],
 )

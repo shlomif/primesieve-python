@@ -1,1 +1,3 @@
 recursive-include lib/primesieve/src *.cpp
+include primesieve/*.pyx
+include primesieve/*.pxd
