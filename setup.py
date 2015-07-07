@@ -24,7 +24,7 @@ ext_modules = cythonize(extension) if cythonize else [extension]
 
 setup(
     name='primesieve',
-    version="0.0.1",
+    version="0.0.2",
     url = "https://github.com/hickford/primesieve-python",
     description="Fast prime number generator. Python bindings around C++ library primesieve",
     license = "MIT",

@@ -1,7 +1,7 @@
 primesieve-python
 ================
 
-Fast prime number generator for Python. Simple bindings around the C++ library [primesieve](http://primesieve.org/) using [Cython](http://cython.org/). Orders of magnitude faster than any pure Python code.
+Fast prime number generator for Python. Simple bindings around the C++ library [primesieve](http://primesieve.org/). Orders of magnitude faster than any pure Python code.
 
 Motivation
 ------
@@ -52,4 +52,4 @@ Development
 See also
 ---
 
-* [pyprimesieve](https://github.com/jaredks/pyprimesieve) a similar project, but which isn't compatible with recent Python versions
+* [pyprimesieve](https://github.com/jaredks/pyprimesieve) a similar project
