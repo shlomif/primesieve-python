@@ -16,7 +16,7 @@ else:
 extension = Extension(
         "primesieve",
         ["primesieve/primesieve.pyx"] if cythonize else ["primesieve/primesieve.cpp"],
-        include_dirs = ["lib/primesieve/include"],
+        include_dirs=["lib/primesieve/include", "lib/primesieve/include/primesieve"],
         language="c++",
         )
 
