@@ -117,3 +117,8 @@ Development
 ### Windows build
 
 [![Build status](https://ci.appveyor.com/api/projects/status/4chekgdj7bqx4ivt/branch/master?svg=true)](https://ci.appveyor.com/project/hickford/primesieve-python/branch/master)
+
+See also
+---
+
+* [pyprimesieve](https://github.com/jaredks/pyprimesieve) another Python wrapper around the primesieve library
