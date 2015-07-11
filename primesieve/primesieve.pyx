@@ -109,6 +109,8 @@ cdef class Iterator:
     cdef cpp_primesieve.iterator _iterator
     def __cinit__(self):
         self._iterator = cpp_primesieve.iterator()
+    cpdef skipto(self, uint64_t start, uint64_t stop_hint = 2**62):
+        self._iterator.skipto(start, stop_hint)
     cpdef uint64_t next_prime(self):
         return self._iterator.next_prime()
     cpdef uint64_t previous_prime(self):
