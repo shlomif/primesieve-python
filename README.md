@@ -1,7 +1,13 @@
 primesieve-python
 ================
 
-Fast prime number generator for Python. Simple bindings around the C++ library [primesieve](http://primesieve.org/). Orders of magnitude faster than any pure Python code.
+Python bindings for the [primesieve](http://primesieve.org/) C++ library. Generates primes orders of magnitude faster than any pure Python code. Features:
+
+* Generate a list of primes
+* Count primes and [prime k-tuplets](https://en.wikipedia.org/wiki/Prime_k-tuple)
+* Print primes and prime k-tuplets
+* Find the nth prime
+* Iterate over primes using little memory
 
 Motivation
 ------
