@@ -109,7 +109,8 @@ Counting primes and prime k-tuplets and finding the nth prime can be done in par
 Development
 -----------
 
-1. Install Cython `pip install cython`
+1. Install [Cython](http://cython.org/) `pip install cython`
+2. Install [pytest](https://pytest.org/) `pip install pytest`
 2. Clone this repo `git clone --recursive https://github.com/hickford/primesieve-python && cd primesieve-python`
 3. Install `pip install . --upgrade` (builds primesieve C++ library and Python extension)
 4. Test `py.test`
