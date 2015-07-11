@@ -1,6 +1,6 @@
 primesieve-python
 =================
-[![Build Status](https://travis-ci.org/kimwalisch/primesieve-python.svg?branch=master)](https://travis-ci.org/kimwalisch/primesieve-python)
+[![Build Status](https://travis-ci.org/hickford/primesieve-python.svg?branch=master)](https://travis-ci.org/hickford/primesieve-python)
 
 Python bindings for the [primesieve](http://primesieve.org/) C++ library. Generates primes orders of magnitude faster than any pure Python code. Features:
 
@@ -110,10 +110,10 @@ Development
 -----------
 
 1. Install Cython `pip install cython`
-2. Clone this repo `git clone --recursive https://github.com/kimwalisch/primesieve-python && cd primesieve-python`
+2. Clone this repo `git clone --recursive https://github.com/hickford/primesieve-python && cd primesieve-python`
 3. Install `pip install . --upgrade` (builds primesieve C++ library and Python extension)
 4. Test `py.test`
 
 ### Windows build
 
-[![Build status](https://ci.appveyor.com/api/projects/status/4chekgdj7bqx4ivt/branch/master?svg=true)](https://ci.appveyor.com/project/kimwalisch/primesieve-python/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/4chekgdj7bqx4ivt/branch/master?svg=true)](https://ci.appveyor.com/project/hickford/primesieve-python/branch/master)
