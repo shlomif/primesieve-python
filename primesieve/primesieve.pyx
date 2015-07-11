@@ -17,11 +17,9 @@ cpdef vector[uint64_t] generate_n_primes(uint64_t n, uint64_t start = 0):
     cpp_primesieve.generate_n_primes[uint64_t](n, start, &primes)
     return primes
 
-
 cpdef uint64_t nth_prime(int64_t n, uint64_t start = 0):
     """Find the nth prime after start"""
     return cpp_primesieve.nth_prime(n, start)
-
 
 cpdef uint64_t count_primes(uint64_t a, uint64_t b = 0):
     """Count prime numbers"""
@@ -65,6 +63,47 @@ cpdef uint64_t count_sextuplets(uint64_t a, uint64_t b = 0):
     else:
         return cpp_primesieve.count_sextuplets(b, a)
 
+cpdef print_primes(uint64_t a, uint64_t b = 0):
+    """Print prime numbers to stdout"""
+    if b != 0:
+        cpp_primesieve.print_primes(a, b)
+    else:
+        cpp_primesieve.print_primes(b, a)
+ 
+cpdef print_twins(uint64_t a, uint64_t b = 0):
+    """Print twin primes to stdout"""
+    if b != 0:
+        cpp_primesieve.print_twins(a, b)
+    else:
+        cpp_primesieve.print_twins(b, a)
+ 
+cpdef print_triplets(uint64_t a, uint64_t b = 0):
+    """Print prime triplets to stdout"""
+    if b != 0:
+        cpp_primesieve.print_triplets(a, b)
+    else:
+        cpp_primesieve.print_triplets(b, a)
+
+cpdef print_quadruplets(uint64_t a, uint64_t b = 0):
+    """Print prime quadruplets to stdout"""
+    if b != 0:
+        cpp_primesieve.print_quadruplets(a, b)
+    else:
+        cpp_primesieve.print_quadruplets(b, a)
+
+cpdef print_quintuplets(uint64_t a, uint64_t b = 0):
+    """Print prime quintuplets to stdout"""
+    if b != 0:
+        cpp_primesieve.print_quintuplets(a, b)
+    else:
+        cpp_primesieve.print_quintuplets(b, a)
+
+cpdef print_sextuplets(uint64_t a, uint64_t b = 0):
+    """Print prime sextuplets to stdout"""
+    if b != 0:
+        cpp_primesieve.print_sextuplets(a, b)
+    else:
+        cpp_primesieve.print_sextuplets(b, a)
 
 cdef class Iterator:
     cdef cpp_primesieve.iterator _iterator
