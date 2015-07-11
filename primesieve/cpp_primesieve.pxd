@@ -11,10 +11,17 @@ cdef extern from "primesieve.hpp" namespace "primesieve":
     uint64_t count_quadruplets(uint64_t start, uint64_t stop)
     uint64_t count_quintuplets(uint64_t start, uint64_t stop)
     uint64_t count_sextuplets(uint64_t start, uint64_t stop)
+    void print_primes(uint64_t start, uint64_t stop)
+    void print_twins(uint64_t start, uint64_t stop)
+    void print_triplets(uint64_t start, uint64_t stop)
+    void print_quadruplets(uint64_t start, uint64_t stop)
+    void print_quintuplets(uint64_t start, uint64_t stop)
+    void print_sextuplets(uint64_t start, uint64_t stop)
 
 cdef extern from "iterator.hpp" namespace "primesieve":
     cdef cppclass iterator:
         iterator()
         iterator(uint64_t start, uint64_t stop_hint)
+        void skipto(uint64_t start, uint64_t stop_hint)
         uint64_t next_prime()
         uint64_t previous_prime()
