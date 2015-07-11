@@ -39,6 +39,10 @@ syntax of the primesieve C++ library.
 >>> generate_n_primes(10)
 [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
 
+# Generate a list of the first 10 starting at 1000
+>>> generate_n_primes(10, 1000)
+[1009, 1013, 1019, 1021, 1031, 1033, 1039, 1049, 1051, 1061]
+
 # Get the 10th prime
 >>> nth_prime(10)
 29
