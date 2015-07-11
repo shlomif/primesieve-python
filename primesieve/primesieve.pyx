@@ -5,7 +5,7 @@ cimport cpp_primesieve
 cpdef vector[uint64_t] generate_primes(uint64_t a, uint64_t b = 0):
     """Generate a list of primes"""
     cdef vector[uint64_t] primes
-    if b != 0
+    if b != 0:
         cpp_primesieve.generate_primes[uint64_t](a, b, &primes)
     else
         cpp_primesieve.generate_primes[uint64_t](b, a, &primes)
@@ -25,42 +25,42 @@ cpdef uint64_t nth_prime(int64_t n, uint64_t start = 0):
 
 cpdef uint64_t count_primes(uint64_t a, uint64_t b = 0):
     """Count prime numbers"""
-    if b != 0
+    if b != 0:
         return cpp_primesieve.count_primes(a, b)
     else
         return cpp_primesieve.count_primes(b, a)
  
 cpdef uint64_t count_twins(uint64_t a, uint64_t b = 0):
     """Count twin primes"""
-    if b != 0
+    if b != 0:
         return cpp_primesieve.count_twins(a, b)
     else
         return cpp_primesieve.count_twins(b, a)
  
 cpdef uint64_t count_triplets(uint64_t a, uint64_t b = 0):
     """Count prime triplets"""
-    if b != 0
+    if b != 0:
         return cpp_primesieve.count_triplets(a, b)
     else
         return cpp_primesieve.count_triplets(b, a)
 
 cpdef uint64_t count_quadruplets(uint64_t a, uint64_t b = 0):
     """Count prime quadruplets"""
-    if b != 0
+    if b != 0:
         return cpp_primesieve.count_quadruplets(a, b)
     else
         return cpp_primesieve.count_quadruplets(b, a)
 
 cpdef uint64_t count_quintuplets(uint64_t a, uint64_t b = 0):
     """Count prime quintuplets"""
-    if b != 0
+    if b != 0:
         return cpp_primesieve.count_quintuplets(a, b)
     else
         return cpp_primesieve.count_quintuplets(b, a)
 
 cpdef uint64_t count_sextuplets(uint64_t a, uint64_t b = 0):
     """Count prime sextuplets"""
-    if b != 0
+    if b != 0:
         return cpp_primesieve.count_sextuplets(a, b)
     else
         return cpp_primesieve.count_sextuplets(b, a)
