@@ -5,11 +5,18 @@ def test_count_primes():
     assert primesieve.count_primes(10**6) == 78498
     assert primesieve.count_primes(100, 10**6) == 78473
 
+def test_parallel_count_primes():
+    assert primesieve.parallel_count_primes(10**10) == 455052511
+    assert primesieve.parallel_count_primes(10**9, 10**10) == 404204977
+
 def test_nth_prime():
     assert primesieve.nth_prime(25) == 97
     assert primesieve.nth_prime(26) == 101
     assert primesieve.nth_prime(1, 100) == 101
     assert primesieve.nth_prime(100, 1000000) == 1001311
+
+def test_parallel_nth_prime():
+    assert primesieve.parallel_nth_prime(10**8) == 2038074743
 
 def test_generate_primes():
     assert primesieve.generate_primes(10) == [2,3,5,7]
