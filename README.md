@@ -52,6 +52,8 @@ syntax of the primesieve C++ library.
 50847534
 ```
 
+Here is a [list of all available functions](primesieve/cpp_primesieve.pxd).
+
 Iterating over primes
 ---------------------
 
