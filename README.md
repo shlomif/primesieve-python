@@ -1,5 +1,6 @@
 primesieve-python
-================
+=================
+[![Build Status](https://travis-ci.org/kimwalisch/primesieve-python.svg?branch=master)](https://travis-ci.org/kimwalisch/primesieve-python)
 
 Python bindings for the [primesieve](http://primesieve.org/) C++ library. Generates primes orders of magnitude faster than any pure Python code. Features:
 
@@ -112,10 +113,6 @@ Development
 2. Clone this repo `git clone --recursive https://github.com/kimwalisch/primesieve-python && cd primesieve-python`
 3. Install `pip install . --upgrade` (builds primesieve C++ library and Python extension)
 4. Test `py.test`
-
-### Linux build
-
-[![Build Status](https://travis-ci.org/kimwalisch/primesieve-python.svg?branch=master)](https://travis-ci.org/kimwalisch/primesieve-python)
 
 ### Windows build
 
