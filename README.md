@@ -21,19 +21,48 @@ From [PyPI](https://pypi.python.org/pypi/primesieve)
 
 Usage
 ---
+The syntax of the primesieve Python bindings is nearly identical to the
+syntax of the primesieve C++ library.
 
-    >>> import primesieve
-    >>> primesieve.count(10**9)
-    50847534
-    >>> primesieve.generate_primes(40)
-    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
-    >>> primesieve.nth_prime(10)
-    29
-    >>> primesieve.generate_n_primes(10)
-    [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+```Python
+>>> from primesieve import *
 
-Benchmarks
----
+# Generate a list of the primes below 40
+>>> generate_primes(40)
+[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
+
+# Generate a list of the primes between 100 and 120
+>>> generate_primes(100, 120)
+[101, 103, 107, 109, 113]
+
+# Generate a list of the first 10 primes
+>>> generate_n_primes(10)
+[2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
+
+# Get the 10th prime
+>>> nth_prime(10)
+29
+
+# Count the primes below 10**9
+>>> count_primes(10**9)
+50847534
+```
+
+Instead of generating a large list of primes and then do something with
+the primes it is also possible to simply iterate over the primes which uses
+less memory.
+
+```Python
+>>> import primesieve
+it = primesieve.Iterator()
+
+# Iterate over the primes below 10000
+while True:
+    prime = it.next_prime()
+    if prime > 10000:
+        break
+    print prime
+```
 
 Development
 ---------
