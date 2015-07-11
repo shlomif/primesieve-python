@@ -52,6 +52,9 @@ syntax of the primesieve C++ library.
 50847534
 ```
 
+Iterating over primes
+---------------------
+
 Instead of generating a large list of primes and then do something with
 the primes it is also possible to simply iterate over the primes which uses
 less memory.
@@ -65,6 +68,14 @@ while True:
     prime = it.next_prime()
     if prime > 10000:
         break
+    print prime
+
+# Set iterator start number to 100
+it.skipto(100)
+
+# Iterate backwards over the primes below 100
+while prime > 2:
+    prime = it.previous_prime()
     print prime
 ```
 
