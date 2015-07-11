@@ -38,16 +38,16 @@ Benchmarks
 Development
 ---------
 
-[![Build Status](https://travis-ci.org/hickford/primesieve-python.svg?branch=master)](https://travis-ci.org/hickford/primesieve-python)
+[![Build Status](https://travis-ci.org/kimwalisch/primesieve-python.svg?branch=master)](https://travis-ci.org/kimwalisch/primesieve-python)
 
 1. Install Cython `pip install cython`
-2. Clone this repo `git clone --recursive https://github.com/hickford/primesieve-python && cd primesieve-python`
+2. Clone this repo `git clone --recursive https://github.com/kimwalisch/primesieve-python && cd primesieve-python`
 3. Install `pip install .` (this builds both the primesieve C++ library and Python extension)
 4. Test `py.test`
 
 ### Windows build
 
-[![Build status](https://ci.appveyor.com/api/projects/status/4chekgdj7bqx4ivt/branch/master?svg=true)](https://ci.appveyor.com/project/hickford/primesieve-python/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/4chekgdj7bqx4ivt/branch/master?svg=true)](https://ci.appveyor.com/project/kimwalisch/primesieve-python/branch/master)
 
 See also
 ---
