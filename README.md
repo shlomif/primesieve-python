@@ -10,14 +10,14 @@ Python bindings for the [primesieve](http://primesieve.org/) C++ library. Genera
 * Iterate over primes using little memory
 
 Motivation
-------
+----------
 
 I enjoy algorithm problems such as those in [Google Code Jam](https://code.google.com/codejam) and [Project Euler](https://projecteuler.net/). Many pertain to number theory. It's important (and fun) to write your own prime finding code once, but it's also useful to have a fast, reliable library.
 
 Two of my favourite problems: Google Code Jam [*Expensive Dinner*](https://code.google.com/codejam/contest/dashboard?c=1150486#s=p2) and Project Euler [Problem 500](https://projecteuler.net/problem=500)
 
 Installation
-----
+------------
 
 [![PyPI](https://img.shields.io/pypi/v/primesieve.svg)](https://pypi.python.org/pypi/primesieve)
 
@@ -26,7 +26,8 @@ From [PyPI](https://pypi.python.org/pypi/primesieve)
     pip install primesieve
 
 Usage
----
+-----
+
 The syntax of the primesieve Python bindings is nearly identical to the
 syntax of the primesieve C++ library.
 
@@ -87,15 +88,34 @@ while prime > 2:
     print prime
 ```
 
-Development
----------
+Multi-threading
+---------------
 
-[![Build Status](https://travis-ci.org/kimwalisch/primesieve-python.svg?branch=master)](https://travis-ci.org/kimwalisch/primesieve-python)
+Counting primes and prime k-tuplets and finding the nth prime can be done in parallel using multiple threads, just use the ```parallel_``` prefix and primesieve will use all your CPU cores.
+
+```Python
+>>> from primesieve import *
+
+# Count the primes below 10**11 using all CPU cores
+>>> parallel_count_primes(10**11)
+4118054813
+
+# Find the 10**10th prime using all CPU cores
+>>> parallel_nth_prime(10**10)
+252097800623
+```
+
+Development
+-----------
 
 1. Install Cython `pip install cython`
 2. Clone this repo `git clone --recursive https://github.com/kimwalisch/primesieve-python && cd primesieve-python`
 3. Install `pip install . --upgrade` (builds primesieve C++ library and Python extension)
 4. Test `py.test`
+
+### Linux build
+
+[![Build Status](https://travis-ci.org/kimwalisch/primesieve-python.svg?branch=master)](https://travis-ci.org/kimwalisch/primesieve-python)
 
 ### Windows build
 
