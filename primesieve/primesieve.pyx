@@ -109,42 +109,42 @@ cpdef uint64_t parallel_count_sextuplets(uint64_t a, uint64_t b = 0) except +:
     else:
         return cpp_primesieve.parallel_count_sextuplets(b, a)
 
-cpdef print_primes(uint64_t a, uint64_t b = 0) except +:
+cpdef void print_primes(uint64_t a, uint64_t b = 0) except +:
     """Print prime numbers to stdout"""
     if b != 0:
         cpp_primesieve.print_primes(a, b)
     else:
         cpp_primesieve.print_primes(b, a)
  
-cpdef print_twins(uint64_t a, uint64_t b = 0) except +:
+cpdef void print_twins(uint64_t a, uint64_t b = 0) except +:
     """Print twin primes to stdout"""
     if b != 0:
         cpp_primesieve.print_twins(a, b)
     else:
         cpp_primesieve.print_twins(b, a)
  
-cpdef print_triplets(uint64_t a, uint64_t b = 0) except +:
+cpdef void print_triplets(uint64_t a, uint64_t b = 0) except +:
     """Print prime triplets to stdout"""
     if b != 0:
         cpp_primesieve.print_triplets(a, b)
     else:
         cpp_primesieve.print_triplets(b, a)
 
-cpdef print_quadruplets(uint64_t a, uint64_t b = 0) except +:
+cpdef void print_quadruplets(uint64_t a, uint64_t b = 0) except +:
     """Print prime quadruplets to stdout"""
     if b != 0:
         cpp_primesieve.print_quadruplets(a, b)
     else:
         cpp_primesieve.print_quadruplets(b, a)
 
-cpdef print_quintuplets(uint64_t a, uint64_t b = 0) except +:
+cpdef void print_quintuplets(uint64_t a, uint64_t b = 0) except +:
     """Print prime quintuplets to stdout"""
     if b != 0:
         cpp_primesieve.print_quintuplets(a, b)
     else:
         cpp_primesieve.print_quintuplets(b, a)
 
-cpdef print_sextuplets(uint64_t a, uint64_t b = 0) except +:
+cpdef void print_sextuplets(uint64_t a, uint64_t b = 0) except +:
     """Print prime sextuplets to stdout"""
     if b != 0:
         cpp_primesieve.print_sextuplets(a, b)
@@ -155,7 +155,7 @@ cdef class Iterator:
     cdef cpp_primesieve.iterator _iterator
     def __cinit__(self):
         self._iterator = cpp_primesieve.iterator()
-    cpdef skipto(self, uint64_t start, uint64_t stop_hint = 2**62) except +:
+    cpdef void skipto(self, uint64_t start, uint64_t stop_hint = 2**62) except +:
         self._iterator.skipto(start, stop_hint)
     cpdef uint64_t next_prime(self) except +:
         return self._iterator.next_prime()
