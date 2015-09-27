@@ -47,7 +47,7 @@ class build_ext_subclass(build_ext):
 
 setup(
     name='primesieve',
-    version="0.1.1",
+    version="0.1.2",
     url = "https://github.com/hickford/primesieve-python",
     description="Fast prime number generator. Python bindings around C++ library primesieve",
     license = "MIT",
