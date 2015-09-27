@@ -1,5 +1,7 @@
 from setuptools import setup, Extension
 from glob import glob
+from distutils.command.build_ext import build_ext
+from distutils.command.build_clib import build_clib
 
 library = ('primesieve', dict(
     sources=glob("lib/primesieve/src/primesieve/*.cpp"),
@@ -22,6 +24,23 @@ extension = Extension(
 
 ext_modules = cythonize(extension) if cythonize else [extension]
 
+class build_clib_subclass(build_clib):
+    """Workaround to add msvc_compat (stdint.h) for old msvc versions"""
+    def build_libraries(self, libraries):
+        if self.compiler.compiler_type == "msvc" and int(self.compiler._MSVCCompiler__version) <= 9:
+            for lib_name, build_info in libraries:
+                build_info['include_dirs'].append("lib/primesieve/src/msvc_compat")
+                print(build_info)
+        build_clib.build_libraries(self, libraries)
+
+class build_ext_subclass(build_ext):
+    """Workaround to add msvc_compat (stdint.h) for old msvc versions"""
+    def build_extensions(self):
+        if self.compiler.compiler_type == "msvc" and int(self.compiler._MSVCCompiler__version) <= 9:
+            for e in self.extensions:
+                e.include_dirs.append("lib/primesieve/src/msvc_compat")
+        build_ext.build_extensions(self)
+
 setup(
     name='primesieve',
     version="0.1.0",
@@ -30,6 +49,7 @@ setup(
     license = "MIT",
     libraries = [library],
     ext_modules = ext_modules,
+    cmdclass = {'build_ext': build_ext_subclass, 'build_clib' : build_clib_subclass},
     classifiers=[
     'Programming Language :: Python :: 2',
     'Programming Language :: Python :: 2.6',
