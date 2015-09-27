@@ -1,6 +1,5 @@
 primesieve-python
 =================
-[![Build Status](https://travis-ci.org/hickford/primesieve-python.svg?branch=master)](https://travis-ci.org/hickford/primesieve-python)
 
 Python bindings for the [primesieve](http://primesieve.org/) C++ library. Generates primes orders of magnitude faster than any pure Python code. Features:
 
@@ -108,6 +107,8 @@ Counting primes and prime k-tuplets and finding the nth prime can be done in par
 
 Development
 -----------
+
+[![Build Status](https://travis-ci.org/hickford/primesieve-python.svg?branch=master)](https://travis-ci.org/hickford/primesieve-python)
 
 1. Install [Cython](http://cython.org/) `pip install cython`
 2. Install [pytest](https://pytest.org/) `pip install pytest`
