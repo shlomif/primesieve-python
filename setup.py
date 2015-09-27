@@ -24,10 +24,14 @@ extension = Extension(
 
 ext_modules = cythonize(extension) if cythonize else [extension]
 
+def old_msvc(compiler):
+    """Test whether compiler is msvc <= 9.0"""
+    return compiler.compiler_type == "msvc" and hasattr(compiler, "_MSVCCompiler__version") and int(compiler._MSVCCompiler__version) <= 9
+
 class build_clib_subclass(build_clib):
     """Workaround to add msvc_compat (stdint.h) for old msvc versions"""
     def build_libraries(self, libraries):
-        if self.compiler.compiler_type == "msvc" and int(self.compiler._MSVCCompiler__version) <= 9:
+        if old_msvc(self.compiler):
             for lib_name, build_info in libraries:
                 build_info['include_dirs'].append("lib/primesieve/src/msvc_compat")
                 print(build_info)
@@ -36,7 +40,7 @@ class build_clib_subclass(build_clib):
 class build_ext_subclass(build_ext):
     """Workaround to add msvc_compat (stdint.h) for old msvc versions"""
     def build_extensions(self):
-        if self.compiler.compiler_type == "msvc" and int(self.compiler._MSVCCompiler__version) <= 9:
+        if old_msvc(self.compiler):
             for e in self.extensions:
                 e.include_dirs.append("lib/primesieve/src/msvc_compat")
         build_ext.build_extensions(self)
