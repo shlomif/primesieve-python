@@ -15,14 +15,23 @@ else:
     # fallback to compiled cpp
     cythonize = None
 
-extension = Extension(
+extensions = []
+
+extensions.append(Extension(
         "primesieve",
         ["primesieve/primesieve.pyx"] if cythonize else ["primesieve/primesieve.cpp"],
         include_dirs=["lib/primesieve/include", "lib/primesieve/include/primesieve"],
         language="c++",
-        )
+        ))
 
-ext_modules = cythonize(extension) if cythonize else [extension]
+extensions.append(Extension(
+        "walisch",
+        ["primesieve/walisch/walisch.pyx"] if cythonize else ["primesieve/walisch/walisch.cpp"],
+        include_dirs=["lib/primesieve/include", "lib/primesieve/include/primesieve"],
+        language="c++",
+        ))
+
+ext_modules = cythonize(extensions) if cythonize else [extensions]
 
 def old_msvc(compiler):
     """Test whether compiler is msvc <= 9.0"""
