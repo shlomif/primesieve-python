@@ -25,7 +25,7 @@ cdef extern from "primesieve.hpp" namespace "primesieve":
     void print_quintuplets(uint64_t start, uint64_t stop)
     void print_sextuplets(uint64_t start, uint64_t stop)
 
-cdef extern from "iterator.hpp" namespace "primesieve":
+cdef extern from "primesieve/iterator.hpp" namespace "primesieve":
     cdef cppclass iterator:
         iterator()
         iterator(uint64_t start, uint64_t stop_hint)

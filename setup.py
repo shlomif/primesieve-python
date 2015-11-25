@@ -18,16 +18,16 @@ else:
 extensions = []
 
 extensions.append(Extension(
-        "primesieve",
-        ["primesieve/primesieve.pyx"] if cythonize else ["primesieve/primesieve.cpp"],
-        include_dirs=["lib/primesieve/include", "lib/primesieve/include/primesieve"],
+        "primesieve.core",
+        ["primesieve/core.pyx"] if cythonize else ["primesieve/core.cpp"],
+        include_dirs=["lib/primesieve/include"],
         language="c++",
         ))
 
 extensions.append(Extension(
-        "walisch",
-        ["primesieve/walisch/walisch.pyx"] if cythonize else ["primesieve/walisch/walisch.cpp"],
-        include_dirs=["lib/primesieve/include", "lib/primesieve/include/primesieve"],
+        "primesieve.numpy",
+        ["primesieve/numpy.pyx"] if cythonize else ["primesieve/numpy.cpp"],
+        include_dirs=["lib/primesieve/include"],
         language="c++",
         ))
 
@@ -61,6 +61,7 @@ setup(
     description="Fast prime number generator. Python bindings around C++ library primesieve",
     license = "MIT",
     libraries = [library],
+    packages = ["primesieve"],
     ext_modules = ext_modules,
     cmdclass = {'build_ext': build_ext_subclass, 'build_clib' : build_clib_subclass},
     classifiers=[
