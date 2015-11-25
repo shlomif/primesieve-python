@@ -24,10 +24,35 @@ extensions.append(Extension(
         language="c++",
         ))
 
-extensions.append(Extension(
+def is_pypy():
+    import platform
+    try:
+        if platform.python_implementation() == 'PyPy':
+            return True
+    except AttributeError:
+        pass
+    return False
+
+def can_import(module_name):
+    """can_import(module_name) -> module or None"""
+    try:
+        return __import__(module_name)
+    except ImportError:
+        return None
+
+def is_Numpy_installed():
+    if is_pypy():
+        return False
+    return bool(can_import("numpy"))
+
+# Add primesieve.numpy extension if NumPy is installed
+if is_Numpy_installed():
+    import numpy
+    numpy_include_dir = numpy.get_include()
+    extensions.append(Extension(
         "primesieve.numpy",
         ["primesieve/numpy.pyx"] if cythonize else ["primesieve/numpy.cpp"],
-        include_dirs=["lib/primesieve/include"],
+        include_dirs=["lib/primesieve/include", numpy_include_dir],
         language="c++",
         ))
 
@@ -56,9 +81,9 @@ class build_ext_subclass(build_ext):
 
 setup(
     name='primesieve',
-    version="0.1.2",
+    version="0.1.3",
     url = "https://github.com/hickford/primesieve-python",
-    description="Fast prime number generator. Python bindings around C++ library primesieve",
+    description="Fast prime number generator. Python bindings for primesieve C/C++ library",
     license = "MIT",
     libraries = [library],
     packages = ["primesieve"],
