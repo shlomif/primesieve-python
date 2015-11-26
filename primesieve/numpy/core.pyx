@@ -30,9 +30,9 @@ cpdef np.ndarray[np.int64_t, ndim=1] generate_primes(int64_t a, int64_t b = 0) e
     return primes
 
 cpdef np.ndarray[np.int64_t, ndim=1] generate_n_primes(int64_t n, int64_t start = 0) except +:
+    """Generate a numpy array with the next n primes"""
     n = max(n, 0)
     start = max(start, 0)
-    """Generate a numpy array with the next n primes"""
     cdef void* c_primes = cpp_core.primesieve_generate_n_primes(n, start, INT64_PRIMES)
     primes = c_to_numpy_array(c_primes, n, np.NPY_INT64)
     return primes
