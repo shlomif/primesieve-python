@@ -50,8 +50,8 @@ if is_Numpy_installed():
     import numpy
     numpy_include_dir = numpy.get_include()
     extensions.append(Extension(
-        "primesieve.numpy",
-        ["primesieve/numpy.pyx"] if cythonize else ["primesieve/numpy.cpp"],
+        "primesieve.numpy.core",
+        ["primesieve/numpy/core.pyx"] if cythonize else ["primesieve/numpy/core.cpp"],
         include_dirs=["lib/primesieve/include", numpy_include_dir],
         language="c++",
         ))
@@ -86,7 +86,7 @@ setup(
     description="Fast prime number generator. Python bindings for primesieve C/C++ library",
     license = "MIT",
     libraries = [library],
-    packages = ["primesieve"],
+    packages = ["primesieve", "primesieve.numpy"],
     ext_modules = ext_modules,
     cmdclass = {'build_ext': build_ext_subclass, 'build_clib' : build_clib_subclass},
     classifiers=[
