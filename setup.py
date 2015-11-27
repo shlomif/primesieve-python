@@ -7,6 +7,10 @@ import shutil
 import subprocess
 import tempfile
 
+extensions = []
+extra_compile_args = []
+extra_link_args = []
+
 # If this C/C++ test program compiles the compiler supports OpenMP
 # http://stackoverflow.com/questions/16549893/programatically-testing-for-openmp-support-from-a-python-setup-script
 omp_test = \
@@ -28,7 +32,7 @@ def get_compiler_openmp_flag():
     curdir = os.getcwd()
     os.chdir(tmpdir)
     filename = r'omp_test.c'
-    openmp_flag = None
+    openmp_flag = ""
 
     try:
         cc = os.environ['CC']
@@ -51,20 +55,22 @@ def get_compiler_openmp_flag():
                 if exit_code == 0:
                     openmp_flag = '/openmp'
 
-    print 'get_compiler_openmp_flag():', openmp_flag
     #clean up
     os.chdir(curdir)
     shutil.rmtree(tmpdir)
     return openmp_flag
 
 openmp_flag = get_compiler_openmp_flag()
+print 'get_compiler_openmp_flag():', openmp_flag
+extra_compile_args.append(openmp_flag)
+extra_link_args.append(openmp_flag)
 
 library = ('primesieve', dict(
     sources = glob("lib/primesieve/src/primesieve/*.cpp"),
     include_dirs = ["lib/primesieve/include"],
     language = "c++",
-    extra_compile_args = [openmp_flag],
-    extra_link_args = [openmp_flag]
+    extra_compile_args = extra_compile_args,
+    extra_link_args = extra_link_args
     ))
 
 if glob("primesieve/*.pyx"):
@@ -73,13 +79,13 @@ else:
     # fallback to compiled cpp
     cythonize = None
 
-extensions = []
-
 extensions.append(Extension(
         "primesieve.core",
         ["primesieve/core.pyx"] if cythonize else ["primesieve/core.cpp"],
         include_dirs = ["lib/primesieve/include"],
         language = "c++",
+        extra_compile_args = extra_compile_args,
+        extra_link_args = extra_link_args
         ))
 
 def is_pypy():
@@ -111,7 +117,7 @@ if is_Numpy_installed():
         "primesieve.numpy.core",
         ["primesieve/numpy/core.pyx"] if cythonize else ["primesieve/numpy/core.cpp"],
         include_dirs = ["lib/primesieve/include", numpy_include_dir],
-        language = "c++",
+        language = "c++"
         ))
 
 ext_modules = cythonize(extensions) if cythonize else [extensions]
