@@ -81,13 +81,12 @@ which uses less memory.
 ```Python
 >>> import primesieve
 it = primesieve.Iterator()
+prime = it.next_prime()
 
 # Iterate over the primes below 10000
-while True:
-    prime = it.next_prime()
-    if prime > 10000:
-        break
+while prime < 10000:
     print prime
+    prime = it.next_prime()
 
 # Set iterator start number to 100
 it.skipto(100)
