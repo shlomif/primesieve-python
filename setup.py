@@ -71,7 +71,7 @@ def get_compiler_openmp_flag():
     return openmp_flag
 
 openmp_flag = get_compiler_openmp_flag()
-print 'get_compiler_openmp_flag():', openmp_flag
+print('get_compiler_openmp_flag(): ' + openmp_flag)
 
 extra_compile_args.append(openmp_flag)
 extra_link_args.append(openmp_flag)
