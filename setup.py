@@ -24,33 +24,34 @@ omp_test = \
 
 # Get the current compiler's OpenMP flag
 def get_compiler_openmp_flag():
-    openmp_flag = None
     tmpdir = tempfile.mkdtemp()
     curdir = os.getcwd()
     os.chdir(tmpdir)
-    filename = r'omp_test.cpp'
+    filename = r'omp_test.c'
+    openmp_flag = None
+
     try:
-        cxx = os.environ['CXX']
+        cc = os.environ['CC']
     except KeyError:
-        cxx = 'c++'
+        cc = 'cc'
     with open(filename, 'w', 0) as file:
         file.write(omp_test)
 
     # Compile test program using different OpenMP compiler flags
     with open(os.devnull, 'w') as fnull:
-        exit_code = subprocess.call([cxx, '-fopenmp', filename], stdout=fnull, stderr=fnull)
+        exit_code = subprocess.call([cc, '-fopenmp', filename], stdout=fnull, stderr=fnull)
         if exit_code == 0:
             openmp_flag = '-fopenmp'
         else:
-            exit_code = subprocess.call([cxx, '-openmp', filename], stdout=fnull, stderr=fnull)
+            exit_code = subprocess.call([cc, '-openmp', filename], stdout=fnull, stderr=fnull)
             if exit_code == 0:
                 openmp_flag = '-openmp'
             else:
-                exit_code = subprocess.call([cxx, '/openmp', filename], stdout=fnull, stderr=fnull)
+                exit_code = subprocess.call([cc, '/openmp', filename], stdout=fnull, stderr=fnull)
                 if exit_code == 0:
                     openmp_flag = '/openmp'
 
-    print 'get_compiler_openmp_flag(): ', openmp_flag
+    print 'get_compiler_openmp_flag():', openmp_flag
     #clean up
     os.chdir(curdir)
     shutil.rmtree(tmpdir)
@@ -59,11 +60,11 @@ def get_compiler_openmp_flag():
 openmp_flag = get_compiler_openmp_flag()
 
 library = ('primesieve', dict(
-    sources=glob("lib/primesieve/src/primesieve/*.cpp"),
-    include_dirs=["lib/primesieve/include"],
-    language="c++",
-    extra_compile_args=openmp_flag,
-    extra_link_args=openmp_flag
+    sources = glob("lib/primesieve/src/primesieve/*.cpp"),
+    include_dirs = ["lib/primesieve/include"],
+    language = "c++",
+    extra_compile_args = [openmp_flag],
+    extra_link_args = [openmp_flag]
     ))
 
 if glob("primesieve/*.pyx"):
@@ -77,8 +78,8 @@ extensions = []
 extensions.append(Extension(
         "primesieve.core",
         ["primesieve/core.pyx"] if cythonize else ["primesieve/core.cpp"],
-        include_dirs=["lib/primesieve/include"],
-        language="c++",
+        include_dirs = ["lib/primesieve/include"],
+        language = "c++",
         ))
 
 def is_pypy():
@@ -109,8 +110,8 @@ if is_Numpy_installed():
     extensions.append(Extension(
         "primesieve.numpy.core",
         ["primesieve/numpy/core.pyx"] if cythonize else ["primesieve/numpy/core.cpp"],
-        include_dirs=["lib/primesieve/include", numpy_include_dir],
-        language="c++",
+        include_dirs = ["lib/primesieve/include", numpy_include_dir],
+        language = "c++",
         ))
 
 ext_modules = cythonize(extensions) if cythonize else [extensions]
@@ -137,16 +138,16 @@ class build_ext_subclass(build_ext):
         build_ext.build_extensions(self)
 
 setup(
-    name='primesieve',
-    version="0.1.3",
+    name = 'primesieve',
+    version = "0.1.3",
     url = "https://github.com/hickford/primesieve-python",
-    description="Fast prime number generator. Python bindings for primesieve C/C++ library",
+    description = "Fast prime number generator. Python bindings for primesieve C/C++ library",
     license = "MIT",
     libraries = [library],
     packages = ["primesieve", "primesieve.numpy"],
     ext_modules = ext_modules,
     cmdclass = {'build_ext': build_ext_subclass, 'build_clib' : build_clib_subclass},
-    classifiers=[
+    classifiers = [
     'Programming Language :: Python :: 2',
     'Programming Language :: Python :: 2.6',
     'Programming Language :: Python :: 2.7',
