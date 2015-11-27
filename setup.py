@@ -80,9 +80,9 @@ extra_link_args.append(openmp_flag)
 
 if openmp_flag != "":
     try:
-        cflags = distutils.sysconfig._config_vars['CFLAGS']
+        cflags = distutils.sysconfig.get_config_var('CFLAGS')
         distutils.sysconfig._config_vars['CFLAGS'] = cflags + " " + openmp_flag
-    except KeyError:
+    except:
         # Continue without OpenMP
         pass
 
