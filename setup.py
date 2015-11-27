@@ -2,11 +2,68 @@ from setuptools import setup, Extension
 from glob import glob
 from distutils.command.build_ext import build_ext
 from distutils.command.build_clib import build_clib
+import os
+import shutil
+import subprocess
+import tempfile
+
+# If this C/C++ test program compiles the compiler supports OpenMP
+# http://stackoverflow.com/questions/16549893/programatically-testing-for-openmp-support-from-a-python-setup-script
+omp_test = \
+    r"""
+    #include <omp.h>
+    #include <stdio.h>
+
+    int main()
+    {
+        #pragma omp parallel
+        printf("Hello from thread %d, nthreads %d\n", omp_get_thread_num(), omp_get_num_threads());
+        return 0;
+    }
+    """
+
+# Get the current compiler's OpenMP flag
+def get_compiler_openmp_flag():
+    openmp_flag = None
+    tmpdir = tempfile.mkdtemp()
+    curdir = os.getcwd()
+    os.chdir(tmpdir)
+    filename = r'omp_test.cpp'
+    try:
+        cxx = os.environ['CXX']
+    except KeyError:
+        cxx = 'c++'
+    with open(filename, 'w', 0) as file:
+        file.write(omp_test)
+
+    # Compile test program using different OpenMP compiler flags
+    with open(os.devnull, 'w') as fnull:
+        exit_code = subprocess.call([cxx, '-fopenmp', filename], stdout=fnull, stderr=fnull)
+        if exit_code == 0:
+            openmp_flag = '-fopenmp'
+        else:
+            exit_code = subprocess.call([cxx, '-openmp', filename], stdout=fnull, stderr=fnull)
+            if exit_code == 0:
+                openmp_flag = '-openmp'
+            else:
+                exit_code = subprocess.call([cxx, '/openmp', filename], stdout=fnull, stderr=fnull)
+                if exit_code == 0:
+                    openmp_flag = '/openmp'
+
+    print 'get_compiler_openmp_flag(): ', openmp_flag
+    #clean up
+    os.chdir(curdir)
+    shutil.rmtree(tmpdir)
+    return openmp_flag
+
+openmp_flag = get_compiler_openmp_flag()
 
 library = ('primesieve', dict(
     sources=glob("lib/primesieve/src/primesieve/*.cpp"),
     include_dirs=["lib/primesieve/include"],
     language="c++",
+    extra_compile_args=openmp_flag,
+    extra_link_args=openmp_flag
     ))
 
 if glob("primesieve/*.pyx"):
