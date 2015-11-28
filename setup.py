@@ -39,7 +39,6 @@ def get_compiler_openmp_flag():
     curdir = os.getcwd()
     os.chdir(tmpdir)
     filename = r'omp_test.c'
-
     with open(filename, 'w') as file:
         file.write(omp_test)
         file.flush()
@@ -48,20 +47,26 @@ def get_compiler_openmp_flag():
         cc = os.environ['CC']
     except KeyError:
         cc = 'cc'
+    print("Compiler used: " + cc)
 
-    # Compile test program using different OpenMP compiler flags
-    with open(os.devnull, 'w') as fnull:
-        exit_code = subprocess.call([cc, '-fopenmp', filename], shell=True, stdout=fnull, stderr=fnull)
-        if exit_code == 0:
-            openmp_flag = '-fopenmp'
-        else:
-            exit_code = subprocess.call([cc, '-openmp', filename], shell=True, stdout=fnull, stderr=fnull)
+    # Compile omp_test.c program using different OpenMP compiler flags.
+    # If the code below fails continue without OpenMP support.
+    try:
+        with open(os.devnull, 'w') as fnull:
+            exit_code = subprocess.call([cc, '-fopenmp', filename], stdout=fnull, stderr=fnull)
             if exit_code == 0:
-                openmp_flag = '-openmp'
+                openmp_flag = '-fopenmp'
             else:
-                exit_code = subprocess.call([cc, '/openmp', filename], shell=True, stdout=fnull, stderr=fnull)
+                exit_code = subprocess.call([cc, '-openmp', filename], stdout=fnull, stderr=fnull)
                 if exit_code == 0:
-                    openmp_flag = '/openmp'
+                    openmp_flag = '-openmp'
+                else:
+                    exit_code = subprocess.call([cc, '/openmp', filename], stdout=fnull, stderr=fnull)
+                    if exit_code == 0:
+                        openmp_flag = '/openmp'
+    except:
+        pass
+
     #clean up
     os.chdir(curdir)
     shutil.rmtree(tmpdir)
