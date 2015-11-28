@@ -69,7 +69,7 @@ syntax of the primesieve C++ library.
 50847534
 ```
 
-Here is a [list of all available functions](primesieve/cpp_primesieve.pxd).
+Here is a [list of all available functions](primesieve/cpp_core.pxd).
 
 Iterating over primes
 ---------------------
@@ -97,6 +97,34 @@ while prime > 0:
     print prime
 ```
 
+NumPy support
+-------------
+Using the ```primesieve.numpy``` module you can generate an array of
+primes using **native C++ performance!** In comparison the
+```primesieve``` module generates a list of primes about 7 times
+slower mostly because the conversion of the C++ primes array into a
+python list is very slow.
+
+```Python
+>>> from primesieve.numpy import *
+
+# Generate a numpy array with the primes below 100
+>>> generate_primes_array(100)
+array([ 2,  3,  5,  7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59,
+       61, 67, 71, 73, 79, 83, 89, 97])
+
+# Generate a numpy array with the first 100 primes
+>>> generate_n_primes_array(100)
+array([  2,   3,   5,   7,  11,  13,  17,  19,  23,  29,  31,  37,  41,
+        43,  47,  53,  59,  61,  67,  71,  73,  79,  83,  89,  97, 101,
+       103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167,
+       173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239,
+       241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313,
+       317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397,
+       401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467,
+       479, 487, 491, 499, 503, 509, 521, 523, 541])
+```
+
 Multi-threading
 ---------------
 
@@ -114,33 +142,6 @@ prefix and primesieve will use all your CPU cores.
 # Find the 10**10th prime using all CPU cores
 >>> parallel_nth_prime(10**10)
 252097800623
-```
-
-NumPy support
--------------
-Using the ```primesieve.numpy``` module you can generate an array of
-primes using **native C++ performance!** In comparison the
-```primesieve``` module generates a list of primes about 7 times
-slower mostly because the conversion of the C++ primes array into a
-python list is very slow.
-
-```Python
->>> from primesieve.numpy import *
-
-# Generate a numpy array with the primes below 100
-array([ 2,  3,  5,  7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59,
-       61, 67, 71, 73, 79, 83, 89, 97])
-
-# Generate a numpy array with the first 100 primes
->>> generate_n_primes(100)
-array([  2,   3,   5,   7,  11,  13,  17,  19,  23,  29,  31,  37,  41,
-        43,  47,  53,  59,  61,  67,  71,  73,  79,  83,  89,  97, 101,
-       103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167,
-       173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239,
-       241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313,
-       317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397,
-       401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467,
-       479, 487, 491, 499, 503, 509, 521, 523, 541])
 ```
 
 Development
