@@ -43,6 +43,9 @@ def get_compiler_openmp_flag():
         file.write(omp_test)
         file.flush()
         os.fsync(file)
+        print "File should be on disk now"
+
+    print os.listdir(".")
 
     try:
         cc = os.environ['CC']
