@@ -2,6 +2,7 @@ from setuptools import setup, Extension
 from glob import glob
 from distutils.command.build_ext import build_ext
 from distutils.command.build_clib import build_clib
+from Cython.Build import cythonize
 import distutils.sysconfig
 import platform
 import os
@@ -14,12 +15,6 @@ import tempfile
 extensions = []
 extra_compile_args = []
 extra_link_args = []
-
-# Use Cython if available.
-try:
-    from Cython.Build import cythonize
-except ImportError:
-    cythonize = None
 
 # --------------------- Get OpenMP compiler flag --------------------
 
@@ -124,7 +119,7 @@ libprimesieve = ('primesieve', dict(
 
 extensions.append(Extension(
     "primesieve.core",
-    ["primesieve/core.pyx"] if cythonize else ["primesieve/core.cpp"],
+    ["primesieve/core.pyx"],
     include_dirs = ["lib/primesieve/include"],
     extra_compile_args = extra_compile_args,
     extra_link_args = extra_link_args,
@@ -138,7 +133,7 @@ if is_Numpy_installed():
     import numpy
     extensions.append(Extension(
         "primesieve.numpy.core",
-        ["primesieve/numpy/core.pyx"] if cythonize else ["primesieve/numpy/core.cpp"],
+        ["primesieve/numpy/core.pyx"],
         include_dirs = ["lib/primesieve/include", numpy.get_include()],
         extra_compile_args = extra_compile_args,
         extra_link_args = extra_link_args,
@@ -147,7 +142,7 @@ if is_Numpy_installed():
 
 # --------------------- Build ---------------------------------------
 
-ext_modules = cythonize(extensions) if cythonize else [extensions]
+ext_modules = cythonize(extensions)
 
 def old_msvc(compiler):
     """Test whether compiler is msvc <= 9.0"""
