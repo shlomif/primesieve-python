@@ -42,7 +42,7 @@ def get_compiler_openmp_flag():
     with open(filename, 'w') as file:
         file.write(omp_test)
         file.flush()
-        os.fsync()
+        os.fsync(file)
 
     try:
         cc = os.environ['CC']
