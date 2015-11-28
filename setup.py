@@ -138,7 +138,6 @@ extensions.append(Extension(
 
 # --------------------- primesieve.numpy module ---------------------
 
-# if NumPy is installed build primesieve.array extension 
 if is_Numpy_installed():
     import numpy
     extensions.append(Extension(
