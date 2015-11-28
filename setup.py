@@ -39,18 +39,20 @@ omp_test = \
 
 # Get the current compiler's OpenMP flag
 def get_compiler_openmp_flag():
+    openmp_flag = ""
     tmpdir = tempfile.mkdtemp()
     curdir = os.getcwd()
     os.chdir(tmpdir)
     filename = r'omp_test.c'
-    openmp_flag = ""
+
+    with open(filename, 'w') as file:
+        file.write(omp_test)
+        file.flush()
 
     try:
         cc = os.environ['CC']
     except KeyError:
         cc = 'cc'
-    with open(filename, 'w', 0) as file:
-        file.write(omp_test)
 
     # Compile test program using different OpenMP compiler flags
     with open(os.devnull, 'w') as fnull:
