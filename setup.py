@@ -37,6 +37,7 @@ def get_compiler_openmp_flag():
     openmp_flag = ""
     tmpdir = tempfile.mkdtemp()
     curdir = os.getcwd()
+    os.chdir(tmpdir)
     filename = r'omp_test.c'
 
     with open(filename, 'w') as file:
@@ -54,16 +55,16 @@ def get_compiler_openmp_flag():
 
     # Compile test program using different OpenMP compiler flags
     with open(os.devnull, 'w') as fnull:
-        print("cc -fopenmp "+filename)
-        exit_code = subprocess.call("cc -fopenmp "+filename, stdout=fnull, stderr=fnull)
+        print("cc -fopenmp "+tmpdir+filename)
+        exit_code = subprocess.call("cc -fopenmp "+tmpdir+filename, stdout=fnull, stderr=fnull)
         if exit_code == 0:
             openmp_flag = '-fopenmp'
         else:
-            exit_code = subprocess.call(["cc -openmp " + filename], stdout=fnull, stderr=fnull)
+            exit_code = subprocess.call("cc -openmp " +tmpdir+ filename, stdout=fnull, stderr=fnull)
             if exit_code == 0:
                 openmp_flag = '-openmp'
             else:
-                exit_code = subprocess.call(["cc /openmp " + filename], stdout=fnull, stderr=fnull)
+                exit_code = subprocess.call("cc /openmp " +tmpdir+ filename, stdout=fnull, stderr=fnull)
                 if exit_code == 0:
                     openmp_flag = '/openmp'
     #clean up
