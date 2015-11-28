@@ -37,7 +37,10 @@ def get_compiler_openmp_flag():
     openmp_flag = ""
     tmpdir = tempfile.mkdtemp()
     curdir = os.getcwd()
+    print("kim, tmpdir: " + tmpdir)
+    print("kim, curdir: " + tmpdir)
     os.chdir(tmpdir)
+    print("kim, curdir2: " + tmpdir)
     filename = r'omp_test.c'
 
     with open(filename, 'w') as file:
