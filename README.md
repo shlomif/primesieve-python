@@ -35,8 +35,8 @@ Installation
 pip install primesieve
 ````
 
-Usage
------
+Usage examples
+--------------
 
 The syntax of the primesieve Python bindings is nearly identical to the
 syntax of the primesieve C++ library.
