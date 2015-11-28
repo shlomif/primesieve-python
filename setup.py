@@ -47,25 +47,32 @@ def get_compiler_openmp_flag():
         cc = os.environ['CC']
     except KeyError:
         cc = 'cc'
-    print("Compiler used: " + cc)
 
+    # This code is an ugly hack!
     # Compile omp_test.c program using different OpenMP compiler flags.
     # If the code below fails continue without OpenMP support.
-    try:
-        with open(os.devnull, 'w') as fnull:
+    with open(os.devnull, 'w') as fnull:
+        exit_code = 1
+        try:
             exit_code = subprocess.call([cc, '-fopenmp', filename], stdout=fnull, stderr=fnull)
-            if exit_code == 0:
-                openmp_flag = '-fopenmp'
-            else:
+        except:
+            pass
+        if exit_code == 0:
+            openmp_flag = '-fopenmp'
+        else:
+            try:
                 exit_code = subprocess.call([cc, '-openmp', filename], stdout=fnull, stderr=fnull)
+            except:
+                pass
+            if exit_code == 0:
+                openmp_flag = '-openmp'
+            else:
+                try:
+                    exit_code = subprocess.call(['cl.exe /openmp', filename], stdout=fnull, stderr=fnull)
+                except:
+                    pass
                 if exit_code == 0:
-                    openmp_flag = '-openmp'
-                else:
-                    exit_code = subprocess.call([cc, '/openmp', filename], stdout=fnull, stderr=fnull)
-                    if exit_code == 0:
-                        openmp_flag = '/openmp'
-    except:
-        pass
+                    openmp_flag = '/openmp'
 
     #clean up
     os.chdir(curdir)
