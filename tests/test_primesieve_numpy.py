@@ -11,9 +11,9 @@ if is_numpy_installed():
     from numpy.testing import assert_array_equal
 
     def test_generate_primes_numpy():
-        assert_array_equal(generate_primes(10), [2,3,5,7])
-        assert_array_equal(generate_primes(10, 20), [11,13,17,19])
+        assert_array_equal(generate_primes_array(10), [2,3,5,7])
+        assert_array_equal(generate_primes_array(10, 20), [11,13,17,19])
 
     def test_generate_n_primes_numpy():
-        assert_array_equal(generate_n_primes(7), [2,3,5,7,11,13,17])
-        assert_array_equal(generate_n_primes(5, 100), [101,103,107,109,113])
+        assert_array_equal(generate_n_primes_array(7), [2,3,5,7,11,13,17])
+        assert_array_equal(generate_n_primes_array(5, 100), [101,103,107,109,113])

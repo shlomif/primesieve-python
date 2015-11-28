@@ -32,7 +32,6 @@ omp_test = \
     }
     """
 
-# Get the current compiler's OpenMP flag
 def get_compiler_openmp_flag():
     openmp_flag = ""
     tmpdir = tempfile.mkdtemp()
@@ -92,7 +91,6 @@ if openmp_flag != "":
         cflags = distutils.sysconfig.get_config_var('CFLAGS')
         distutils.sysconfig._config_vars['CFLAGS'] = cflags + " " + openmp_flag
     except:
-        # Continue without OpenMP
         pass
 
 # ------------------ Check if NumPy is installed --------------------
@@ -138,14 +136,14 @@ extensions.append(Extension(
     language = "c++"
     ))
 
-# --------------------- primesieve module ---------------------------
+# --------------------- primesieve.numpy module ---------------------
 
-# Add primesieve.numpy extension if NumPy is installed
+# if NumPy is installed build primesieve.array extension 
 if is_Numpy_installed():
     import numpy
     extensions.append(Extension(
-        "primesieve.numpy.core",
-        ["primesieve/numpy/core.pyx"],
+        "primesieve.numpy.generate",
+        ["primesieve/numpy/generate.pyx"],
         include_dirs = ["lib/primesieve/include", numpy.get_include()],
         extra_compile_args = extra_compile_args,
         extra_link_args = extra_link_args,
