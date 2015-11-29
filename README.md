@@ -100,10 +100,11 @@ while prime > 0:
 NumPy support
 -------------
 Using the ```primesieve.numpy``` module you can generate an array of
-primes using **native C++ performance!** In comparison the
-```primesieve``` module generates a list of primes about 7 times
-slower mostly because the conversion of the C++ primes array into a
-python list is very slow.
+primes using **native C++ performance!**
+
+In comparison the ```primesieve``` module generates a list of primes
+about 7 times slower mostly because the conversion of the C++ primes
+array into a python list is very slow.
 
 ```Python
 >>> from primesieve.numpy import *
@@ -143,6 +144,11 @@ prefix and primesieve will use all your CPU cores.
 >>> parallel_nth_prime(10**10)
 252097800623
 ```
+
+Note that multi-threading currently only works on **Linux** and
+**Cygwin/MinGW** as the [GNU GCC compiler](https://gcc.gnu.org/)
+is currently the only major compiler out there with good
+[OpenMP](https://en.wikipedia.org/wiki/OpenMP) support.
 
 Development
 -----------
