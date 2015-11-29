@@ -47,7 +47,6 @@ def get_compiler_openmp_flag():
     except KeyError:
         cc = 'cc'
 
-    # This code is an ugly hack!
     # Compile omp_test.c program using different OpenMP compiler flags.
     # If the code below fails continue without OpenMP support.
     with open(os.devnull, 'w') as fnull:
@@ -67,7 +66,7 @@ def get_compiler_openmp_flag():
                 openmp_flag = '-openmp'
             else:
                 try:
-                    exit_code = subprocess.call(['cl.exe /openmp', filename], stdout=fnull, stderr=fnull)
+                    exit_code = subprocess.call(['cl.exe', '/openmp', filename], stdout=fnull, stderr=fnull)
                 except:
                     pass
                 if exit_code == 0:
