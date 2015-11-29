@@ -64,13 +64,6 @@ def get_compiler_openmp_flag():
                 pass
             if exit_code == 0:
                 openmp_flag = '-openmp'
-            else:
-                try:
-                    exit_code = subprocess.call(['cl.exe', '/openmp', filename], stdout=fnull, stderr=fnull)
-                except:
-                    pass
-                if exit_code == 0:
-                    openmp_flag = '/openmp'
 
     #clean up
     os.chdir(curdir)
@@ -175,7 +168,7 @@ class build_ext_subclass(build_ext):
 
 setup(
     name = 'primesieve',
-    version = "0.1.3",
+    version = "1.0.0",
     url = "https://github.com/hickford/primesieve-python",
     description = "Fast prime number generator. Python bindings for primesieve C/C++ library",
     license = "MIT",
