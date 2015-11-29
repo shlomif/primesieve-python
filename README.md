@@ -147,8 +147,16 @@ prefix and primesieve will use all your CPU cores.
 Development
 -----------
 
-1. Install [Cython](http://cython.org/) `pip install cython`
-2. Install [pytest](https://pytest.org/) `pip install pytest`
-2. Clone this repo `git clone --recursive https://github.com/hickford/primesieve-python && cd primesieve-python`
-3. Install `pip install . --upgrade` (builds primesieve C++ library and Python extension)
-4. Test `py.test`
+```python
+# Install prerequisites
+$ pip install cython pytest numpy
+
+# Clone this repository
+$ git clone --recursive https://github.com/hickford/primesieve-python && cd primesieve-python
+
+# Build and install primesieve-python
+$ pip install . --upgrade
+
+# Run tests
+$ py.test
+```
