@@ -1,2 +1,2 @@
-from primesieve.numpy.generate import generate_primes_array
-from primesieve.numpy.generate import generate_n_primes_array
+from primesieve.numpy._generate import generate_primes_array
+from primesieve.numpy._generate import generate_n_primes_array

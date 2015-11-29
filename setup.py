@@ -128,8 +128,8 @@ libprimesieve = ('primesieve', dict(
 # --------------------- primesieve module ---------------------------
 
 extensions.append(Extension(
-    "primesieve.core",
-    ["primesieve/core.pyx"],
+    "primesieve._primesieve",
+    ["primesieve/_primesieve.pyx"],
     include_dirs = ["lib/primesieve/include"],
     extra_compile_args = extra_compile_args,
     extra_link_args = extra_link_args,
@@ -141,8 +141,8 @@ extensions.append(Extension(
 if is_Numpy_installed():
     import numpy
     extensions.append(Extension(
-        "primesieve.numpy.generate",
-        ["primesieve/numpy/generate.pyx"],
+        "primesieve.numpy._generate",
+        ["primesieve/numpy/_generate.pyx"],
         include_dirs = ["lib/primesieve/include", numpy.get_include()],
         extra_compile_args = extra_compile_args,
         extra_link_args = extra_link_args,

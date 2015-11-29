@@ -1,1 +1,1 @@
-from primesieve.core import *
+from primesieve._primesieve import *
