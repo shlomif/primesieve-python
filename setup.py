@@ -2,27 +2,148 @@ from setuptools import setup, Extension
 from glob import glob
 from distutils.command.build_ext import build_ext
 from distutils.command.build_clib import build_clib
+from Cython.Build import cythonize
+import distutils.sysconfig
+import platform
+import os
+import shutil
+import subprocess
+import tempfile
 
-library = ('primesieve', dict(
-    sources=glob("lib/primesieve/src/primesieve/*.cpp"),
-    include_dirs=["lib/primesieve/include"],
-    language="c++",
+# --------------------- Initialization ------------------------------
+
+extensions = []
+extra_compile_args = []
+extra_link_args = []
+
+# --------------------- Get OpenMP compiler flag --------------------
+
+# If this C test program compiles the compiler supports OpenMP
+# http://stackoverflow.com/questions/16549893/programatically-testing-for-openmp-support-from-a-python-setup-script
+omp_test = \
+    r"""
+    #include <omp.h>
+    #include <stdio.h>
+    int main()
+    {
+        #pragma omp parallel
+        printf("Hello from thread %d, nthreads %d\n", omp_get_thread_num(), omp_get_num_threads());
+        return 0;
+    }
+    """
+
+def get_compiler_openmp_flag():
+    openmp_flag = ""
+    tmpdir = tempfile.mkdtemp()
+    curdir = os.getcwd()
+    os.chdir(tmpdir)
+    filename = r'omp_test.c'
+    with open(filename, 'w') as file:
+        file.write(omp_test)
+        file.flush()
+
+    try:
+        cc = os.environ['CC']
+    except KeyError:
+        cc = 'cc'
+
+    # Compile omp_test.c program using different OpenMP compiler flags.
+    # If the code below fails continue without OpenMP support.
+    with open(os.devnull, 'w') as fnull:
+        exit_code = 1
+        try:
+            exit_code = subprocess.call([cc, '-fopenmp', filename], stdout=fnull, stderr=fnull)
+        except:
+            pass
+        if exit_code == 0:
+            openmp_flag = '-fopenmp'
+        else:
+            try:
+                exit_code = subprocess.call([cc, '-openmp', filename], stdout=fnull, stderr=fnull)
+            except:
+                pass
+            if exit_code == 0:
+                openmp_flag = '-openmp'
+
+    #clean up
+    os.chdir(curdir)
+    shutil.rmtree(tmpdir)
+    return openmp_flag
+
+openmp_flag = get_compiler_openmp_flag()
+print('get_compiler_openmp_flag(): ' + openmp_flag)
+
+extra_compile_args.append(openmp_flag)
+extra_link_args.append(openmp_flag)
+
+# ------------------ OpenMP hack for build_clib --------------------
+
+if openmp_flag != "":
+    try:
+        cflags = distutils.sysconfig.get_config_var('CFLAGS')
+        distutils.sysconfig._config_vars['CFLAGS'] = cflags + " " + openmp_flag
+    except:
+        pass
+
+# ------------------ Check if NumPy is installed --------------------
+
+def is_pypy():
+    try:
+        if platform.python_implementation() == 'PyPy':
+            return True
+    except AttributeError:
+        pass
+    return False
+
+def can_import(module_name):
+    """can_import(module_name) -> module or None"""
+    try:
+        return __import__(module_name)
+    except ImportError:
+        return None
+
+def is_Numpy_installed():
+    if is_pypy():
+        return False
+    return bool(can_import("numpy"))
+
+# --------------------- libprimesieve -------------------------------
+
+libprimesieve = ('primesieve', dict(
+    sources = glob("lib/primesieve/src/primesieve/*.cpp"),
+    include_dirs = ["lib/primesieve/include"],
+    extra_compile_args = extra_compile_args,
+    extra_link_args = extra_link_args,
+    language = "c++"
     ))
 
-if glob("primesieve/*.pyx"):
-    from Cython.Build import cythonize
-else:
-    # fallback to compiled cpp
-    cythonize = None
+# --------------------- primesieve module ---------------------------
 
-extension = Extension(
-        "primesieve",
-        ["primesieve/primesieve.pyx"] if cythonize else ["primesieve/primesieve.cpp"],
-        include_dirs=["lib/primesieve/include", "lib/primesieve/include/primesieve"],
-        language="c++",
-        )
+extensions.append(Extension(
+    "primesieve._primesieve",
+    ["primesieve/_primesieve.pyx"],
+    include_dirs = ["lib/primesieve/include"],
+    extra_compile_args = extra_compile_args,
+    extra_link_args = extra_link_args,
+    language = "c++"
+    ))
 
-ext_modules = cythonize(extension) if cythonize else [extension]
+# --------------------- primesieve.numpy module ---------------------
+
+if is_Numpy_installed():
+    import numpy
+    extensions.append(Extension(
+        "primesieve.numpy._generate",
+        ["primesieve/numpy/_generate.pyx"],
+        include_dirs = ["lib/primesieve/include", numpy.get_include()],
+        extra_compile_args = extra_compile_args,
+        extra_link_args = extra_link_args,
+        language = "c++"
+        ))
+
+# --------------------- Build ---------------------------------------
+
+ext_modules = cythonize(extensions)
 
 def old_msvc(compiler):
     """Test whether compiler is msvc <= 9.0"""
@@ -46,15 +167,16 @@ class build_ext_subclass(build_ext):
         build_ext.build_extensions(self)
 
 setup(
-    name='primesieve',
-    version="0.1.2",
+    name = 'primesieve',
+    version = "1.0.0",
     url = "https://github.com/hickford/primesieve-python",
-    description="Fast prime number generator. Python bindings around C++ library primesieve",
+    description = "Fast prime number generator. Python bindings for primesieve C/C++ library",
     license = "MIT",
-    libraries = [library],
+    libraries = [libprimesieve],
+    packages = ["primesieve", "primesieve.numpy"],
     ext_modules = ext_modules,
     cmdclass = {'build_ext': build_ext_subclass, 'build_clib' : build_clib_subclass},
-    classifiers=[
+    classifiers = [
     'Programming Language :: Python :: 2',
     'Programming Language :: Python :: 2.6',
     'Programming Language :: Python :: 2.7',
