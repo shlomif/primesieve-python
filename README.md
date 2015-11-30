@@ -154,6 +154,9 @@ is currently the only major compiler out there with good
 Development
 -----------
 
+You need to have installed a C++ compiler e.g. [GCC](https://gcc.gnu.org/),
+[clang++](http://llvm.org/) or MSVC.
+
 ```python
 # Install prerequisites
 $ pip install cython pytest numpy
