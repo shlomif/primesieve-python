@@ -1,4 +1,3 @@
 Cython
 pytest
 wheel
-numpy
