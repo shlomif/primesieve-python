@@ -80,6 +80,7 @@ which uses less memory.
 
 ```Python
 >>> import primesieve
+
 it = primesieve.Iterator()
 prime = it.next_prime()
 
