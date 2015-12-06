@@ -78,6 +78,10 @@ install:
   # http://help.appveyor.com/discussions/questions/1054-caching-numpy-build-within-a-wheel-on-appveyor#comment_36202180
   - "powershell ./appveyor/install_numpy.ps1"
 
+  # This is where I install numpy from the pre-built wheel I compiled either
+  # earlier in this session, or in a previous session.
+  - "%CMD_IN_ENV% pip install --no-index --find-links=c:\\tmp numpy"
+
   # take care to fetch C++ library
   - "git submodule update --init --recursive" 
 
