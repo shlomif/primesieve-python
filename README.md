@@ -171,9 +171,9 @@ $ pip install . --upgrade
 $ py.test
 ```
 
-### Mac OS X and OpenMP
+#### Mac OS X and OpenMP
 
-It isn't that hard to get parallel process support working on MacOSX.
+It isn't that hard to get parallel process support working on MacOSX. You'll need to install the clang compiler that supports OpenMP. Instead of the pip install step above, do the following steps.
 
 ```bash
 
