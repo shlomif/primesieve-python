@@ -12,8 +12,14 @@ import tempfile
 # The primesieve package (https://pypi.python.org/pypi/primesieve)
 # distributes the generated C++ rather than the pyx file.
 # So Cython isn't needed as a dependency.
-if glob("primesieve/*.pyx"):
+try:
     from Cython.Build import cythonize
+    print("found cython")
+except:
+    cythonize = None
+    print("cython not found")
+    
+if cythonize and glob("primesieve/*.pyx"):
     module_file_ext = 'pyx'
 else:
     module_file_ext = 'cpp'
