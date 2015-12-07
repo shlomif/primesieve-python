@@ -10,12 +10,11 @@ Python code!
 **Features:**
 
 * Generate a list of primes
-* Generate a numpy array of primes
-* Count primes and [prime k-tuplets](https://en.wikipedia.org/wiki/Prime_k-tuple)
-* Print primes and prime k-tuplets
-* Find the nth prime
 * Iterate over primes using little memory
-* Multi-threading for counting primes and finding the nth prime
+* Find the nth prime
+* Count/print primes and [prime k-tuplets](https://en.wikipedia.org/wiki/Prime_k-tuple)
+* Multi-threaded for counting primes and finding the nth prime
+* NumPy support
 
 Motivation
 ----------
@@ -28,9 +27,20 @@ once, but it's also useful to have a fast, reliable library.
 
 Two of my favourite problems: Google Code Jam [*Expensive Dinner*](https://code.google.com/codejam/contest/dashboard?c=1150486#s=p2) and Project Euler [Problem 500](https://projecteuler.net/problem=500)
 
+Prerequisites
+------------
+You need to have installed a C++ compiler on all OSes except Windows.
+
+```bash
+# OS X
+brew install clang
+
+# Linux
+sudo apt-get install g++ python-dev
+```
+
 Installation
 ------------
-
 ```
 pip install primesieve
 ````
@@ -157,16 +167,16 @@ Development
 You need to have installed a C++ compiler e.g. [GCC](https://gcc.gnu.org/),
 [clang++](http://llvm.org/) or MSVC.
 
-```python
+```bash
 # Install prerequisites
-$ pip install cython pytest numpy
+pip install cython pytest numpy
 
 # Clone this repository
-$ git clone --recursive https://github.com/hickford/primesieve-python && cd primesieve-python
+git clone --recursive https://github.com/hickford/primesieve-python && cd primesieve-python
 
 # Build and install primesieve-python
-$ pip install . --upgrade
+pip install . --upgrade
 
 # Run tests
-$ py.test
+py.test
 ```
