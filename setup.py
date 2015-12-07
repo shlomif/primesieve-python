@@ -9,6 +9,8 @@ import shutil
 import subprocess
 import tempfile
 
+# --------------------- Check if Cython is installed ----------------
+
 # The primesieve package (https://pypi.python.org/pypi/primesieve)
 # distributes the generated C++ rather than the pyx file.
 # So Cython isn't needed as a dependency.
@@ -18,7 +20,7 @@ try:
 except:
     cythonize = None
     print("cython not found")
-    
+
 if cythonize and glob("primesieve/*.pyx"):
     module_file_ext = 'pyx'
 else:
@@ -52,6 +54,7 @@ def get_compiler_openmp_flag():
     curdir = os.getcwd()
     os.chdir(tmpdir)
     filename = r'omp_test.c'
+
     with open(filename, 'w') as file:
         file.write(omp_test)
         file.flush()
@@ -157,9 +160,9 @@ if is_Numpy_installed():
 
 # --------------------- Build ---------------------------------------
 
-if module_file_ext == 'pyx':
+if cythonize:
     ext_modules = cythonize(extensions)
-elif module_file_ext:
+else:
     ext_modules = extensions
 
 def old_msvc(compiler):
