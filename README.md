@@ -32,11 +32,11 @@ Prerequisites
 You need to have installed a C++ compiler on all OSes except Windows.
 
 ```bash
-# OS X
-brew install clang
-
 # Linux
 sudo apt-get install g++ python-dev
+
+# OS X
+brew install gcc
 ```
 
 Installation
