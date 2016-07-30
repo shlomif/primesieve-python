@@ -35,8 +35,7 @@ You need to have installed a C++ compiler on all OSes except Windows.
 # Linux
 sudo apt-get install g++ python-dev
 
-# Mac OS X
-# First install Xcode using App Store
+# Mac OS X: first install Xcode using App Store
 xcode-select --install
 ```
 
@@ -80,7 +79,7 @@ syntax of the primesieve C++ library.
 50847534
 ```
 
-Here is a [list of all available functions](primesieve/cpp_core.pxd).
+Here is a [list of all available functions](primesieve/cpp_primesieve.pxd).
 
 Iterating over primes
 ---------------------
