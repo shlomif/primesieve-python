@@ -180,7 +180,7 @@ class build_ext_subclass(build_ext):
 
 setup(
     name = 'primesieve',
-    version = '1.0.0',
+    version = '1.1.0',
     url = 'https://github.com/hickford/primesieve-python',
     description = 'Fast prime number generator. Python bindings for primesieve C/C++ library',
     license = 'MIT',
