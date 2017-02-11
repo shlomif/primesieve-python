@@ -35,7 +35,7 @@ You need to have installed a C++ compiler on all OSes except Windows.
 # Linux
 sudo apt-get install g++ python-dev
 
-# Mac OS X: first install Xcode using App Store
+# macOS: first install Xcode using App Store
 xcode-select --install
 ```
 
