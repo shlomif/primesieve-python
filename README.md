@@ -170,8 +170,10 @@ You need to have installed a C++ compiler, see [Prerequisites](#prerequisites).
 # Install prerequisites
 pip install cython pytest numpy
 
-# Clone this repository
-git clone --recursive https://github.com/hickford/primesieve-python && cd primesieve-python
+# Clone repository
+git clone --recursive https://github.com/hickford/primesieve-python
+
+cd primesieve-python
 
 # Build and install primesieve-python
 pip install . --upgrade
