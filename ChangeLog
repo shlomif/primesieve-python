@@ -1,0 +1,17 @@
+2017-22-03 Kim Walisch  <kim.walisch@gmail.com>
+
+  Version 1.3.0 released.
+
+  * New Python API.
+  * Fix OpenMP compilation.
+  * Simplify setup.py.
+  * Multi-threaded by default for counting & nth prime.
+
+  New Python API
+  --------------
+  The API has been simplified and is now similar to other math
+  libraries like Matlab, PARI-GP, Math::Prime::Util.
+
+  generate_primes(a, b)   -> primes(a, b)
+  generate_n_primes(a, b) -> n_primes(a, b)
+  previous_prime()        -> prev_prime()
