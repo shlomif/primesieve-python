@@ -8,7 +8,7 @@ Python code!
 
 **Features:**
 
-* Generate a list of primes
+* Get a list of primes
 * Iterate over primes using little memory
 * Find the nth prime
 * Count/print primes and [prime k-tuplets](https://en.wikipedia.org/wiki/Prime_k-tuple)
