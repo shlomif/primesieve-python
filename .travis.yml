@@ -8,5 +8,5 @@ python:
 install:
   - pip install Cython # slow
   - pip install numpy
-  - pip install .
+  - pip install . --verbose
 script: py.test
