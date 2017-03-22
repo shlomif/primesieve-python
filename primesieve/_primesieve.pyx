@@ -2,7 +2,7 @@ from libc.stdint cimport uint64_t, int64_t
 from libcpp.vector cimport vector
 cimport cpp_primesieve
 
-cpdef vector[uint64_t] generate_primes(uint64_t a, uint64_t b = 0) except +:
+cpdef vector[uint64_t] primes(uint64_t a, uint64_t b = 0) except +:
     """Generate a list of primes"""
     cdef vector[uint64_t] primes
     if b == 0:
@@ -10,93 +10,48 @@ cpdef vector[uint64_t] generate_primes(uint64_t a, uint64_t b = 0) except +:
     cpp_primesieve.generate_primes[uint64_t](a, b, &primes)
     return primes
 
-cpdef vector[uint64_t] generate_n_primes(uint64_t n, uint64_t start = 0) except +:
-    """List the first n primes"""
+cpdef vector[uint64_t] n_primes(uint64_t n, uint64_t start = 0) except +:
+    """List the first n primes >= start"""
     cdef vector[uint64_t] primes
     cpp_primesieve.generate_n_primes[uint64_t](n, start, &primes)
     return primes
 
 cpdef uint64_t nth_prime(int64_t n, uint64_t start = 0) except +:
-    """Find the nth prime after start"""
-    return cpp_primesieve.nth_prime(n, start)
-
-cpdef uint64_t parallel_nth_prime(int64_t n, uint64_t start = 0) except +:
-    """Find the nth prime after start using multi-threading"""
+    """Find the nth prime > start"""
     return cpp_primesieve.parallel_nth_prime(n, start)
 
 cpdef uint64_t count_primes(uint64_t a, uint64_t b = 0) except +:
     """Count prime numbers"""
     if b == 0:
         (a,b) = (0,a)
-    return cpp_primesieve.count_primes(a, b)
- 
-cpdef uint64_t count_twins(uint64_t a, uint64_t b = 0) except +:
-    """Count twin primes"""
-    if b == 0:
-        (a,b) = (0,a)
-    return cpp_primesieve.count_twins(a, b)
- 
-cpdef uint64_t count_triplets(uint64_t a, uint64_t b = 0) except +:
-    """Count prime triplets"""
-    if b == 0:
-        (a,b) = (0,a)
-    return cpp_primesieve.count_triplets(a, b)
-
-cpdef uint64_t count_quadruplets(uint64_t a, uint64_t b = 0) except +:
-    """Count prime quadruplets"""
-    if b == 0:
-        (a,b) = (0,a)
-    return cpp_primesieve.count_quadruplets(a, b)
-
-
-cpdef uint64_t count_quintuplets(uint64_t a, uint64_t b = 0) except +:
-    """Count prime quintuplets"""
-    if b == 0:
-        (a,b) = (0,a)
-    return cpp_primesieve.count_quintuplets(a, b)
-
-cpdef uint64_t count_sextuplets(uint64_t a, uint64_t b = 0) except +:
-    """Count prime sextuplets"""
-    if b == 0:
-        (a,b) = (0,a)
-    return cpp_primesieve.count_sextuplets(a, b)
-
-
-cpdef uint64_t parallel_count_primes(uint64_t a, uint64_t b = 0) except +:
-    """Count prime numbers using multi-threading"""
-    if b == 0:
-        (a,b) = (0,a)
     return cpp_primesieve.parallel_count_primes(a, b)
  
-cpdef uint64_t parallel_count_twins(uint64_t a, uint64_t b = 0) except +:
-    """Count twin primes using multi-threading"""
+cpdef uint64_t count_twins(uint64_t a, uint64_t b = 0) except +:
+    """Count twin primes """
     if b == 0:
         (a,b) = (0,a)
     return cpp_primesieve.parallel_count_twins(a, b)
 
- 
-cpdef uint64_t parallel_count_triplets(uint64_t a, uint64_t b = 0) except +:
-    """Count prime triplets using multi-threading"""
+cpdef uint64_t count_triplets(uint64_t a, uint64_t b = 0) except +:
+    """Count prime triplets """
     if b == 0:
         (a,b) = (0,a)
     return cpp_primesieve.parallel_count_triplets(a, b)
 
-
-cpdef uint64_t parallel_count_quadruplets(uint64_t a, uint64_t b = 0) except +:
-    """Count prime quadruplets using multi-threading"""
+cpdef uint64_t count_quadruplets(uint64_t a, uint64_t b = 0) except +:
+    """Count prime quadruplets """
     if b == 0:
         (a,b) = (0,a)
     return cpp_primesieve.parallel_count_quadruplets(a, b)
 
-cpdef uint64_t parallel_count_quintuplets(uint64_t a, uint64_t b = 0) except +:
-    """Count prime quintuplets using multi-threading"""
+cpdef uint64_t count_quintuplets(uint64_t a, uint64_t b = 0) except +:
+    """Count prime quintuplets """
     if b == 0:
         (a,b) = (0,a)
     return cpp_primesieve.parallel_count_quintuplets(a, b)
 
-
-cpdef uint64_t parallel_count_sextuplets(uint64_t a, uint64_t b = 0) except +:
-    """Count prime sextuplets using multi-threading"""
+cpdef uint64_t count_sextuplets(uint64_t a, uint64_t b = 0) except +:
+    """Count prime sextuplets """
     if b == 0:
         (a,b) = (0,a)
     return cpp_primesieve.parallel_count_sextuplets(a, b)
@@ -113,20 +68,17 @@ cpdef void print_twins(uint64_t a, uint64_t b = 0) except +:
         (a,b) = (0,a)
     cpp_primesieve.print_twins(a, b)
 
- 
 cpdef void print_triplets(uint64_t a, uint64_t b = 0) except +:
     """Print prime triplets to stdout"""
     if b == 0:
         (a,b) = (0,a)
     cpp_primesieve.print_triplets(a, b)
 
-
 cpdef void print_quadruplets(uint64_t a, uint64_t b = 0) except +:
     """Print prime quadruplets to stdout"""
     if b == 0:
         (a,b) = (0,a)
     cpp_primesieve.print_quadruplets(a, b)
-
 
 cpdef void print_quintuplets(uint64_t a, uint64_t b = 0) except +:
     """Print prime quintuplets to stdout"""
@@ -140,6 +92,13 @@ cpdef void print_sextuplets(uint64_t a, uint64_t b = 0) except +:
         (a,b) = (0,a)
     cpp_primesieve.print_sextuplets(a, b)
 
+cpdef int get_num_threads() except +:
+    """Get the currently set number of threads"""
+    return cpp_primesieve.get_num_threads()
+
+cpdef void set_num_threads(int threads) except +:
+    """Set the number of threads for sieving"""
+    cpp_primesieve.set_num_threads(threads)
 
 cdef class Iterator:
     cdef cpp_primesieve.iterator _iterator
@@ -149,5 +108,5 @@ cdef class Iterator:
         self._iterator.skipto(start, stop_hint)
     cpdef uint64_t next_prime(self) except +:
         return self._iterator.next_prime()
-    cpdef uint64_t previous_prime(self) except +:
+    cpdef uint64_t prev_prime(self) except +:
         return self._iterator.previous_prime()
