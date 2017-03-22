@@ -24,7 +24,9 @@ I enjoy algorithm problems such as those in
 theory. It's important (and fun) to write your own prime finding code
 once, but it's also useful to have a fast, reliable library.
 
-Two of my favourite problems: Google Code Jam [*Expensive Dinner*](https://code.google.com/codejam/contest/dashboard?c=1150486#s=p2) and Project Euler [Problem 500](https://projecteuler.net/problem=500)
+Two of my favourite problems: Google Code Jam
+[Expensive Dinner](https://code.google.com/codejam/contest/dashboard?c=1150486#s=p2)
+and Project Euler [Problem 500](https://projecteuler.net/problem=500)
 
 Prerequisites
 ------------
@@ -46,9 +48,6 @@ pip install primesieve
 
 Usage examples
 --------------
-
-The syntax of the primesieve Python bindings is nearly identical to the
-syntax of the primesieve C++ library.
 
 ```Python
 >>> from primesieve import *
