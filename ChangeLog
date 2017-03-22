@@ -3,6 +3,7 @@
   Version 1.3.0 released.
 
   * New Python API.
+  * Parallel C++ compilation.
   * Fix OpenMP compilation.
   * Simplify setup.py.
   * Multi-threaded by default for counting & nth prime.
