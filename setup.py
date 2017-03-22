@@ -25,7 +25,7 @@ extra_link_args = []
 # --------------------- Get OpenMP compiler flag --------------------
 
 # If this C test program compiles the compiler supports OpenMP
-# http://stackoverflow.com/questions/16549893/programatically-testing-for-openmp-support-from-a-python-setup-script
+# http://stackoverflow.com/a/16555458/363778
 omp_test = \
     r"""
     #include <omp.h>
