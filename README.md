@@ -157,3 +157,23 @@ pip install . --upgrade
 # Run tests
 py.test
 ```
+
+#### Mac OS X and OpenMP
+
+It isn't that hard to get parallel process support working on MacOSX. You'll need to install the clang compiler that supports OpenMP. Instead of the pip install step above, do the following steps.
+
+```bash
+
+# get the clang compiler with OpenMP support 
+brew install clang-omp
+
+# build the package using clang compilers with OpenMP support
+CXX=/usr/local/bin/clang-omp CC=/usr/local/bin/clang-omp pip install . --upgrade
+
+# test the primesieve library uses multiple cores.
+# run this and check Activity Monitor for multiple threads
+python -c 'import primesieve as ps; n=ps.parallel_count_primes(10**10); print(n)'
+455052511
+```
+
+
