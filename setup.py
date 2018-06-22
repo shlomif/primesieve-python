@@ -40,7 +40,7 @@ omp_test = \
     """
 
 def get_compiler_openmp_flag():
-    openmp_flag = ''
+    openmp_flags = []
     tmpdir = tempfile.mkdtemp()
     curdir = os.getcwd()
     os.chdir(tmpdir)
@@ -65,24 +65,25 @@ def get_compiler_openmp_flag():
         except:
             pass
         if exit_code == 0:
-            openmp_flag = '-fopenmp'
+            openmp_flags = ['-fopenmp']
         else:
             try:
                 exit_code = subprocess.call([cc, '/openmp', filename], stdout=fnull, stderr=fnull)
             except:
                 pass
             if exit_code == 0:
-                openmp_flag = '/openmp'
+                openmp_flags = ['/openmp']
 
     #clean up
     os.chdir(curdir)
     shutil.rmtree(tmpdir)
-    return openmp_flag
+    return openmp_flags
 
-openmp_flag = get_compiler_openmp_flag()
-print('get_compiler_openmp_flag(): ' + openmp_flag)
-extra_compile_args.append(openmp_flag)
-extra_link_args.append(openmp_flag)
+openmp_flags = get_compiler_openmp_flag()
+print('get_compiler_openmp_flag(): ' + ' '.join(openmp_flags))
+for flag in openmp_flags:
+    extra_compile_args.append(flag)
+    extra_link_args.append(flag)
 
 # ------------------ Check if NumPy is installed --------------------
 
