@@ -40,7 +40,7 @@ omp_test = \
     """
 
 def get_compiler_openmp_flag():
-    openmp_flags = []
+    openmp_flag = ''
     tmpdir = tempfile.mkdtemp()
     curdir = os.getcwd()
     os.chdir(tmpdir)
@@ -65,25 +65,26 @@ def get_compiler_openmp_flag():
         except:
             pass
         if exit_code == 0:
-            openmp_flags = ['-fopenmp']
+            openmp_flag = '-fopenmp'
         else:
             try:
                 exit_code = subprocess.call([cc, '/openmp', filename], stdout=fnull, stderr=fnull)
             except:
                 pass
             if exit_code == 0:
-                openmp_flags = ['/openmp']
+                openmp_flag = '/openmp'
 
     #clean up
     os.chdir(curdir)
     shutil.rmtree(tmpdir)
-    return openmp_flags
+    return openmp_flag
 
-openmp_flags = get_compiler_openmp_flag()
-print('get_compiler_openmp_flag(): ' + ' '.join(openmp_flags))
-for flag in openmp_flags:
-    extra_compile_args.append(flag)
-    extra_link_args.append(flag)
+openmp_flag = get_compiler_openmp_flag()
+
+if openmp_flag:
+    print('get_compiler_openmp_flag(): ' + openmp_flag)
+    extra_compile_args.append(openmp_flag)
+    extra_link_args.append(openmp_flag)
 
 # ------------------ Check if NumPy is installed --------------------
 
@@ -183,7 +184,7 @@ class build_ext_subclass(build_ext):
 
 setup(
     name = 'primesieve',
-    version = '1.3.0',
+    version = '1.4.0',
     url = 'https://github.com/hickford/primesieve-python',
     description = 'Fast prime number generator. Python bindings for primesieve C/C++ library',
     maintainer = 'Kim Walisch',
@@ -196,9 +197,9 @@ setup(
     'Programming Language :: Python :: 2',
     'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.3',
     'Programming Language :: Python :: 3.4',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
     ],
 )
