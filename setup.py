@@ -80,9 +80,11 @@ def get_compiler_openmp_flag():
     return openmp_flag
 
 openmp_flag = get_compiler_openmp_flag()
-print('get_compiler_openmp_flag(): ' + openmp_flag)
-extra_compile_args.append(openmp_flag)
-extra_link_args.append(openmp_flag)
+
+if openmp_flag:
+    print('get_compiler_openmp_flag(): ' + openmp_flag)
+    extra_compile_args.append(openmp_flag)
+    extra_link_args.append(openmp_flag)
 
 # ------------------ Check if NumPy is installed --------------------
 
@@ -182,7 +184,7 @@ class build_ext_subclass(build_ext):
 
 setup(
     name = 'primesieve',
-    version = '1.3.0',
+    version = '1.4.0',
     url = 'https://github.com/hickford/primesieve-python',
     description = 'Fast prime number generator. Python bindings for primesieve C/C++ library',
     maintainer = 'Kim Walisch',
@@ -195,9 +197,9 @@ setup(
     'Programming Language :: Python :: 2',
     'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.3',
     'Programming Language :: Python :: 3.4',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
     ],
 )
