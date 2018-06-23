@@ -93,8 +93,10 @@ install:
   # take care to fetch C++ library
   - "git submodule update --init --recursive" 
 
+-build: false  # Not a C# project, build stuff at the test step instead.
+
 build_script:
-  - "%CMD_IN_ENV% %PYTHON%/Scripts/pip install ."
+  - "%CMD_IN_ENV% %PYTHON%/Scripts/pip install . --upgrade"
 
 test_script:
   - "%CMD_IN_ENV% %PYTHON%/Scripts/py.test"
