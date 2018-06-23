@@ -16,19 +16,6 @@ Generates primes orders of magnitude faster than any pure Python code!
 * Multi-threaded for counting primes and finding the nth prime
 * NumPy support
 
-Motivation
-----------
-
-I enjoy algorithm problems such as those in
-[Google Code Jam](https://code.google.com/codejam) and
-[Project Euler](https://projecteuler.net/). Many pertain to number
-theory. It's important (and fun) to write your own prime finding code
-once, but it's also useful to have a fast, reliable library.
-
-Two of my favourite problems: Google Code Jam
-[Expensive Dinner](https://code.google.com/codejam/contest/dashboard?c=1150486#s=p2)
-and Project Euler [Problem 500](https://projecteuler.net/problem=500)
-
 Prerequisites
 ------------
 You need to have installed a C++ compiler on all OSes except Windows.
