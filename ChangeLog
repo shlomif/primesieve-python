@@ -4,6 +4,7 @@
 
   * Fix OpenMP compilation error.
   * Support Python 3.7.
+  * Drop Python 3.3 support (not supported by NumPy).
   * Add Fedora installation instructions.
   * Use README.md as PyPI description.
 
