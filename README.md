@@ -1,8 +1,8 @@
-primesieve-python
-=================
+# primesieve-python
+
 [![Build Status](https://travis-ci.org/hickford/primesieve-python.svg?branch=master)](https://travis-ci.org/hickford/primesieve-python) [![Build status](https://ci.appveyor.com/api/projects/status/4chekgdj7bqx4ivt/branch/master?svg=true)](https://ci.appveyor.com/project/hickford/primesieve-python/branch/master) [![PyPI](https://img.shields.io/pypi/v/primesieve.svg)](https://pypi.python.org/pypi/primesieve) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/hickford/primesieve-python/blob/master/LICENSE)
 
-Python bindings for the [primesieve](http://primesieve.org/) C++
+Python bindings for the [primesieve](https://primesieve.org) C++
 library.
 
 Generates primes orders of magnitude faster than any pure Python code!
@@ -16,8 +16,8 @@ Generates primes orders of magnitude faster than any pure Python code!
 * Multi-threaded for counting primes and finding the nth prime
 * NumPy support
 
-Prerequisites
-------------
+# Prerequisites
+
 You need to have installed a C++ compiler on all OSes except Windows.
 
 ```bash
@@ -31,14 +31,13 @@ sudo dnf install gcc-c++ python-devel
 xcode-select --install
 ```
 
-Installation
-------------
+# Installation
+
 ```
 pip install primesieve
 ````
 
-Usage examples
---------------
+# Usage examples
 
 ```Python
 >>> from primesieve import *
@@ -70,8 +69,7 @@ Usage examples
 
 Here is a [list of all available functions](primesieve/_primesieve.pyx).
 
-Iterating over primes
----------------------
+# Iterating over primes
 
 Instead of generating a large list of primes and then do something
 with the primes it is also possible to simply iterate over the primes
@@ -98,8 +96,8 @@ while prime > 0:
     prime = it.prev_prime()
 ```
 
-NumPy support
--------------
+# NumPy support
+
 Using the ```primesieve.numpy``` module you can generate an array of
 primes using **native C++ performance!**
 
@@ -127,8 +125,7 @@ array([  2,   3,   5,   7,  11,  13,  17,  19,  23,  29,  31,  37,  41,
        479, 487, 491, 499, 503, 509, 521, 523, 541])
 ```
 
-Development
------------
+# Development
 
 You need to have installed a C++ compiler, see [Prerequisites](#prerequisites).
 
