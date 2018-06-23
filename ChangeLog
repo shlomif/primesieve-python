@@ -1,3 +1,12 @@
+2018-23-06 Kim Walisch  <kim.walisch@gmail.com>
+
+  Version 1.4.0 released.
+
+  * Fix OpenMP compilation error.
+  * Support Python 3.7.
+  * Add Fedora installation instructions.
+  * Use README.md as PyPI description.
+
 2017-22-03 Kim Walisch  <kim.walisch@gmail.com>
 
   Version 1.3.0 released.
