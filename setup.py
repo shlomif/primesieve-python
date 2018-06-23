@@ -187,6 +187,7 @@ setup(
     version = '1.4.0',
     url = 'https://github.com/hickford/primesieve-python',
     description = 'Fast prime number generator. Python bindings for primesieve C/C++ library',
+    long_description=read('README.md'),
     maintainer = 'Kim Walisch',
     maintainer_email = 'kim.walisch@gmail.com',
     license = 'MIT',
