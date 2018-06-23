@@ -27,7 +27,7 @@ sudo apt install g++ python-dev
 # Fedora
 sudo dnf install gcc-c++ python-devel
 
-# macOS: first install Xcode using App Store
+# macOS
 xcode-select --install
 ```
 
