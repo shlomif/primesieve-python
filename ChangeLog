@@ -1,6 +1,6 @@
 2018-23-06 Kim Walisch  <kim.walisch@gmail.com>
 
-  Version 1.4.1 released.
+  Version 1.4.2 released.
 
   * Fix OpenMP compilation error.
   * Support Python 3.7.
