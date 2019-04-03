@@ -2,8 +2,8 @@
 
 [![Build Status](https://travis-ci.org/hickford/primesieve-python.svg?branch=master)](https://travis-ci.org/hickford/primesieve-python) [![Build status](https://ci.appveyor.com/api/projects/status/4chekgdj7bqx4ivt/branch/master?svg=true)](https://ci.appveyor.com/project/hickford/primesieve-python/branch/master) [![PyPI](https://img.shields.io/pypi/v/primesieve.svg)](https://pypi.python.org/pypi/primesieve) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/hickford/primesieve-python/blob/master/LICENSE)
 
-Python bindings for the [primesieve](https://primesieve.org) C++
-library.
+Python bindings for the [primesieve](https://github.com/kimwalisch/primesieve)
+C++ library.
 
 Generates primes orders of magnitude faster than any pure Python code!
 
