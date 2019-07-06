@@ -1,6 +1,5 @@
-# cython: language_level=3
 from libc.stdint cimport int64_t
-cimport primesieve.numpy.cpp_numpy as cpp_numpy
+cimport cpp_numpy
 import numpy as np
 cimport numpy as np
 
