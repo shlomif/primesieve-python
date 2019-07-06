@@ -38,6 +38,7 @@ cpdef primes(int64_t a, int64_t b = 0):
         raise RuntimeError("Failed generating primes, most likely due to insufficient memory.")
 
     primes = c_to_array_array(c_primes, size)
+    cpp_numpy.primesieve_free(c_primes)
     return primes
 
 cpdef n_primes(int64_t n, int64_t start = 0):
@@ -55,4 +56,5 @@ cpdef n_primes(int64_t n, int64_t start = 0):
         raise RuntimeError("Failed generating primes, most likely due to insufficient memory.")
 
     primes = c_to_array_array(c_primes, n)
+    cpp_numpy.primesieve_free(c_primes)
     return primes
