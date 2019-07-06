@@ -2,6 +2,7 @@
 cimport primesieve.array.cpp_numpy as cpp_numpy
 from libc.stdint cimport uint64_t, int64_t
 import array
+import sys
 
 cdef extern from "primesieve.h":
     cpdef enum:
@@ -13,7 +14,10 @@ cdef extern from 'errno.h':
 cdef c_to_array_array(void* ptr, size_t N):
     """Bind C array allocated using malloc to python array.array"""
     arr = array.array('L', [])
-    arr.frombytes((<char*>ptr)[:(N*sizeof(uint64_t))])
+    if sys.version >= (3,):
+        arr.frombytes((<char*>ptr)[:(N*sizeof(uint64_t))])
+    else:
+        arr.fromstring((<char*>ptr)[:(N*sizeof(uint64_t))])
     return arr
 
 cpdef primes(int64_t a, int64_t b = 0):
