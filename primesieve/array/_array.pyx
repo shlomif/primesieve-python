@@ -1,4 +1,5 @@
-cimport cpp_numpy
+# cython: language_level=3
+cimport primesieve.array.cpp_numpy as cpp_numpy
 from libc.stdint cimport uint64_t, int64_t
 from libc.string cimport memcpy
 from cpython cimport array
