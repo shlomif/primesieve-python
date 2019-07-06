@@ -14,7 +14,7 @@ cdef extern from 'errno.h':
 cdef c_to_array_array(void* ptr, size_t N):
     """Bind C array allocated using malloc to python array.array"""
     arr = array.array('L', [])
-    if sys.version >= (3,):
+    if sys.version_info >= (3,):
         arr.frombytes((<char*>ptr)[:(N*sizeof(uint64_t))])
     else:
         arr.fromstring((<char*>ptr)[:(N*sizeof(uint64_t))])
