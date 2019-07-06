@@ -1,7 +1,6 @@
 # cython: language_level=3
 cimport primesieve.array.cpp_numpy as cpp_numpy
 from libc.stdint cimport uint64_t, int64_t
-from libc.string cimport memcpy
 from cpython cimport array
 import array
 
@@ -15,8 +14,7 @@ cdef extern from 'errno.h':
 cdef c_to_numpy_array(void* ptr, size_t N):
     """Bind C array allocated using malloc to NumPy ndarray"""
     cdef array.array arr = array.array('L', [])
-    array.resize(arr, N)
-    memcpy(arr.data.as_voidptr, ptr, N*sizeof(uint64_t))
+    array.extend_buffer(arr, <char*>ptr, N)
     return arr
 
 cpdef array.array primes(int64_t a, int64_t b = 0):
