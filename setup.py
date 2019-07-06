@@ -105,7 +105,7 @@ def can_import(module_name):
 
 def is_Numpy_installed():
     if is_pypy():
-        return True
+        return False
     return bool(can_import("numpy"))
 
 # --------------------- primesieve module ---------------------------
