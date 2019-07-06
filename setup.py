@@ -105,7 +105,7 @@ def can_import(module_name):
 
 def is_Numpy_installed():
     if is_pypy():
-        return False
+        return True
     return bool(can_import("numpy"))
 
 # --------------------- primesieve module ---------------------------
@@ -113,6 +113,15 @@ def is_Numpy_installed():
 extensions.append(Extension(
     "primesieve._primesieve",
     ["primesieve/_primesieve." + module_file_ext] + glob("lib/primesieve/src/primesieve/*.cpp"),
+    include_dirs = ["lib/primesieve/include"],
+    extra_compile_args = extra_compile_args,
+    extra_link_args = extra_link_args,
+    language = "c++"
+    ))
+
+extensions.append(Extension(
+    "primesieve.array._array",
+    ["primesieve/array/_array." + module_file_ext] + glob("lib/primesieve/src/primesieve/*.cpp"),
     include_dirs = ["lib/primesieve/include"],
     extra_compile_args = extra_compile_args,
     extra_link_args = extra_link_args,
@@ -192,7 +201,7 @@ setup(
     maintainer = 'Kim Walisch',
     maintainer_email = 'kim.walisch@gmail.com',
     license = 'MIT',
-    packages = ['primesieve', 'primesieve.numpy'],
+    packages = ['primesieve', 'primesieve.array', 'primesieve.numpy'],
     ext_modules = ext_modules,
     cmdclass = {'build_ext': build_ext_subclass},
     classifiers = [
