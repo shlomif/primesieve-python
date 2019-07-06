@@ -1,7 +1,6 @@
 # cython: language_level=3
 cimport primesieve.array.cpp_numpy as cpp_numpy
 from libc.stdint cimport uint64_t, int64_t
-from cpython cimport array
 import array
 
 cdef extern from "primesieve.h":
@@ -13,11 +12,11 @@ cdef extern from 'errno.h':
 
 cdef c_to_numpy_array(void* ptr, size_t N):
     """Bind C array allocated using malloc to NumPy ndarray"""
-    cdef array.array arr = array.array('L', [])
-    array.extend_buffer(arr, <char*>ptr, N)
+    arr = array.array('L', [])
+    arr.frombytes((<char*>ptr)[:(N*sizeof(uint64_t))])
     return arr
 
-cpdef array.array primes(int64_t a, int64_t b = 0):
+cpdef primes(int64_t a, int64_t b = 0):
     """Generate a numpy primes array"""
     a = max(a, 0)
     b = max(b, 0)
@@ -37,7 +36,7 @@ cpdef array.array primes(int64_t a, int64_t b = 0):
     primes = c_to_numpy_array(c_primes, size)
     return primes
 
-cpdef array.array n_primes(int64_t n, int64_t start = 0):
+cpdef n_primes(int64_t n, int64_t start = 0):
     """Generate a numpy array with the next n primes"""
     n = max(n, 0)
     start = max(start, 0)
