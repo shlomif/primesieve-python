@@ -8,17 +8,22 @@ cdef extern from "primesieve.h":
     cpdef enum:
         INT64_PRIMES
         ULONG_PRIMES
+        ULONGLONG_PRIMES
 
 cdef extern from 'errno.h':
     int errno
 
+cdef int is_py3 = sys.version_info >= (3,)
+arr_type = ("Q" if is_py3 else "L")
+cdef size_t item_size = (sizeof(unsigned long long) if is_py3 else sizeof(unsigned long))
+cdef int primes_type = (ULONGLONG_PRIMES if is_py3 else ULONG_PRIMES)
 cdef c_to_array_array(void* ptr, size_t N):
     """Bind C array allocated using malloc to python array.array"""
-    arr = array.array('L', [])
-    if sys.version_info >= (3,):
-        arr.frombytes((<char*>ptr)[:(N*sizeof(unsigned long))])
+    arr = array.array(arr_type, [])
+    if is_py3:
+        arr.frombytes((<char*>ptr)[:(N*item_size)])
     else:
-        arr.fromstring((<char*>ptr)[:(N*sizeof(unsigned long))])
+        arr.fromstring((<char*>ptr)[:(N*item_size)])
     return arr
 
 cpdef primes(int64_t a, int64_t b = 0):
@@ -33,7 +38,7 @@ cpdef primes(int64_t a, int64_t b = 0):
     errno = 0
 
     cdef size_t size = 0
-    cdef void* c_primes = cpp_numpy.primesieve_generate_primes(a, b, &size, ULONG_PRIMES)
+    cdef void* c_primes = cpp_numpy.primesieve_generate_primes(a, b, &size, primes_type)
 
     if errno != 0:
         raise RuntimeError("Failed generating primes, most likely due to insufficient memory.")
@@ -51,7 +56,7 @@ cpdef n_primes(int64_t n, int64_t start = 0):
     global errno
     errno = 0
 
-    cdef void* c_primes = cpp_numpy.primesieve_generate_n_primes(n, start, ULONG_PRIMES)
+    cdef void* c_primes = cpp_numpy.primesieve_generate_n_primes(n, start, primes_type)
 
     if errno != 0:
         raise RuntimeError("Failed generating primes, most likely due to insufficient memory.")
