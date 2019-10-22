@@ -184,7 +184,7 @@ class build_ext_subclass(build_ext):
 
 setup(
     name = 'primesieve',
-    version = '1.4.4',
+    version = '1.4.5',
     url = 'https://github.com/hickford/primesieve-python',
     description = 'Fast prime number generator. Python bindings for primesieve C/C++ library',
     long_description = open('README.md',"rb").read().decode('utf8'),
@@ -199,9 +199,9 @@ setup(
     'Programming Language :: Python :: 2',
     'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.4',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
     ],
 )
