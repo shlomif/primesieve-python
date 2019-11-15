@@ -121,6 +121,15 @@ extensions.append(Extension(
     language = "c++"
     ))
 
+extensions.append(Extension(
+    "primesieve.array._array",
+    ["primesieve/array/_array." + module_file_ext] + glob("lib/primesieve/src/primesieve/*.cpp"),
+    include_dirs = ["lib/primesieve/include"],
+    extra_compile_args = extra_compile_args,
+    extra_link_args = extra_link_args,
+    language = "c++"
+    ))
+
 # --------------------- primesieve.numpy module ---------------------
 
 if is_Numpy_installed():
@@ -196,7 +205,7 @@ setup(
     maintainer = 'Kim Walisch',
     maintainer_email = 'kim.walisch@gmail.com',
     license = 'MIT',
-    packages = ['primesieve', 'primesieve.numpy'],
+    packages = ['primesieve', 'primesieve.array', 'primesieve.numpy'],
     ext_modules = ext_modules,
     cmdclass = {'build_ext': build_ext_subclass},
     classifiers = [
