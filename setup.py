@@ -33,7 +33,7 @@ omp_test = \
     int main()
     {
         #pragma omp parallel
-        printf("Hello from thread %d, nthreads %d\n", 
+        printf("Hello from thread %d, nthreads %d\n",
                 omp_get_thread_num(), omp_get_num_threads());
         return 0;
     }
@@ -112,7 +112,9 @@ def is_Numpy_installed():
 
 extensions.append(Extension(
     "primesieve._primesieve",
-    ["primesieve/_primesieve." + module_file_ext] + glob("lib/primesieve/src/primesieve/*.cpp"),
+    ["primesieve/_primesieve." + module_file_ext] +
+    glob("lib/primesieve/src/*.cpp") +
+    glob("lib/primesieve/src/primesieve/*.cpp"),
     include_dirs = ["lib/primesieve/include"],
     extra_compile_args = extra_compile_args,
     extra_link_args = extra_link_args,
@@ -125,7 +127,9 @@ if is_Numpy_installed():
     import numpy
     extensions.append(Extension(
         "primesieve.numpy._numpy",
-        ["primesieve/numpy/_numpy." + module_file_ext] + glob("lib/primesieve/src/primesieve/*.cpp"),
+        ["primesieve/numpy/_numpy." + module_file_ext] +
+        glob("lib/primesieve/src/*.cpp") +
+        glob("lib/primesieve/src/primesieve/*.cpp"),
         include_dirs = ["lib/primesieve/include", numpy.get_include()],
         extra_compile_args = extra_compile_args,
         extra_link_args = extra_link_args,
@@ -135,14 +139,14 @@ if is_Numpy_installed():
 # --------------------- Parallel build -------------------------------
 # http://stackoverflow.com/a/13176803/363778
 
-def parallel_cpp_compile(self, 
-                         sources, 
-                         output_dir=None, 
-                         macros=None, 
-                         include_dirs=None, 
-                         debug=0, 
-                         extra_preargs=None, 
-                         extra_postargs=None, 
+def parallel_cpp_compile(self,
+                         sources,
+                         output_dir=None,
+                         macros=None,
+                         include_dirs=None,
+                         debug=0,
+                         extra_preargs=None,
+                         extra_postargs=None,
                          depends=None):
 
     macros, objects, extra_postargs, pp_opts, build = \
@@ -184,7 +188,7 @@ class build_ext_subclass(build_ext):
 
 setup(
     name = 'primesieve',
-    version = '1.4.5',
+    version = '1.4.6',
     url = 'https://github.com/hickford/primesieve-python',
     description = 'Fast prime number generator. Python bindings for primesieve C/C++ library',
     long_description = open('README.md',"rb").read().decode('utf8'),
