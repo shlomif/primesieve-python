@@ -123,7 +123,9 @@ extensions.append(Extension(
 
 extensions.append(Extension(
     "primesieve.array._array",
-    ["primesieve/array/_array." + module_file_ext] + glob("lib/primesieve/src/primesieve/*.cpp"),
+    ["primesieve/array/_array." + module_file_ext] +
+    glob("lib/primesieve/src/*.cpp") +
+    glob("lib/primesieve/src/primesieve/*.cpp"),
     include_dirs = ["lib/primesieve/include"],
     extra_compile_args = extra_compile_args,
     extra_link_args = extra_link_args,

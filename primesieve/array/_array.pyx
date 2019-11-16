@@ -1,8 +1,10 @@
 # cython: language_level=3
-cimport primesieve.array.cpp_array as cpp_array
-from libc.stdint cimport uint64_t, int64_t
+
 import array
+from libc.stdint cimport uint64_t, int64_t
 import sys
+
+cimport cpp_array
 
 cdef extern from "primesieve.h":
     cpdef enum:

@@ -1,6 +1,9 @@
+# cython: language_level=3
+
 from libc.stdint cimport uint64_t, int64_t
 from libcpp.string cimport string
 from libcpp.vector cimport vector
+
 cimport cpp_primesieve
 
 cpdef vector[uint64_t] primes(uint64_t a, uint64_t b = 0) except +:
