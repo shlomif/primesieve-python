@@ -4,7 +4,7 @@ import array
 from libc.stdint cimport uint64_t, int64_t
 import sys
 
-cimport cpp_array
+from primesieve.array cimport cpp_array
 
 cdef extern from "primesieve.h":
     cpdef enum:

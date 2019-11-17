@@ -21,6 +21,7 @@ else:
 extensions = []
 extra_compile_args = []
 extra_link_args = []
+include_dirs = []
 
 # --------------------- Get OpenMP compiler flag --------------------
 
@@ -132,6 +133,8 @@ extensions.append(Extension(
     language = "c++"
     ))
 
+include_dirs.append("lib/primesieve/include")
+
 # --------------------- primesieve.numpy module ---------------------
 
 if is_Numpy_installed():
@@ -146,6 +149,8 @@ if is_Numpy_installed():
         extra_link_args = extra_link_args,
         language = "c++"
         ))
+
+include_dirs.append(numpy.get_include())
 
 # --------------------- Parallel build -------------------------------
 # http://stackoverflow.com/a/13176803/363778
@@ -179,7 +184,7 @@ distutils.ccompiler.CCompiler.compile = parallel_cpp_compile
 # --------------------- Build ---------------------------------------
 
 if module_file_ext == 'pyx':
-    ext_modules = cythonize(extensions)
+    ext_modules = cythonize(extensions, include_dirs)
 else:
     ext_modules = extensions
 

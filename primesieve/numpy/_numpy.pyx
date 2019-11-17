@@ -5,7 +5,7 @@ from libc.stdint cimport int64_t
 import numpy as np
 cimport numpy as np
 
-cimport cpp_numpy
+from primesieve.numpy cimport cpp_numpy
 
 np.import_array()
 
