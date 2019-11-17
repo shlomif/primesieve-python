@@ -184,7 +184,7 @@ distutils.ccompiler.CCompiler.compile = parallel_cpp_compile
 # --------------------- Build ---------------------------------------
 
 if module_file_ext == 'pyx':
-    ext_modules = cythonize(extensions, include_dirs)
+    ext_modules = cythonize(extensions, include_path=include_dirs)
 else:
     ext_modules = extensions
 
