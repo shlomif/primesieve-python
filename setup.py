@@ -24,7 +24,7 @@ else:
 # --------------------- Initialization ------------------------------
 
 extensions = []
-extra_compile_args = []
+extra_compile_args = ['-std=c++11']
 extra_link_args = []
 include_dirs = []
 
