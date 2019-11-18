@@ -7,6 +7,7 @@ import os
 import platform
 import shutil
 import subprocess
+import sys
 import tempfile
 
 from setuptools import Extension, setup
@@ -23,7 +24,9 @@ else:
 # --------------------- Initialization ------------------------------
 
 extensions = []
-extra_compile_args = ['-std=c++11']
+extra_compile_args = []
+if not sys.platform.startswith('win'):
+    extra_compile_args.append('-std=c++11')
 extra_link_args = []
 include_dirs = []
 
@@ -204,7 +207,7 @@ def parallel_cpp_compile(self,
     return objects
 
 
-distutils.ccompiler.CCompiler.compile = parallel_cpp_compile  # type: ignore
+# distutils.ccompiler.CCompiler.compile = parallel_cpp_compile  # type: ignore
 
 # --------------------- Build ---------------------------------------
 
