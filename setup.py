@@ -4,7 +4,6 @@ import distutils.ccompiler
 from distutils.command.build_ext import build_ext  # type: ignore
 from glob import glob
 import os
-from pathlib import Path
 import platform
 import shutil
 import subprocess
@@ -238,7 +237,7 @@ setup(
     name='primesieve',
     version='1.4.6',
     url='https://github.com/hickford/primesieve-python',
-    long_description=Path('README.md').read_text(),
+    long_description=open('README.md', "rb").read().decode('utf8'),
     long_description_content_type='text/markdown',
     maintainer='Kim Walisch',
     maintainer_email='kim.walisch@gmail.com',
