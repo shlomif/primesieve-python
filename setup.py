@@ -206,8 +206,8 @@ def parallel_cpp_compile(self,
     list(multiprocessing.pool.ThreadPool().imap(_single_compile, objects))
     return objects
 
-
-# distutils.ccompiler.CCompiler.compile = parallel_cpp_compile  # type: ignore
+if not sys.version.startswith('3.6') and not sys.version.startswith('3.7'):
+    distutils.ccompiler.CCompiler.compile = parallel_cpp_compile  # type: ignore
 
 # --------------------- Build ---------------------------------------
 
