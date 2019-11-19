@@ -59,9 +59,9 @@ def use_pthread():
         file.write(pthread_test)
         file.flush()
 
-    try:
+    if "CXX" in os.environ:
         cxx = os.environ['CXX']
-    except KeyError:
+    else:
         cxx = 'c++'
 
     has_pthread = False
