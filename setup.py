@@ -238,7 +238,7 @@ class BuildExtSubclass(build_ext):
 
 setup(
     name='primesieve',
-    version='1.4.6',
+    version='1.5.0',
     url='https://github.com/hickford/primesieve-python',
     long_description=open('README.md', "rb").read().decode('utf8'),
     long_description_content_type='text/markdown',
