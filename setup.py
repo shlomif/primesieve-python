@@ -30,78 +30,73 @@ if not sys.platform.startswith('win'):
 extra_link_args = []
 include_dirs = []
 
-# --------------------- Get OpenMP compiler flag --------------------
+# ------------- Check if compiler supports -pthread -----------------
 
-
-def get_compiler_openmp_flag():
-    """Get OpenMP compiler flag."""
-    # If this C test program compiles the compiler supports OpenMP
-    # http://stackoverflow.com/a/16555458/363778
-    omp_test = \
+def use_pthread():
+    # Simple C++ program which uses std::thread
+    pthread_test = \
         r"""
-        #include <omp.h>
-        #include <stdio.h>
-        int main()
-        {
-            #pragma omp parallel
-            printf("Hello from thread %d, nthreads %d\n",
-                    omp_get_thread_num(), omp_get_num_threads());
+        #include <iostream>
+        #include <thread>
+
+        void task() {
+            std::cout << "Hello, World!" << std::endl;
+        }
+
+        int main() {
+            std::thread t(task);
+            t.join();
             return 0;
         }
         """
 
-    openmp_flag = ''
     tmpdir = tempfile.mkdtemp()
     curdir = os.getcwd()
     os.chdir(tmpdir)
-    filename = r'omp_test.c'
+    filename = r'pthread_test.cpp'
 
     with open(filename, 'w') as file:
-        file.write(omp_test)
+        file.write(pthread_test)
         file.flush()
 
-    try:
-        cc = os.environ['CC']
-    except KeyError:
-        cc = 'cc'
+    if "CXX" in os.environ:
+        cxx = os.environ['CXX']
+    else:
+        cxx = 'c++'
 
-    # Compile omp_test.c program using different OpenMP
-    # compiler flags. If compilation fails continue without
-    # OpenMP support.
+    has_pthread = False
+
     with open(os.devnull, 'w') as fnull:
         exit_code = 1
         try:
+            # 1st compile without -pthread and check if it works
             exit_code = subprocess.call(
-                [cc, '-fopenmp', filename],
+                [cxx, '-std=c++11', filename],
                 stdout=fnull,
                 stderr=fnull)
         except Exception:
             pass
-        if exit_code == 0:
-            openmp_flag = '-fopenmp'
-        else:
+        if exit_code != 0:
             try:
+                # 2nd compile with -pthread and check if it works
                 exit_code = subprocess.call(
-                    [cc, '/openmp', filename],
+                    [cxx, '-std=c++11 -pthread', filename],
                     stdout=fnull,
                     stderr=fnull)
             except Exception:
                 pass
             if exit_code == 0:
-                openmp_flag = '/openmp'
+                has_pthread = True
 
     # clean up
     os.chdir(curdir)
     shutil.rmtree(tmpdir)
-    return openmp_flag
+    return has_pthread
 
-
-openmp_flag = get_compiler_openmp_flag()
-
-if openmp_flag:
-    print('get_compiler_openmp_flag(): ' + openmp_flag)
-    extra_compile_args.append(openmp_flag)
-    extra_link_args.append(openmp_flag)
+if use_pthread():
+    print('Use compiler flag: -pthread')
+    extra_compile_args.append(-pthread)
+    extra_link_args.append(-pthread)
 
 # ------------------ Check if NumPy is installed --------------------
 
