@@ -9,7 +9,8 @@ Linux: [![Circle CI](https://circleci.com/gh/conda-forge/python-primesieve-feeds
 OSX: [![TravisCI](https://travis-ci.org/conda-forge/python-primesieve-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/python-primesieve-feedstock)
 Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/python-primesieve-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/python-primesieve-feedstock/branch/master)
 
-**Summary:**
+
+# Summary
 
 Python bindings for the [primesieve](https://github.com/kimwalisch/primesieve)
 C++ library.
@@ -28,6 +29,7 @@ Generates primes orders of magnitude faster than any pure Python code!
 # Prerequisites
 
 These do not apply if using conda to install.
+
 You need to have installed a C++ compiler on all OSes except Windows.
 
 ```bash
