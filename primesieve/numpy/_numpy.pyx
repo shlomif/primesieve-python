@@ -1,7 +1,11 @@
+# cython: language_level=3
+
 from libc.stdint cimport int64_t
-cimport cpp_numpy
+
 import numpy as np
 cimport numpy as np
+
+from primesieve.numpy cimport cpp_numpy
 
 np.import_array()
 
