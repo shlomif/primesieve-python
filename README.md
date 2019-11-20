@@ -105,7 +105,7 @@ while prime > 0:
 # NumPy support
 
 Using the ```primesieve.numpy``` module you can generate an array of
-primes using **native C++ performance!**
+primes using native C++ performance!
 
 In comparison the ```primesieve``` module generates an array of primes
 about 3 times slower mostly because the conversion of the C primes
