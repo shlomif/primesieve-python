@@ -1,11 +1,15 @@
-2019-19-11 Kim Walisch  <kim.walisch@gmail.com>, @shlomif, @brl0
+2019-20-11 Kim Walisch  <kim.walisch@gmail.com>, @shlomif, @brl0
 
-  Version 1.5.0 released.
+  Version 2.0.0 released.
 
-  * Add array submodule.
+  * Add array support thanks to Shlomi Fish & Brian Larsen.
+    primesieve.primes(n) and primesieve.n_primes(n)
+    now run up to 3 times faster.
+  * Drop Python 2.7 support.
   * Update to latest version of primesieve.
   * Update to Cython language level 3.
   * Minor cleanup to setup, travis, and appveyor.
+  * setup.py: Fix parallel build issue.
 
 2019-22-10 Kim Walisch  <kim.walisch@gmail.com>
 
