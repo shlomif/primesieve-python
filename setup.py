@@ -1,7 +1,6 @@
 """Setup file for primesieve Python bindings."""
 
 import distutils.ccompiler
-from distutils.command.build_ext import build_ext  # type: ignore
 from glob import glob
 import os
 import platform
@@ -162,36 +161,14 @@ if is_numpy_installed():
         ))
 
 # --------------------- Parallel build -------------------------------
-# http://stackoverflow.com/a/13176803/363778
+# https://stackoverflow.com/a/55670555
 
-
-def parallel_cpp_compile(self,
-                         sources,
-                         output_dir=None,
-                         macros=None,
-                         include_dirs=None,
-                         debug=0,
-                         extra_preargs=None,
-                         extra_postargs=None,
-                         depends=None):  # noqa
-    """Compile cpp files in parallel."""
-    macros, objects, extra_postargs, pp_opts, build = \
-        self._setup_compile(output_dir, macros, include_dirs,
-                            sources, depends, extra_postargs)
-    cc_args = self._get_cc_args(pp_opts, debug, extra_preargs)
-    import multiprocessing.pool
-
-    def _single_compile(obj):
-        try:
-            src, ext = build[obj]
-        except KeyError:
-            return
-        self._compile(obj, src, ext, cc_args, extra_postargs, pp_opts)
-    list(multiprocessing.pool.ThreadPool().imap(_single_compile, objects))
-    return objects
-
-if not sys.version.startswith('3.6') and not sys.version.startswith('3.7'):
-    distutils.ccompiler.CCompiler.compile = parallel_cpp_compile  # type: ignore
+try:
+    from numpy.distutils.ccompiler import CCompiler_compile
+    import distutils.ccompiler
+    distutils.ccompiler.CCompiler.compile = CCompiler_compile
+except ImportError:
+    print("Numpy not found, parallel compile not available.")
 
 # --------------------- Build ---------------------------------------
 
@@ -201,28 +178,9 @@ if module_file_ext == 'pyx':
 else:
     ext_modules = extensions
 
-
-def old_msvc(compiler):
-    """Test whether compiler is msvc <= 9.0."""
-    return compiler.compiler_type == 'msvc' and \
-        hasattr(compiler, '_MSVCCompiler__version') and \
-        int(compiler._MSVCCompiler__version) <= 9
-
-
-class BuildExtSubclass(build_ext):
-    """Workaround to add msvc_compat (stdint.h) for old msvc versions."""
-
-    def build_extensions(self):
-        """Build extensions."""
-        if old_msvc(self.compiler):
-            for e in self.extensions:
-                e.include_dirs.append('lib/primesieve/src/msvc_compat')
-        build_ext.build_extensions(self)  # type: ignore
-
-
 setup(
     name='primesieve',
-    version='1.5.0',
+    version='2.0.0',
     url='https://github.com/hickford/primesieve-python',
     long_description=open('README.md', "rb").read().decode('utf8'),
     long_description_content_type='text/markdown',
@@ -231,10 +189,7 @@ setup(
     license='MIT',
     packages=['primesieve', 'primesieve.numpy'],
     ext_modules=ext_modules,
-    cmdclass={'build_ext': BuildExtSubclass},
     classifiers=[
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',

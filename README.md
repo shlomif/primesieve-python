@@ -9,7 +9,7 @@ Generates primes orders of magnitude faster than any pure Python code!
 
 **Features:**
 
-* Get a list of primes
+* Get an array of primes
 * Iterate over primes using little memory
 * Find the nth prime
 * Count/print primes and [prime k-tuplets](https://en.wikipedia.org/wiki/Prime_k-tuple)
@@ -37,24 +37,30 @@ xcode-select --install
 pip install primesieve
 ````
 
+For Python 2.7 use:
+
+```
+pip install "primesieve<=1.4.4"
+````
+
 # Usage examples
 
 ```Python
 >>> from primesieve import *
 
-# Get a list of the primes <= 40
+# Get an array of the primes <= 40
 >>>  primes(40)
 [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37]
 
-# Get a list of the primes between 100 and 120
+# Get an array of the primes between 100 and 120
 >>>  primes(100, 120)
 [101, 103, 107, 109, 113]
 
-# Get a list of the first 10 primes
+# Get an array of the first 10 primes
 >>>  n_primes(10)
 [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]
 
-# Get a list of the first 10 primes >= 1000
+# Get an array of the first 10 primes >= 1000
 >>>  n_primes(10, 1000)
 [1009, 1013, 1019, 1021, 1031, 1033, 1039, 1049, 1051, 1061]
 
@@ -71,7 +77,7 @@ Here is a [list of all available functions](primesieve/_primesieve.pyx).
 
 # Iterating over primes
 
-Instead of generating a large list of primes and then do something
+Instead of generating a large array of primes and then do something
 with the primes it is also possible to simply iterate over the primes
 which uses less memory.
 
@@ -101,9 +107,9 @@ while prime > 0:
 Using the ```primesieve.numpy``` module you can generate an array of
 primes using **native C++ performance!**
 
-In comparison the ```primesieve``` module generates a list of primes
-about 7 times slower mostly because the conversion of the C++ primes
-array into a python list is very slow.
+In comparison the ```primesieve``` module generates an array of primes
+about 3 times slower mostly because the conversion of the C primes
+array into a python array is quite slow.
 
 ```Python
 >>> from primesieve.numpy import *
