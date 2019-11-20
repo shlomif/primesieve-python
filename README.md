@@ -1,16 +1,11 @@
 # primesieve-python
 
-Current release info
-====================
-[![Build Status](https://travis-ci.org/hickford/primesieve-python.svg?branch=master)](https://travis-ci.org/hickford/primesieve-python) [![Build status](https://ci.appveyor.com/api/projects/status/4chekgdj7bqx4ivt/branch/master?svg=true)](https://ci.appveyor.com/project/hickford/primesieve-python/branch/master) [![PyPI](https://img.shields.io/pypi/v/primesieve.svg)](https://pypi.python.org/pypi/primesieve) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/hickford/primesieve-python/blob/master/LICENSE)![PyPI - Downloads](https://img.shields.io/pypi/dm/primesieve)
+[![Build Status](https://travis-ci.org/hickford/primesieve-python.svg?branch=master)](https://travis-ci.org/hickford/primesieve-python) [![Build status](https://ci.appveyor.com/api/projects/status/4chekgdj7bqx4ivt/branch/master?svg=true)](https://ci.appveyor.com/project/hickford/primesieve-python/branch/master) [![PyPI](https://img.shields.io/pypi/v/primesieve.svg)](https://pypi.python.org/pypi/primesieve) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/hickford/primesieve-python/blob/master/LICENSE) ![PyPI - Downloads](https://img.shields.io/pypi/dm/primesieve)
 
 Conda release info
 ====================
 Version: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/python-primesieve/badges/version.svg)](https://anaconda.org/conda-forge/python-primesieve)
 Downloads: [![Anaconda-Server Badge](https://anaconda.org/conda-forge/python-primesieve/badges/downloads.svg)](https://anaconda.org/conda-forge/python-primesieve)
-
-Conda build status
-====================
 Linux: [![Circle CI](https://circleci.com/gh/conda-forge/python-primesieve-feedstock.svg?style=shield)](https://circleci.com/gh/conda-forge/python-primesieve-feedstock)
 OSX: [![TravisCI](https://travis-ci.org/conda-forge/python-primesieve-feedstock.svg?branch=master)](https://travis-ci.org/conda-forge/python-primesieve-feedstock)
 Windows: [![AppVeyor](https://ci.appveyor.com/api/projects/status/github/conda-forge/python-primesieve-feedstock?svg=True)](https://ci.appveyor.com/project/conda-forge/python-primesieve-feedstock/branch/master)
@@ -48,20 +43,15 @@ xcode-select --install
 # Installation
 
 ```
-pip install primesieve
-````
+# Install via pip
+python -m pip install primesieve
 
-OR
-
-```
+# Install via conda
 conda install -c conda-forge python-primesieve
-````
 
-For Python 2.7 use:
-
-```
+# For Python 2.7 use:
 pip install "primesieve<=1.4.4"
-````
+```
 
 # Usage examples
 
