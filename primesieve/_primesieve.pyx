@@ -67,7 +67,7 @@ cpdef primes(uint64_t a, uint64_t b = 0) except +:
     cdef void* c_primes = cpp_primesieve.primesieve_generate_primes(a, b, &size, primes_type)
 
     if errno != 0:
-        raise RuntimeError("Failed generating primes, most likely due to insufficient memory.")
+        raise RuntimeError("Failed to generate primes, most likely due to insufficient memory.")
 
     primes = c_to_array_array(c_primes, size)
     cpp_primesieve.primesieve_free(c_primes)
@@ -85,7 +85,7 @@ cpdef n_primes(uint64_t n, uint64_t start = 0) except +:
     cdef void* c_primes = cpp_primesieve.primesieve_generate_n_primes(n, start, primes_type)
 
     if errno != 0:
-        raise RuntimeError("Failed generating primes, most likely due to insufficient memory.")
+        raise RuntimeError("Failed to generate primes, most likely due to insufficient memory.")
 
     primes = c_to_array_array(c_primes, n)
     cpp_primesieve.primesieve_free(c_primes)

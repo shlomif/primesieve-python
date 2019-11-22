@@ -40,7 +40,7 @@ cpdef np.ndarray[np.int64_t, ndim=1] primes(int64_t a, int64_t b = 0):
     cdef void* c_primes = cpp_numpy.primesieve_generate_primes(a, b, &size, INT64_PRIMES)
 
     if errno != 0:
-        raise RuntimeError("Failed generating primes, most likely due to insufficient memory.")
+        raise RuntimeError("Failed to generate primes, most likely due to insufficient memory.")
 
     primes = c_to_numpy_array(c_primes, size, np.NPY_INT64)
     return primes
@@ -57,7 +57,7 @@ cpdef np.ndarray[np.int64_t, ndim=1] n_primes(int64_t n, int64_t start = 0):
     cdef void* c_primes = cpp_numpy.primesieve_generate_n_primes(n, start, INT64_PRIMES)
 
     if errno != 0:
-        raise RuntimeError("Failed generating primes, most likely due to insufficient memory.")
+        raise RuntimeError("Failed to generate primes, most likely due to insufficient memory.")
 
     primes = c_to_numpy_array(c_primes, n, np.NPY_INT64)
     return primes
