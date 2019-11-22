@@ -10,11 +10,6 @@
   * Update to Cython language level 3.
   * Minor cleanup to setup, travis, and appveyor.
   * setup.py: Fix parallel build issue.
-
-2019-22-10 Kim Walisch  <kim.walisch@gmail.com>
-
-  Version 1.4.5 released.
-
   * Add Python 3.8 support.
   * Drop Python 3.4 support.
 
