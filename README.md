@@ -50,7 +50,7 @@ pip install "primesieve<=1.4.4"
 [![Circle CI](https://circleci.com/gh/conda-forge/python-primesieve-feedstock.svg?style=shield)](https://circleci.com/gh/conda-forge/python-primesieve-feedstock)
 [![Anaconda-Server Badge](https://anaconda.org/conda-forge/python-primesieve/badges/downloads.svg)](https://anaconda.org/conda-forge/python-primesieve)
 
-You do not need to install a C++ compiler when installing python-primesieve using Conda.
+You don't need to install a C++ compiler when installing python-primesieve using Conda.
 
 ```
 conda install -c conda-forge python-primesieve
