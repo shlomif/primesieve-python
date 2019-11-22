@@ -36,11 +36,14 @@ xcode-select --install
 # Installation
 
 ```bash
-# Python 3 or later:
+# Python 3.5 or later:
 python -m pip install primesieve
 
-# For Python 2.7 use:
+# For Python 2.7 or 3.4 use:
 pip install "primesieve<=1.4.4"
+
+# For Python 3.3 use:
+pip install "primesieve<=1.3.0"
 ```
 
 # Conda Installation
