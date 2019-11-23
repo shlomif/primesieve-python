@@ -36,8 +36,8 @@ xcode-select --install
 # Installation
 
 ```bash
-# Python 3 or later:
-python -m pip install primesieve
+# Python 3 or later
+pip install primesieve
 
 # For Python 2.7 use:
 pip install "primesieve<=1.4.4"
