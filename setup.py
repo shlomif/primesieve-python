@@ -183,7 +183,7 @@ setup(
     version='2.0.0',
     url='https://github.com/hickford/primesieve-python',
     long_description=open('README.md', "rb").read().decode('utf8'),
-    long_description_content_type='text/markdown',
+    long_description_content_type=text/markdown,
     maintainer='Kim Walisch',
     maintainer_email='kim.walisch@gmail.com',
     license='MIT',
