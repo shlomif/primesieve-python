@@ -32,12 +32,11 @@ steps:
 
 - script: |
     cd lib
-    git init
-    git remote add origin https://github.com/kimwalisch/primesieve.git
-    git fetch
+    git clone https://github.com/kimwalisch/primesieve.git
+    cd primesieve
     git checkout v7.4
     ls -alF
-    cd ..
+    cd ..\..
   displayName: 'Git primesieve lib'
 
 - script: |
