@@ -7,7 +7,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'macOS-latest'
+  vmImage: 'windows-latest'
 strategy:
   matrix:
     Python35:
