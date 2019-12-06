@@ -27,8 +27,12 @@ steps:
 
 - script: |
     python -m pip install --upgrade pip
-    pip install -r requirements.txt
+    pip install cython numpy
   displayName: 'Install dependencies'
+
+- script: |
+    python setup.py
+  displayName: 'Install'
 
 - script: |
     pip install pytest pytest-azurepipelines
