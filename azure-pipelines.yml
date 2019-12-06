@@ -36,7 +36,7 @@ steps:
     cd primesieve
     git checkout v7.4
     ls -alF
-    cd ..\..
+    cd ../..
   displayName: 'Git primesieve lib'
 
 - script: |
