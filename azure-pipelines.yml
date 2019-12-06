@@ -31,10 +31,14 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-    python setup.py
+    python setup.py install
   displayName: 'Install'
 
 - script: |
     pip install pytest pytest-azurepipelines
     pytest
   displayName: 'pytest'
+
+- script: |
+    python setup.py build
+  displayName: 'Build'
