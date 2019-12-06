@@ -31,8 +31,10 @@ steps:
   displayName: 'Install dependencies'
 
 - script: |
-    git clone https://github.com/kimwalisch/primesieve.git lib
     cd lib
+    git init
+    git remote add origin https://github.com/kimwalisch/primesieve.git
+    git fetch
     git checkout tag/v7.4
     cd ..
   displayName: 'Git primesieve lib'
