@@ -6,18 +6,38 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'windows-latest'
 strategy:
   matrix:
-    Python35:
-      python.version: '3.5'
-    Python36:
+    py36_linux:
+      imageName: "ubuntu-16.04"
       python.version: '3.6'
-    Python37:
+    py37_linux:
+      imageName: "ubuntu-16.04"
       python.version: '3.7'
-    Python38:
+    py38_linux:
+      imageName: "ubuntu-16.04"
       python.version: '3.8'
+    py36_mac:
+      imageName: "macos-10.13"
+      python.version: '3.6'
+    py37_mac:
+      imageName: "macos-10.13"
+      python.version: '3.7'
+    py38_mac:
+      imageName: "macos-10.13"
+      python.version: '3.8'
+    py36_windows:
+      imageName: "windows-latest"
+      python.version: '3.6'
+    py37_windows:
+      imageName: "windows-latest"
+      python.version: '3.7'
+    py38_windows:
+      imageName: "windows-latest"
+      python.version: '3.8'
+
+pool:
+  vmImage: $(imageName)
 
 steps:
 - task: UsePythonVersion@0
