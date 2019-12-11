@@ -1,0 +1,75 @@
+# Python package
+# Create and test a Python package on multiple Python versions.
+# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/python
+
+trigger:
+- master
+
+strategy:
+  matrix:
+    py36_linux:
+      imageName: "ubuntu-16.04"
+      python.version: '3.6'
+    py37_linux:
+      imageName: "ubuntu-16.04"
+      python.version: '3.7'
+    py38_linux:
+      imageName: "ubuntu-16.04"
+      python.version: '3.8'
+    py36_mac:
+      imageName: "macos-10.13"
+      python.version: '3.6'
+    py37_mac:
+      imageName: "macos-10.13"
+      python.version: '3.7'
+    py38_mac:
+      imageName: "macos-10.13"
+      python.version: '3.8'
+    py36_windows:
+      imageName: "windows-latest"
+      python.version: '3.6'
+    py37_windows:
+      imageName: "windows-latest"
+      python.version: '3.7'
+    py38_windows:
+      imageName: "windows-latest"
+      python.version: '3.8'
+
+pool:
+  vmImage: $(imageName)
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '$(python.version)'
+  displayName: 'Use Python $(python.version)'
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install cython numpy
+  displayName: 'Install dependencies'
+
+- script: |
+    cd lib
+    git clone https://github.com/kimwalisch/primesieve.git
+    cd primesieve
+    git checkout v7.4
+    ls -alF
+    cd ../..
+  displayName: 'Git primesieve lib'
+
+- script: |
+    pwd
+    ls -alF
+    python setup.py install
+  displayName: 'Install'
+
+- script: |
+    pip install pytest pytest-azurepipelines
+    pytest
+  displayName: 'pytest'
+
+- script: |
+    python setup.py build
+  displayName: 'Build'
