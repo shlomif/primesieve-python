@@ -1,6 +1,6 @@
 # primesieve-python
 
-[![Build Status](https://travis-ci.org/hickford/primesieve-python.svg?branch=master)](https://travis-ci.org/hickford/primesieve-python) [![Build status](https://ci.appveyor.com/api/projects/status/4chekgdj7bqx4ivt/branch/master?svg=true)](https://ci.appveyor.com/project/hickford/primesieve-python/branch/master) [![PyPI](https://img.shields.io/pypi/v/primesieve.svg)](https://pypi.python.org/pypi/primesieve)
+[![Build Status](https://travis-ci.org/kimwalisch/primesieve-python.svg?branch=master)](https://travis-ci.org/kimwalisch/primesieve-python) [![Build status](https://ci.appveyor.com/api/projects/status/4chekgdj7bqx4ivt/branch/master?svg=true)](https://ci.appveyor.com/project/kimwalisch/primesieve-python/branch/master) [![PyPI](https://img.shields.io/pypi/v/primesieve.svg)](https://pypi.python.org/pypi/primesieve)
 
 # Summary
 
@@ -153,7 +153,7 @@ You need to have installed a C++ compiler, see [Prerequisites](#prerequisites).
 pip install cython pytest numpy
 
 # Clone repository
-git clone --recursive https://github.com/hickford/primesieve-python
+git clone --recursive https://github.com/kimwalisch/primesieve-python
 
 cd primesieve-python
 
