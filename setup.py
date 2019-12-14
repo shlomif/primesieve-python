@@ -180,8 +180,8 @@ else:
 
 setup(
     name='primesieve',
-    version='2.0.0',
-    url='https://github.com/hickford/primesieve-python',
+    version='2.0.1',
+    url='https://github.com/kimwalisch/primesieve-python',
     long_description=open('README.md', "rb").read().decode('utf8'),
     long_description_content_type='text/markdown',
     maintainer='Kim Walisch',
