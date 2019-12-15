@@ -6,87 +6,134 @@
 trigger:
 - master
 
-strategy:
-  matrix:
-    py36_linux:
-      imageName: "Ubuntu-16.04"
-      python.version: '3.6'
-      cibw_build: cp36-manylinux*
-    py37_linux:
-      imageName: "Ubuntu-16.04"
-      python.version: '3.7'
-      cibw_build: cp37-manylinux*
-    py38_linux:
-      imageName: "Ubuntu-16.04"
-      python.version: '3.8'
-      cibw_build: cp38-manylinux*
-    py36_mac:
-      imageName: "macos-10.13"
-      python.version: '3.6'
-      cibw_build: cp36-macosx*
-    py37_mac:
-      imageName: "macos-10.13"
-      python.version: '3.7'
-      cibw_build: cp37-macosx*
-    py38_mac:
-      imageName: "macos-10.13"
-      python.version: '3.8'
-      cibw_build: cp38-macosx*
-    py36_windows:
-      imageName: "windows-latest"
-      python.version: '3.6'
-      cibw_build: cp36-win*
-    py37_windows:
-      imageName: "windows-latest"
-      python.version: '3.7'
-      cibw_build: cp37-win*
-    py38_windows:
-      imageName: "windows-latest"
-      python.version: '3.8'
-      cibw_build: cp38-win*
+jobs:
+- job: sdist
+  pool: {vmImage: 'Ubuntu-16.04'}
+  steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.6'
+      displayName: 'Use Python 3.6'
+    - script: |
+        python -m pip install -U pip setuptools
+        python -m pip install -U cython numpy
+        python -m pip install -U pytest pytest-azurepipelines
+        python -m pip install -U twine
+      displayName: 'Install dependencies'
+    - script: |
+        cd lib
+        git clone https://github.com/kimwalisch/primesieve.git
+        cd primesieve
+        git checkout v7.4
+        cd ../..
+      displayName: 'Git primesieve lib'
+    - script: |
+        python setup.py install
+      displayName: 'Install'
+    - script: |
+        pytest
+      displayName: 'pytest'
+    - script: |
+        python setup.py sdist
+      displayName: 'SDist'
+    - script: |
+        python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ -u __token__ -p $(test_pypi) dist/*
+      displayName: 'Upload'
 
-pool:
-  vmImage: $(imageName)
+- job: wheels
+  strategy:
+    matrix:
+      py35_linux:
+        imageName: "Ubuntu-16.04"
+        python.version: '3.5'
+        cibw_build: cp35-manylinux*
+      py36_linux:
+        imageName: "Ubuntu-16.04"
+        python.version: '3.6'
+        cibw_build: cp36-manylinux*
+      py37_linux:
+        imageName: "Ubuntu-16.04"
+        python.version: '3.7'
+        cibw_build: cp37-manylinux*
+      py38_linux:
+        imageName: "Ubuntu-16.04"
+        python.version: '3.8'
+        cibw_build: cp38-manylinux*
+      py35_mac:
+        imageName: "macos-10.13"
+        python.version: '3.5'
+        cibw_build: cp35-macosx*
+      py36_mac:
+        imageName: "macos-10.13"
+        python.version: '3.6'
+        cibw_build: cp36-macosx*
+      py37_mac:
+        imageName: "macos-10.13"
+        python.version: '3.7'
+        cibw_build: cp37-macosx*
+      py38_mac:
+        imageName: "macos-10.13"
+        python.version: '3.8'
+        cibw_build: cp38-macosx*
+      py35_windows:
+        imageName: "vs2017-win2016"
+        python.version: '3.5'
+        cibw_build: cp35-win*
+      py36_windows:
+        imageName: "windows-latest"
+        python.version: '3.6'
+        cibw_build: cp36-win*
+      py37_windows:
+        imageName: "windows-latest"
+        python.version: '3.7'
+        cibw_build: cp37-win*
+      py38_windows:
+        imageName: "windows-latest"
+        python.version: '3.8'
+        cibw_build: cp38-win*
 
-variables:
-  CIBW_BUILD: $(cibw_build)
-  CIBW_BEFORE_BUILD: python -m pip install -U cython numpy
+  pool:
+    vmImage: $(imageName)
 
-steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
+  variables:
+    CIBW_BUILD: $(cibw_build)
+    CIBW_BEFORE_BUILD: python -m pip install -U cython numpy
 
-- script: |
-    python -m pip install -U pip
-    python -m pip install -U cython numpy
-    python -m pip install -U pytest pytest-azurepipelines
-    python -m pip install -U wheel cibuildwheel
-    python -m pip install -U twine
-  displayName: 'Install dependencies'
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '$(python.version)'
+    displayName: 'Use Python $(python.version)'
 
-- script: |
-    cd lib
-    git clone https://github.com/kimwalisch/primesieve.git
-    cd primesieve
-    git checkout v7.4
-    cd ../..
-  displayName: 'Git primesieve lib'
+  - script: |
+      python -m pip install -U pip setuptools
+      python -m pip install -U cython numpy
+      python -m pip install -U pytest pytest-azurepipelines
+      python -m pip install -U wheel cibuildwheel
+      python -m pip install -U twine
+    displayName: 'Install dependencies'
 
-- script: |
-    python setup.py install
-  displayName: 'Install'
+  - script: |
+      cd lib
+      git clone https://github.com/kimwalisch/primesieve.git
+      cd primesieve
+      git checkout v7.4
+      cd ../..
+    displayName: 'Git primesieve lib'
 
-- script: |
-    pytest
-  displayName: 'pytest'
+  - script: |
+      python setup.py install
+    displayName: 'Install'
 
-- script: |
-    python -m cibuildwheel --print-build-identifiers
-    python -m cibuildwheel --output-dir wheelhouse .
-  displayName: 'Build'
+  - script: |
+      pytest
+    displayName: 'pytest'
 
-- script: |
-    python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ -u __token__ -p $(test_pypi) wheelhouse/*.whl
-  displayName: 'Upload'
+  - script: |
+      python -m cibuildwheel --print-build-identifiers
+      python -m cibuildwheel --output-dir wheelhouse .
+    displayName: 'Build'
+
+  - script: |
+      python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ -u __token__ -p $(test_pypi) wheelhouse/*.whl
+    displayName: 'Upload'
