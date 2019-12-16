@@ -3,43 +3,29 @@
 # Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
 
-jobs:
-- job: sdist
-  pool: {vmImage: 'Ubuntu-16.04'}
-  steps:
-    - task: UsePythonVersion@0
-      inputs:
-        versionSpec: '3.6'
-      displayName: 'Use Python 3.6'
-    - script: |
-        python -m pip install -U pip setuptools
-        python -m pip install -U cython numpy
-        python -m pip install -U pytest pytest-azurepipelines
-        python -m pip install -U twine
-      displayName: 'Install dependencies'
-    - script: |
-        cd lib
-        git clone https://github.com/kimwalisch/primesieve.git
-        cd primesieve
-        git checkout v7.4
-        cd ../..
-      displayName: 'Git primesieve lib'
-    - script: |
-        python setup.py install
-      displayName: 'Install'
-    - script: |
-        pytest
-      displayName: 'pytest'
-    - script: |
-        python setup.py sdist
-      displayName: 'SDist'
-    - script: |
-        python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ -u __token__ -p $(test_pypi) dist/*.tar.gz
-      displayName: 'Upload'
+trigger:
+  branches:
+    include:
+    - master
+    - releases/*
+  paths:
+    exclude:
+    - README.md
 
+variables:
+  uploadFiles: wheelhouse/*.whl
+  buildScript: python -m cibuildwheel --output-dir wheelhouse .
+
+jobs:
 - job: wheels
   strategy:
     matrix:
+      sdist:
+        imageName: "Ubuntu-16.04"
+        python.version: '3.6'
+        cibw_build: ""
+        buildScript: "python setup.py sdist"
+        uploadFiles: "dist/*.tar.gz"
       py35_linux:
         imageName: "Ubuntu-16.04"
         python.version: '3.5'
@@ -127,10 +113,14 @@ jobs:
     displayName: 'pytest'
 
   - script: |
-      python -m cibuildwheel --print-build-identifiers
-      python -m cibuildwheel --output-dir wheelhouse .
+      $(buildScript)
     displayName: 'Build'
 
   - script: |
-      python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ -u __token__ -p $(test_pypi) wheelhouse/*.whl
-    displayName: 'Upload'
+      python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ -u __token__ -p $(test_pypi) $(uploadFiles)
+    displayName: 'TestPyPI Upload'
+
+  - script: |
+      python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ -u __token__ -p $(pypi_token) $(uploadFiles)
+    condition: and(succeeded(), startsWith(variables['build.sourceBranch'], 'refs/head/release/'))
+    displayName: 'PyPI Upload'
