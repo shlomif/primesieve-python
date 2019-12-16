@@ -20,7 +20,9 @@ Generates primes orders of magnitude faster than any pure Python code!
 
 # Prerequisites
 
-You need to have installed a C++ compiler on all OSes except Windows.
+We provide primesieve wheels (distribution packages) for Windows, macOS
+and Linux for x86 and x64 CPUs. For other operating systems and/or CPUs
+you need to have installed a C++ compiler.
 
 ```bash
 # Ubuntu/Debian
