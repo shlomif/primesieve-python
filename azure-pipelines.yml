@@ -117,6 +117,6 @@ jobs:
     displayName: 'TestPyPI Upload'
 
   - script: |
-      python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ -u __token__ -p $(pypi_token) $(uploadFiles)
+      python -m twine upload --skip-existing --verbose --repository-url https://pypi.org/legacy/ -u __token__ -p $(pypi_token) $(uploadFiles)
     condition: and(succeeded(), startsWith(variables['build.sourceBranch'], 'refs/head/release/'))
     displayName: 'PyPI Upload'
