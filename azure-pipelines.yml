@@ -97,11 +97,7 @@ jobs:
     displayName: 'Install dependencies'
 
   - script: |
-      cd lib
-      git clone https://github.com/kimwalisch/primesieve.git
-      cd primesieve
-      git checkout v7.4
-      cd ../..
+      git submodule update --init
     displayName: 'Git primesieve lib'
 
   - script: |
