@@ -1,6 +1,6 @@
 # primesieve-python
 
-[![Build Status](https://travis-ci.org/kimwalisch/primesieve-python.svg?branch=master)](https://travis-ci.org/kimwalisch/primesieve-python) [![Build status](https://ci.appveyor.com/api/projects/status/4chekgdj7bqx4ivt/branch/master?svg=true)](https://ci.appveyor.com/project/kimwalisch/primesieve-python/branch/master) [![PyPI](https://img.shields.io/pypi/v/primesieve.svg)](https://pypi.python.org/pypi/primesieve)
+[![Build Status](https://dev.azure.com/kimwalisch/primesieve-python/_apis/build/status/kimwalisch.primesieve-python?branchName=master)](https://dev.azure.com/kimwalisch/primesieve-python/_build/latest?definitionId=1&branchName=master) [![Build Status](https://travis-ci.org/kimwalisch/primesieve-python.svg?branch=master)](https://travis-ci.org/kimwalisch/primesieve-python) [![PyPI](https://img.shields.io/pypi/v/primesieve.svg)](https://pypi.python.org/pypi/primesieve)
 
 # Summary
 
