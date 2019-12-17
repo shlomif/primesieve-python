@@ -4,13 +4,9 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/python
 
 trigger:
-  branches:
+  tags:
     include:
-    - master
-    - releases/*
-  paths:
-    exclude:
-    - README.md
+    - v*
 
 variables:
   uploadFiles: wheelhouse/*.whl
@@ -118,5 +114,4 @@ jobs:
 
   - script: |
       python -m twine upload --skip-existing --verbose --repository-url https://pypi.org/legacy/ -u __token__ -p $(pypi_token) $(uploadFiles)
-    condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
     displayName: 'PyPI Upload'
