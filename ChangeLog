@@ -1,3 +1,11 @@
+2019-17-12 Kim Walisch  <kim.walisch@gmail.com>, @brl0
+
+  Version 2.0.1 released.
+
+  * Add support for Azure pipelines and build primesieve
+    wheels (distribution packages) for Windows, macOS
+    and Linux for x68 and x64 CPUs
+
 2019-20-11 Kim Walisch  <kim.walisch@gmail.com>, @shlomif, @brl0
 
   Version 2.0.0 released.
