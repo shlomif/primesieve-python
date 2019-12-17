@@ -1,5 +1,9 @@
 2019-17-12 Kim Walisch  <kim.walisch@gmail.com>, @brl0
 
+  Version 2.0.2 released.
+
+2019-17-12 Kim Walisch  <kim.walisch@gmail.com>, @brl0
+
   Version 2.0.1 released.
 
   * Add support for Azure pipelines and build primesieve
