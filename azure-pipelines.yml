@@ -118,5 +118,5 @@ jobs:
 
   - script: |
       python -m twine upload --skip-existing --verbose --repository-url https://pypi.org/legacy/ -u __token__ -p $(pypi_token) $(uploadFiles)
-    condition: and(succeeded(), startsWith(variables['build.sourceBranch'], 'refs/head/release/'))
+    condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/')
     displayName: 'PyPI Upload'
