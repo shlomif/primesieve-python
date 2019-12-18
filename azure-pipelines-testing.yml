@@ -8,6 +8,7 @@ trigger:
   paths:
     exclude:
     - README.md
+    - ./*.yml
 
 variables:
   uploadFiles: wheelhouse/*.whl
