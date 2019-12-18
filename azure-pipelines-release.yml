@@ -113,5 +113,13 @@ jobs:
     displayName: 'TestPyPI Upload'
 
   - script: |
+      python -m pip install -U --force-reinstall --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple primesieve
+    displayName: 'Install from TestPyPI'
+
+  - script: |
       python -m twine upload --skip-existing --verbose -u __token__ -p $(pypi_token) $(uploadFiles)
     displayName: 'PyPI Upload'
+
+  - script: |
+      python -m pip install -U --force-reinstall primesieve
+    displayName: 'Install from PyPI'
