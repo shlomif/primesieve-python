@@ -1,12 +1,13 @@
-# Python package
-# Create and test a Python package on multiple Python versions.
-# Add steps that analyze code, save the dist with the build record, publish to a PyPI-compatible index, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/python
-
 trigger:
-  tags:
+  branches:
     include:
+    - master
+  tags:
+    exclude:
     - v*
+  paths:
+    exclude:
+    - README.md
 
 variables:
   uploadFiles: wheelhouse/*.whl
@@ -111,7 +112,3 @@ jobs:
   - script: |
       python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ -u __token__ -p $(test_pypi) $(uploadFiles)
     displayName: 'TestPyPI Upload'
-
-  - script: |
-      python -m twine upload --skip-existing --verbose --repository-url https://pypi.org/legacy/ -u __token__ -p $(pypi_token) $(uploadFiles)
-    displayName: 'PyPI Upload'
