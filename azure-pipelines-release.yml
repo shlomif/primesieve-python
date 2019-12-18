@@ -113,5 +113,5 @@ jobs:
     displayName: 'TestPyPI Upload'
 
   - script: |
-      python -m twine upload --skip-existing --verbose --repository-url https://pypi.org/legacy/ -u __token__ -p $(pypi_token) $(uploadFiles)
+      python -m twine upload --skip-existing --verbose -u __token__ -p $(pypi_token) $(uploadFiles)
     displayName: 'PyPI Upload'
