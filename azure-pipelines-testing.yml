@@ -113,3 +113,7 @@ jobs:
   - script: |
       python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ -u __token__ -p $(test_pypi) $(uploadFiles)
     displayName: 'TestPyPI Upload'
+
+  - script: |
+      python -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple primesieve
+    displayName: 'Install from TestPyPI'
