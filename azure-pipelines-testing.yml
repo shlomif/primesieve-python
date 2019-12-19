@@ -115,5 +115,8 @@ jobs:
 
   - script: |
       python -m pip install -U --force-reinstall --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple primesieve
-      python -c "import primesieve;print(primesieve.n_primes(10))"
     displayName: 'Install from TestPyPI'
+
+  - script: |
+      python -c "from primesieve import *;print(primes(10))"
+    displayName: 'Test run'
