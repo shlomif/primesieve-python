@@ -56,19 +56,19 @@ jobs:
         python.version: '3.8'
         cibw_build: cp38-macosx*
       py35_windows:
-        imageName: "vs2015-win2012r2"
+        imageName: "vs2017-win2016"
         python.version: '3.5'
         cibw_build: cp35-win*
       py36_windows:
-        imageName: "vs2015-win2012r2"
+        imageName: "vs2017-win2016"
         python.version: '3.6'
         cibw_build: cp36-win*
       py37_windows:
-        imageName: "vs2015-win2012r2"
+        imageName: "vs2017-win2016"
         python.version: '3.7'
         cibw_build: cp37-win*
       py38_windows:
-        imageName: "vs2015-win2012r2"
+        imageName: "vs2017-win2016"
         python.version: '3.8'
         cibw_build: cp38-win*
 
