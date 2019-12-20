@@ -24,10 +24,11 @@ install:
   - python -m pip install -U cython numpy
   - python -m pip install -U pytest
   - python -m pip install -U twine
-  - python -m pip install -U cibuildwheel
+  - python -m pip install -U wheel cibuildwheel
 
 script:
-  - pip install . --verbose --verbose --verbose
+  - git submodule update --init
+  - python setup.py install
   - py.test
   - python -m cibuildwheel --output-dir wheelhouse .
 
