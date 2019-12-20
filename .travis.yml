@@ -64,7 +64,7 @@ install:
 script:
   - git submodule update --init
   - python setup.py install
-  - pytest
+  - if [ "${TRAVIS_OS_NAME}" != "windows" ]; then pytest; fi
   - export PYTHON_VERSION_WITHOUT_DOT=$(python -c 'import sys; print(str(sys.version_info[0])+str(sys.version_info[1]))')
   - export CIBW_BUILD="cp$PYTHON_VERSION_WITHOUT_DOT-*"
   - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
