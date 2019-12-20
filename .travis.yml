@@ -14,6 +14,22 @@ jobs:
     # and a windows build
     - os: windows
       language: shell
+    - python: 3.6
+        before_install:
+          - |
+            if [ "${TRAVIS_OS_NAME}" = "windows" ]
+            then
+                choco install python --version 3.6.0
+                export PATH="/c/Python36:/c/Python$36/Scripts:$PATH"
+            fi
+    - python: 3.7
+        before_install:
+          - |
+            if [ "${TRAVIS_OS_NAME}" = "windows" ]
+            then
+                choco install python --version 3.7.0
+                export PATH="/c/Python37:/c/Python$37/Scripts:$PATH"
+            fi
 
 env:
   global:
@@ -21,14 +37,6 @@ env:
     # Note: TWINE_PASSWORD is set in Travis settings
 
 install:
-  - |
-    if [ "${TRAVIS_OS_NAME}" = "windows" ]
-    then
-        export CHOCO_PYTHON_VERSION="$TRAVIS_PYTHON_VERSION.0"
-        export PYTHON_VERSION_WITHOUT_DOT="${TRAVIS_PYTHON_VERSION//.}"
-        choco install python --version $CHOCO_PYTHON_VERSION
-        export PATH="/c/Python$PYTHON_VERSION_WITHOUT_DOT:/c/Python$PYTHON_VERSION_WITHOUT_DOT/Scripts:$PATH"
-    fi
   - python -m pip install -U pip setuptools
   - python -m pip install -U cython numpy
   - python -m pip install -U pytest
