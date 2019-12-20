@@ -3,11 +3,6 @@ language: python
 python:
   - 3.7
 
-env:
-  global:
-    - CIBW_BUILD="cp37-*"
-    - CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
-
 jobs:
   include:
     # perform a linux build
@@ -38,6 +33,8 @@ script:
   - git submodule update --init
   - python setup.py install
   - py.test
+  - export CIBW_BUILD="cp37-*"
+  - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
   - python -m cibuildwheel --output-dir wheelhouse .
 
 after_success:
