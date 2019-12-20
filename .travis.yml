@@ -40,5 +40,5 @@ script:
   - python -m cibuildwheel --output-dir wheelhouse .
 
 after_success:
-  - python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ wheelhouse/*.whl;
-  - python -m twine upload --skip-existing --verbose wheelhouse/*.whl;
+  - python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ wheelhouse/*.whl
+  - if [[ $TRAVIS_TAG ]]; python -m twine upload --skip-existing --verbose wheelhouse/*.whl;  fi
