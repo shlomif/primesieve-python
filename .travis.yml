@@ -1,13 +1,35 @@
 language: python
-python:
-  - 3.5
-  - 3.6
-  - 3.7
-  - 3.8
-  - "pypy3"
+
+jobs:
+  include:
+    # perform a linux build
+    - services: docker
+    # and a mac build
+    - os: osx
+      language: shell
+    # and a windows build
+    - os: windows
+      language: shell
+      before_install:
+        - choco install python --version 3.7.0
+        - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
+
+env:
+  global:
+    - TWINE_USERNAME=kimwalisch
+      # Note: TWINE_PASSWORD is set in Travis settings
+
 install:
-  - pip install -U pip setuptools wheel
-  - pip install Cython # slow
-  - pip install numpy
+  - python -m pip install twine cibuildwheel==1.1.0
+  - python -m pip install -U setuptools
+  - python -m pip install -U cython numpy
+  - python -m pip install -U pytest
+
+script:
   - pip install . --verbose --verbose --verbose
-script: py.test
+  - py.test
+  # build the wheels, put them into './wheelhouse'
+  - python -m cibuildwheel --output-dir wheelhouse
+
+after_success:
+  - python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ wheelhouse/*.whl;
