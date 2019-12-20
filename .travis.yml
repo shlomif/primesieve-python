@@ -16,6 +16,7 @@ jobs:
       language: shell
       before_install:
         # choco requires Python version format: Major.Minor.Patch
+        - echo "TRAVIS_PYTHON_VERSION: $TRAVIS_PYTHON_VERSION"
         - export CHOCO_PYTHON_VERSION="$TRAVIS_PYTHON_VERSION.0"
         - export PYTHON_VERSION_WITHOUT_DOT="${TRAVIS_PYTHON_VERSION//.}"
         - choco install python --version $CHOCO_PYTHON_VERSION
