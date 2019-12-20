@@ -2,24 +2,53 @@ language: python
 
 jobs:
   include:
-    # perform a linux build
+    # Linux builds
+    - services: docker
+      python: 3.5
+    - services: docker
+      python: 3.6
     - services: docker
       python: 3.7
+    - services: docker
+      python: 3.8
+    # macOS builds
     - os: osx
+      python: 3.5
       language: shell
-      python: 3.7
-    - os: windows
-      language: shell
+    - os: osx
       python: 3.6
+      language: shell
+    - os: osx
+      python: 3.7
+      language: shell
+    - os: osx
+      python: 3.8
+      language: shell
+    # Windows builds
+    - os: windows
+      python: 3.5
+      language: shell
+      before_install:
+        - choco install python --version 3.5.0
+        - export PATH="/c/Python35:/c/Python$35/Scripts:$PATH"
+    - os: windows
+      python: 3.6
+      language: shell
       before_install:
         - choco install python --version 3.6.0
         - export PATH="/c/Python36:/c/Python$36/Scripts:$PATH"
     - os: windows
-      language: shell
       python: 3.7
+      language: shell
       before_install:
         - choco install python --version 3.7.0
         - export PATH="/c/Python37:/c/Python$37/Scripts:$PATH"
+    - os: windows
+      python: 3.8
+      language: shell
+      before_install:
+        - choco install python --version 3.8.0
+        - export PATH="/c/Python38:/c/Python$38/Scripts:$PATH"
 
 env:
   global:
@@ -35,7 +64,7 @@ install:
 script:
   - git submodule update --init
   - python setup.py install
-  - py.test
+  - python -m pytest
   - export PYTHON_VERSION_WITHOUT_DOT=$(python -c 'import sys; print(str(sys.version_info[0])+str(sys.version_info[1]))')
   - export CIBW_BUILD="cp$PYTHON_VERSION_WITHOUT_DOT-*"
   - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
