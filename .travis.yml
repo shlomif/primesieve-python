@@ -1,5 +1,6 @@
 language: python
 
+# TODO: Add support for Python 3.5, 3.6, 3.7 and 3.8
 python:
   - 3.7
 
@@ -33,9 +34,11 @@ script:
   - git submodule update --init
   - python setup.py install
   - py.test
+  - # TODO: find something better than exporting variables here
   - export CIBW_BUILD="cp37-*"
   - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
   - python -m cibuildwheel --output-dir wheelhouse .
 
 after_success:
   - python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ wheelhouse/*.whl;
+  - python -m twine upload --skip-existing --verbose wheelhouse/*.whl;
