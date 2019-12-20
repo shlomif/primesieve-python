@@ -77,14 +77,20 @@ script:
         export UPLOAD_FILES="dist/*.tar.gz"
     else
         export PYTHON_VERSION_WITHOUT_DOT=$(python -c 'import sys; print(str(sys.version_info[0])+str(sys.version_info[1]))')
-        if [ "${TRAVIS_OS_NAME}" = "linux" ]; then export CIBW_BUILD="cp$PYTHON_VERSION_WITHOUT_DOT-manylinux*"; fi
-        if [ "${TRAVIS_OS_NAME}" = "osx" ]; then export CIBW_BUILD="cp$PYTHON_VERSION_WITHOUT_DOT-macosx*"; fi
-        if [ "${TRAVIS_OS_NAME}" = "windows" ]; then export CIBW_BUILD="cp$PYTHON_VERSION_WITHOUT_DOT-win*"; fi
+        export CIBW_BUILD="cp$PYTHON_VERSION_WITHOUT_DOT-*"
         export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
         python -m cibuildwheel --output-dir wheelhouse .
         export UPLOAD_FILES="wheelhouse/*.whl"
     fi
 
 after_success:
-  - python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ $UPLOAD_FILES
-  - if [[ $TRAVIS_TAG ]]; python -m twine upload --skip-existing --verbose $UPLOAD_FILES;  fi
+  - |
+    if [ "$BUILD_SOURCE_DISTRIBUTION" = "true" ]
+    then
+        python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ dist/*.tar.gz
+        if [[ $TRAVIS_TAG ]]; python -m twine upload --skip-existing --verbose dist/*.tar.gz; fi
+    else
+        python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ wheelhouse/*.whl
+        if [[ $TRAVIS_TAG ]]; python -m twine upload --skip-existing --verbose wheelhouse/*.whl; fi
+    fi
+
