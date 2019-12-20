@@ -34,7 +34,6 @@ jobs:
 env:
   global:
     - TWINE_USERNAME=kimwalisch
-    # Note: TWINE_PASSWORD is set in Travis settings
 
 install:
   - python -m pip install -U pip setuptools
