@@ -15,21 +15,21 @@ jobs:
     - os: windows
       language: shell
     - python: 3.6
-        before_install:
-          - |
-            if [ "${TRAVIS_OS_NAME}" = "windows" ]
-            then
-                choco install python --version 3.6.0
-                export PATH="/c/Python36:/c/Python$36/Scripts:$PATH"
-            fi
+      before_install:
+        - |
+          if [ "${TRAVIS_OS_NAME}" = "windows" ]
+          then
+              choco install python --version 3.6.0
+              export PATH="/c/Python36:/c/Python$36/Scripts:$PATH"
+          fi
     - python: 3.7
-        before_install:
-          - |
-            if [ "${TRAVIS_OS_NAME}" = "windows" ]
-            then
-                choco install python --version 3.7.0
-                export PATH="/c/Python37:/c/Python$37/Scripts:$PATH"
-            fi
+      before_install:
+        - |
+          if [ "${TRAVIS_OS_NAME}" = "windows" ]
+          then
+              choco install python --version 3.7.0
+              export PATH="/c/Python37:/c/Python$37/Scripts:$PATH"
+          fi
 
 env:
   global:
