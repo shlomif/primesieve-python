@@ -13,7 +13,7 @@ jobs:
       language: shell
     # and a windows build
     - os: windows
-      language: shell
+      language: bash
       before_install:
         # choco requires Python version format: Major.Minor.Patch
         - echo "TRAVIS_PYTHON_VERSION: $TRAVIS_PYTHON_VERSION"
