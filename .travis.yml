@@ -1,7 +1,7 @@
 language: python
 
-# TODO: Add support for Python 3.5, 3.6, 3.7 and 3.8
 python:
+  - 3.6
   - 3.7
 
 jobs:
@@ -15,13 +15,16 @@ jobs:
     - os: windows
       language: shell
       before_install:
-        - choco install python --version 3.7.0
-        - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
+        # choco requires Python version format: Major.Minor.Patch
+        - export CHOCO_PYTHON_VERSION="$TRAVIS_PYTHON_VERSION.0"
+        - export PYTHON_VERSION_WITHOUT_DOT="${TRAVIS_PYTHON_VERSION//.}"
+        - choco install python --version $CHOCO_PYTHON_VERSION
+        - export PATH="/c/Python$PYTHON_VERSION_WITHOUT_DOT:/c/Python$PYTHON_VERSION_WITHOUT_DOT/Scripts:$PATH"
 
 env:
   global:
     - TWINE_USERNAME=kimwalisch
-      # Note: TWINE_PASSWORD is set in Travis settings
+    # Note: TWINE_PASSWORD is set in Travis settings
 
 install:
   - python -m pip install -U pip setuptools
@@ -34,8 +37,8 @@ script:
   - git submodule update --init
   - python setup.py install
   - py.test
-  - # TODO: find something better than exporting variables here
-  - export CIBW_BUILD="cp37-*"
+  - export PYTHON_VERSION_WITHOUT_DOT="${TRAVIS_PYTHON_VERSION//.}"
+  - export CIBW_BUILD="cp$PYTHON_VERSION_WITHOUT_DOT-*"
   - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
   - python -m cibuildwheel --output-dir wheelhouse .
 
