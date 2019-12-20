@@ -1,13 +1,56 @@
 language: python
+
 python:
-  - 3.5
   - 3.6
   - 3.7
-  - 3.8
-  - "pypy3"
+
+jobs:
+  include:
+    # perform a linux build
+    - services: docker
+    # and a mac build
+    - os: osx
+      language: shell
+    # and a windows build
+    - os: windows
+      language: shell
+    - python: 3.6
+        before_install:
+          - |
+            if [ "${TRAVIS_OS_NAME}" = "windows" ]
+            then
+                choco install python --version 3.6.0
+                export PATH="/c/Python36:/c/Python$36/Scripts:$PATH"
+            fi
+    - python: 3.7
+        before_install:
+          - |
+            if [ "${TRAVIS_OS_NAME}" = "windows" ]
+            then
+                choco install python --version 3.7.0
+                export PATH="/c/Python37:/c/Python$37/Scripts:$PATH"
+            fi
+
+env:
+  global:
+    - TWINE_USERNAME=kimwalisch
+
 install:
-  - pip install -U pip setuptools wheel
-  - pip install Cython # slow
-  - pip install numpy
-  - pip install . --verbose --verbose --verbose
-script: py.test
+  - python -m pip install -U pip setuptools
+  - python -m pip install -U cython numpy
+  - python -m pip install -U pytest
+  - python -m pip install -U twine
+  - python -m pip install -U cibuildwheel
+
+script:
+  - git submodule update --init
+  - python setup.py install
+  - py.test
+  - export PYTHON_VERSION_WITHOUT_DOT="${TRAVIS_PYTHON_VERSION//.}"
+  - export CIBW_BUILD="cp$PYTHON_VERSION_WITHOUT_DOT-*"
+  - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
+  - python -m cibuildwheel --output-dir wheelhouse .
+
+after_success:
+  - python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ wheelhouse/*.whl
+  - if [[ $TRAVIS_TAG ]]; python -m twine upload --skip-existing --verbose wheelhouse/*.whl;  fi
