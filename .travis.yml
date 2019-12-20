@@ -13,14 +13,7 @@ jobs:
       language: shell
     # and a windows build
     - os: windows
-      language: bash
-      before_install:
-        # choco requires Python version format: Major.Minor.Patch
-        - echo $TRAVIS_PYTHON_VERSION
-        - export CHOCO_PYTHON_VERSION="$TRAVIS_PYTHON_VERSION.0"
-        - export PYTHON_VERSION_WITHOUT_DOT="${TRAVIS_PYTHON_VERSION//.}"
-        - choco install python --version $CHOCO_PYTHON_VERSION
-        - export PATH="/c/Python$PYTHON_VERSION_WITHOUT_DOT:/c/Python$PYTHON_VERSION_WITHOUT_DOT/Scripts:$PATH"
+      language: shell
 
 env:
   global:
@@ -28,6 +21,14 @@ env:
     # Note: TWINE_PASSWORD is set in Travis settings
 
 install:
+  - |
+    if [ "${TRAVIS_OS_NAME}" = "windows" ]
+    then
+        export CHOCO_PYTHON_VERSION="$TRAVIS_PYTHON_VERSION.0"
+        export PYTHON_VERSION_WITHOUT_DOT="${TRAVIS_PYTHON_VERSION//.}"
+        choco install python --version $CHOCO_PYTHON_VERSION
+        export PATH="/c/Python$PYTHON_VERSION_WITHOUT_DOT:/c/Python$PYTHON_VERSION_WITHOUT_DOT/Scripts:$PATH"
+    fi
   - python -m pip install -U pip setuptools
   - python -m pip install -U cython numpy
   - python -m pip install -U pytest
