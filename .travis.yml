@@ -2,6 +2,11 @@ language: python
 
 jobs:
   include:
+    # Build source distribution
+    - services: docker
+      python: 3.6
+      env:
+        - BUILD_SOURCE_DISTRIBUTION="true"
     # Linux builds
     - services: docker
       python: 3.5
@@ -29,7 +34,7 @@ jobs:
       python: 3.5
       language: shell
       before_install:
-        - choco install python --version 3.5.0
+        - choco install python --version 3.5.4
         - export PATH="/c/Python35:/c/Python$35/Scripts:$PATH"
     - os: windows
       python: 3.6
@@ -65,11 +70,19 @@ script:
   - git submodule update --init
   - python setup.py install
   - if [ "${TRAVIS_OS_NAME}" != "windows" ]; then pytest; fi
-  - export PYTHON_VERSION_WITHOUT_DOT=$(python -c 'import sys; print(str(sys.version_info[0])+str(sys.version_info[1]))')
-  - export CIBW_BUILD="cp$PYTHON_VERSION_WITHOUT_DOT-*"
-  - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
-  - python -m cibuildwheel --output-dir wheelhouse .
+  - |
+    if [ "$BUILD_SOURCE_DISTRIBUTION" = "true" ]
+    then
+        python setup.py sdist
+        export UPLOAD_FILES="dist/*.tar.gz"
+    else
+        export PYTHON_VERSION_WITHOUT_DOT=$(python -c 'import sys; print(str(sys.version_info[0])+str(sys.version_info[1]))')
+        export CIBW_BUILD="cp$PYTHON_VERSION_WITHOUT_DOT-*"
+        export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
+        python -m cibuildwheel --output-dir wheelhouse .
+        export UPLOAD_FILES="wheelhouse/*.whl"
+    fi
 
 after_success:
-  - python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ wheelhouse/*.whl
-  - if [[ $TRAVIS_TAG ]]; python -m twine upload --skip-existing --verbose wheelhouse/*.whl;  fi
+  - python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ $UPLOAD_FILES
+  - if [[ $TRAVIS_TAG ]]; python -m twine upload --skip-existing --verbose $UPLOAD_FILES;  fi
