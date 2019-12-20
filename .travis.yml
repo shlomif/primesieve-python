@@ -20,11 +20,11 @@ env:
       # Note: TWINE_PASSWORD is set in Travis settings
 
 install:
-  - python -m pip install -U twine
-  - python -m pip install cibuildwheel==1.1.0
-  - python -m pip install -U setuptools
+  - python -m pip install -U pip setuptools
   - python -m pip install -U cython numpy
   - python -m pip install -U pytest
+  - python -m pip install -U twine
+  - python -m pip install -U cibuildwheel
 
 script:
   - pip install . --verbose --verbose --verbose
