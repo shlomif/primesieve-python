@@ -93,7 +93,7 @@ script:
     else
         export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
         export CIBW_TEST_REQUIRES="pytest"
-        export CIBW_TEST_COMMAND="pytest $TRAVIS_BUILD_DIR/tests"
+        export CIBW_TEST_COMMAND="pytest $TRAVIS_BUILD_DIR"
         python -m cibuildwheel --output-dir wheelhouse .
         export UPLOAD_FILES=wheelhouse/*.whl
     fi
