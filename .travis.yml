@@ -70,8 +70,8 @@ script:
   - git submodule update --init
   - python setup.py install
   - if [ "${TRAVIS_OS_NAME}" != "windows" ]; then pytest; fi
-  # Running the cibuildwheel tool chnages Python to 2.7 on macOS
-  - export TWINE_PYTHON=$(which python)
+  # Running the cibuildwheel tool changes Python to 2.7 on macOS
+  - export TWINE_UPLOAD_COMMAND="$(which python) -m twine upload --skip-existing --verbose"
   - |
     if [ "$BUILD_SOURCE_DISTRIBUTION" = "true" ]
     then
@@ -86,5 +86,5 @@ script:
     fi
 
 after_success:
-  - $TWINE_PYTHON -m upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ $UPLOAD_FILES;
-  - if [[ $TRAVIS_TAG ]]; then $TWINE_PYTHON upload --skip-existing --verbose $UPLOAD_FILES; fi
+  - $TWINE_UPLOAD_COMMAND --repository-url https://test.pypi.org/legacy/ $UPLOAD_FILES;
+  - if [[ $TRAVIS_TAG ]]; then $TWINE_UPLOAD_COMMAND $UPLOAD_FILES; fi
