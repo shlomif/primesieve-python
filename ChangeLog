@@ -4,7 +4,7 @@
 
   * Use Travis to build primesieve wheels (distribution
     packages) for Windows, macOS and Linux for
-    x68 and x64 CPUs
+    x86 and x64 CPUs
   * Get rid of AppVeyor (use Travis instead).
 
 2019-20-11 Kim Walisch  <kim.walisch@gmail.com>, @shlomif, @brl0
