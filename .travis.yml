@@ -3,53 +3,49 @@ language: python
 jobs:
   include:
     # Build source distribution
-    - services: docker
-      python: 3.6
+    - python: 3.6
+      services: docker
       env:
         - BUILD_SOURCE_DISTRIBUTION="true"
     # Linux builds
-    - services: docker
-      python: 3.5
-    - services: docker
-      python: 3.6
-    - services: docker
-      python: 3.7
-    - services: docker
-      python: 3.8
+    - python: 3.5
+      services: docker
+    - python: 3.6
+      services: docker
+    - python: 3.7
+      services: docker
+    - python: 3.8
+      services: docker
     # macOS builds
-    - os: osx
-      python: 3.5
-      language: shell
-    - os: osx
-      python: 3.6
-      language: shell
-    - os: osx
-      python: 3.7
-      language: shell
-    - os: osx
-      python: 3.8
-      language: shell
+    - python: 3.5
+      os: osx
+    - python: 3.6
+      os: osx
+    - python: 3.7
+      os: osx
+    - python: 3.8
+      os: osx
     # Windows builds
-    - os: windows
-      python: 3.5
+    - python: 3.5
+      os: windows
       language: shell
       before_install:
         - choco install python --version 3.5.4
         - export PATH="/c/Python35:/c/Python$35/Scripts:$PATH"
-    - os: windows
-      python: 3.6
+    - python: 3.6
+      os: windows
       language: shell
       before_install:
         - choco install python --version 3.6.0
         - export PATH="/c/Python36:/c/Python$36/Scripts:$PATH"
-    - os: windows
-      python: 3.7
+    - python: 3.7
+      os: windows
       language: shell
       before_install:
         - choco install python --version 3.7.0
         - export PATH="/c/Python37:/c/Python$37/Scripts:$PATH"
-    - os: windows
-      python: 3.8
+    - python: 3.8
+      os: windows
       language: shell
       before_install:
         - choco install python --version 3.8.0
@@ -70,8 +66,6 @@ script:
   - git submodule update --init
   - python setup.py install
   - if [ "${TRAVIS_OS_NAME}" != "windows" ]; then pytest; fi
-  # Running the cibuildwheel tool changes Python to 2.7 on macOS
-  - export TWINE_UPLOAD_COMMAND="$(which python) -m twine upload --skip-existing --verbose"
   - |
     if [ "$BUILD_SOURCE_DISTRIBUTION" = "true" ]
     then
@@ -86,5 +80,5 @@ script:
     fi
 
 after_success:
-  - $TWINE_UPLOAD_COMMAND --repository-url https://test.pypi.org/legacy/ $UPLOAD_FILES;
-  - if [[ $TRAVIS_TAG ]]; then $TWINE_UPLOAD_COMMAND $UPLOAD_FILES; fi
+  - python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ $UPLOAD_FILES;
+  - if [[ $TRAVIS_TAG ]]; then python -m twine upload --skip-existing --verbose $UPLOAD_FILES; fi
