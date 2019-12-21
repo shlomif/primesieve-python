@@ -3,53 +3,85 @@ language: python
 jobs:
   include:
     # Build source distribution
-    - python: 3.6
-      services: docker
+    - services: docker
+      python: 3.6
       env:
         - BUILD_SOURCE_DISTRIBUTION="true"
     # Linux builds
-    - python: 3.5
-      services: docker
-    - python: 3.6
-      services: docker
-    - python: 3.7
-      services: docker
-    - python: 3.8
-      services: docker
+    - services: docker
+      python: 3.5
+      before_script:
+        - export CIBW_BUILD="cp35-manylinux*"
+        - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
+    - services: docker
+      python: 3.6
+      before_script:
+        - export CIBW_BUILD="cp36-manylinux*"
+        - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
+    - services: docker
+      python: 3.7
+      before_script:
+        - export CIBW_BUILD="cp37-manylinux*"
+        - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
+    - services: docker
+      python: 3.8
+      before_script:
+        - export CIBW_BUILD="cp38-manylinux*"
+        - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
     # macOS builds
-    - python: 3.5
-      os: osx
-    - python: 3.6
-      os: osx
-    - python: 3.7
-      os: osx
-    - python: 3.8
-      os: osx
+    - os: osx
+      python: 3.5
+      before_script:
+        - export CIBW_BUILD="cp35-macosx*"
+        - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
+    - os: osx
+      python: 3.6
+      before_script:
+        - export CIBW_BUILD="cp36-macosx*"
+        - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
+    - os: osx
+      python: 3.7
+      before_script:
+        - export CIBW_BUILD="cp37-macosx*"
+        - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
+    - os: osx
+      python: 3.8
+      before_script:
+        - export CIBW_BUILD="cp38-macosx*"
+        - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
     # Windows builds
-    - python: 3.5
-      os: windows
-      language: shell
+    - os: windows
+      python: 3.5
       before_install:
         - choco install python --version 3.5.4
         - export PATH="/c/Python35:/c/Python$35/Scripts:$PATH"
-    - python: 3.6
-      os: windows
-      language: shell
+      before_script:
+        - export CIBW_BUILD="cp35-win*"
+        - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
+    - os: windows
+      python: 3.6
       before_install:
         - choco install python --version 3.6.0
         - export PATH="/c/Python36:/c/Python$36/Scripts:$PATH"
-    - python: 3.7
-      os: windows
-      language: shell
+      before_script:
+        - export CIBW_BUILD="cp36-win*"
+        - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
+    - os: windows
+      python: 3.7
       before_install:
         - choco install python --version 3.7.0
         - export PATH="/c/Python37:/c/Python$37/Scripts:$PATH"
-    - python: 3.8
-      os: windows
-      language: shell
+      before_script:
+        - export CIBW_BUILD="cp37-win*"
+        - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
+    - os: windows
+      python: 3.8
       before_install:
         - choco install python --version 3.8.0
         - export PATH="/c/Python38:/c/Python$38/Scripts:$PATH"
+      before_script:
+        - export CIBW_BUILD="cp38-win*"
+        - export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
 
 env:
   global:
@@ -72,9 +104,6 @@ script:
         python setup.py sdist
         export UPLOAD_FILES=dist/*.tar.gz
     else
-        export PYTHON_VERSION_WITHOUT_DOT=$(python -c 'import sys; print(str(sys.version_info[0])+str(sys.version_info[1]))')
-        export CIBW_BUILD="cp$PYTHON_VERSION_WITHOUT_DOT-*"
-        export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
         python -m cibuildwheel --output-dir wheelhouse .
         export UPLOAD_FILES=wheelhouse/*.whl
     fi
