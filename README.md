@@ -163,5 +163,5 @@ cd primesieve-python
 pip install . --upgrade
 
 # Run tests
-py.test
+pytest
 ```
