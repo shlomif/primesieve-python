@@ -84,5 +84,5 @@ script:
     fi
 
 after_success:
-  - python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ $UPLOAD_FILES;
-  - if [[ $TRAVIS_TAG ]]; then python -m twine upload --skip-existing --verbose $UPLOAD_FILES; fi
+  - twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ $UPLOAD_FILES;
+  - if [[ $TRAVIS_TAG ]]; then twine upload --skip-existing --verbose $UPLOAD_FILES; fi
