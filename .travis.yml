@@ -83,16 +83,17 @@ install:
   - python -m pip install -U cibuildwheel
 
 script:
-  - git submodule update --init
-  - python setup.py install
-  - if [ "${TRAVIS_OS_NAME}" != "windows" ]; then pytest; fi
   - |
     if [ "$BUILD_SOURCE_DISTRIBUTION" = "true" ]
     then
+        python setup.py install
+        pytest
         python setup.py sdist
         export UPLOAD_FILES=dist/*.tar.gz
     else
         export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
+        export CIBW_TEST_REQUIRES="pytest"
+        export CIBW_TEST_COMMAND="pytest {project}\tests"
         python -m cibuildwheel --output-dir wheelhouse .
         export UPLOAD_FILES=wheelhouse/*.whl
     fi
