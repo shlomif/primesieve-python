@@ -71,10 +71,6 @@ jobs:
       before_script:
         - export CIBW_BUILD="cp38-win*"
 
-env:
-  global:
-    - TWINE_USERNAME=kimwalisch
-
 install:
   - python -m pip install -U pip setuptools
   - python -m pip install -U cython numpy
