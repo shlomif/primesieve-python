@@ -11,36 +11,12 @@ jobs:
     - services: docker
       python: 3.5
       before_script:
-        - export CIBW_BUILD="cp35-manylinux*"
-    - services: docker
-      python: 3.6
-      before_script:
-        - export CIBW_BUILD="cp36-manylinux*"
-    - services: docker
-      python: 3.7
-      before_script:
-        - export CIBW_BUILD="cp37-manylinux*"
-    - services: docker
-      python: 3.8
-      before_script:
-        - export CIBW_BUILD="cp38-manylinux*"
+        - export CIBW_BUILD="cp3*"
     # macOS builds
     - os: osx
       language: shell
       before_script:
-        - export CIBW_BUILD="cp35-macosx*"
-    - os: osx
-      language: shell
-      before_script:
-        - export CIBW_BUILD="cp36-macosx*"
-    - os: osx
-      language: shell
-      before_script:
-        - export CIBW_BUILD="cp37-macosx*"
-    - os: osx
-      language: shell
-      before_script:
-        - export CIBW_BUILD="cp38-macosx*"
+        - export CIBW_BUILD="cp3*"
     # Windows builds
     - os: windows
       language: shell
@@ -48,35 +24,10 @@ jobs:
         - choco install python --version 3.5.4
         - export PATH="/c/Python35:/c/Python$35/Scripts:$PATH"
       before_script:
-        - export CIBW_BUILD="cp35-win*"
-    - os: windows
-      language: shell
-      before_install:
-        - choco install python --version 3.6.0
-        - export PATH="/c/Python36:/c/Python$36/Scripts:$PATH"
-      before_script:
-        - export CIBW_BUILD="cp36-win*"
-    - os: windows
-      language: shell
-      before_install:
-        - choco install python --version 3.7.0
-        - export PATH="/c/Python37:/c/Python$37/Scripts:$PATH"
-      before_script:
-        - export CIBW_BUILD="cp37-win*"
-    - os: windows
-      language: shell
-      before_install:
-        - choco install python --version 3.8.0
-        - export PATH="/c/Python38:/c/Python$38/Scripts:$PATH"
-      before_script:
-        - export CIBW_BUILD="cp38-win*"
+        - export CIBW_BUILD="cp3*"
 
 install:
-  - python -m pip install -U pip setuptools
-  - python -m pip install -U cython numpy
-  - python -m pip install -U pytest
-  - python -m pip install -U twine
-  - python -m pip install -U cibuildwheel
+  - python -m pip install -U pip setuptools cython numpy pytest twine cibuildwheel
 
 script:
   - |
@@ -89,11 +40,11 @@ script:
     else
         export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
         export CIBW_TEST_REQUIRES="pytest numpy"
-        export CIBW_TEST_COMMAND="pytest {project}"
+        export CIBW_TEST_COMMAND="pytest {project} && python -c 'import primesieve;print(primesieve.n_primes(10))'"
         python -m cibuildwheel --output-dir wheelhouse .
         export UPLOAD_FILES=wheelhouse/*.whl
     fi
 
 after_success:
-  - python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ $UPLOAD_FILES;
-  - if [[ $TRAVIS_TAG ]]; then python -m twine upload --skip-existing --verbose $UPLOAD_FILES; fi
+  - python -m twine upload -u __token__ -p $TEST_TOKEN --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ $UPLOAD_FILES;
+  - if [[ $TRAVIS_TAG ]]; then python -m twine upload -u __token__ -p $PYPI_TOKEN --skip-existing --verbose $UPLOAD_FILES; fi
