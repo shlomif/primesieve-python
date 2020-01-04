@@ -32,17 +32,19 @@ script:
     then
         python setup.py install
         pytest
-        python -c 'import primesieve;print(primesieve.n_primes(10))'
+        pushd ..
+        python -c "import primesieve;print(primesieve.n_primes(10))"
+        popd
         python setup.py sdist
         export UPLOAD_FILES=dist/*.tar.gz
     else
         export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
         export CIBW_TEST_REQUIRES="pytest numpy"
-        export CIBW_TEST_COMMAND="pytest {project} && python -c 'import primesieve;print(primesieve.n_primes(10))'"
+        export CIBW_TEST_COMMAND='pytest {project} && python -c "import primesieve;print(primesieve.n_primes(10))"'
         python -m cibuildwheel --output-dir wheelhouse .
         export UPLOAD_FILES=wheelhouse/*.whl
     fi
 
 after_success:
-  - TWINE_PASSWORD=$TEST_TOKEN python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ $UPLOAD_FILES;
-  - if [[ $TRAVIS_TAG ]]; then TWINE_PASSWORD=$PYPI_TOKEN python -m twine upload --skip-existing --verbose $UPLOAD_FILES; fi
+  - python -m twine upload -p $TEST_TOKEN --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ $UPLOAD_FILES;
+  - if [[ $TRAVIS_TAG ]]; then python -m twine upload -p $PYPI_TOKEN --skip-existing --verbose $UPLOAD_FILES; fi
