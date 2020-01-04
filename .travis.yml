@@ -46,7 +46,7 @@ script:
     fi
 
 after_success:
-  - export TWINE_PASSWORD=pypi-AgENdGVzdC5weXBpLm9yZwIkOTA5MzI4OWItMzRlYi00ZGFkLTliMDctOWZmN2Y0OWY2YTRjAAI7eyJwZXJtaXNzaW9ucyI6IHsicHJvamVjdHMiOiBbInByaW1lc2lldmUiXX0sICJ2ZXJzaW9uIjogMX0AAAYgR96DU8G0JBnXXXOk8QnwF0b9ZytD-1uch2YMlIrG52c
+  - export TWINE_PASSWORD=$TEST_TOKEN
   - python -m keyring --disable
   - python -m twine upload --repository-url https://test.pypi.org/legacy/ --non-interactive --skip-existing --verbose $UPLOAD_FILES;
   - if [[ $TRAVIS_TAG ]]; then python -m twine upload -p $PYPI_TOKEN --skip-existing --verbose --non-interactive $UPLOAD_FILES; fi
