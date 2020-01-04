@@ -1,103 +1,41 @@
 language: python
-
 jobs:
   include:
-    # Build source distribution
-    - services: docker
-      python: 3.6
-      env:
-        - BUILD_SOURCE_DISTRIBUTION="true"
-    # Linux builds
-    - services: docker
-      python: 3.5
-      before_script:
-        - export CIBW_BUILD="cp35-manylinux*"
-    - services: docker
-      python: 3.6
-      before_script:
-        - export CIBW_BUILD="cp36-manylinux*"
-    - services: docker
-      python: 3.7
-      before_script:
-        - export CIBW_BUILD="cp37-manylinux*"
-    - services: docker
-      python: 3.8
-      before_script:
-        - export CIBW_BUILD="cp38-manylinux*"
-    # macOS builds
-    - os: osx
-      language: shell
-      before_script:
-        - export CIBW_BUILD="cp35-macosx*"
-    - os: osx
-      language: shell
-      before_script:
-        - export CIBW_BUILD="cp36-macosx*"
-    - os: osx
-      language: shell
-      before_script:
-        - export CIBW_BUILD="cp37-macosx*"
-    - os: osx
-      language: shell
-      before_script:
-        - export CIBW_BUILD="cp38-macosx*"
-    # Windows builds
-    - os: windows
-      language: shell
-      before_install:
-        - choco install python --version 3.5.4
-        - export PATH="/c/Python35:/c/Python$35/Scripts:$PATH"
-      before_script:
-        - export CIBW_BUILD="cp35-win*"
-    - os: windows
-      language: shell
-      before_install:
-        - choco install python --version 3.6.0
-        - export PATH="/c/Python36:/c/Python$36/Scripts:$PATH"
-      before_script:
-        - export CIBW_BUILD="cp36-win*"
-    - os: windows
-      language: shell
-      before_install:
-        - choco install python --version 3.7.0
-        - export PATH="/c/Python37:/c/Python$37/Scripts:$PATH"
-      before_script:
-        - export CIBW_BUILD="cp37-win*"
-    - os: windows
-      language: shell
-      before_install:
-        - choco install python --version 3.8.0
-        - export PATH="/c/Python38:/c/Python$38/Scripts:$PATH"
-      before_script:
-        - export CIBW_BUILD="cp38-win*"
-
+  - services: docker
+    env:
+    - BUILD_SOURCE_DISTRIBUTION="true"
+  - services: docker
+  - os: osx
+    language: shell
+  - os: windows
+    language: shell
+    before_install:
+    - choco install python --version 3.8.1
+    - export PATH="/c/Python38:/c/Python$38/Scripts:$PATH"
 env:
   global:
-    - TWINE_USERNAME=kimwalisch
-
+  - export CIBW_BUILD="cp3*"
+  - export TWINE_USERNAME=__token__
 install:
-  - python -m pip install -U pip setuptools
-  - python -m pip install -U cython numpy
-  - python -m pip install -U pytest
-  - python -m pip install -U twine
-  - python -m pip install -U cibuildwheel
-
+- python -m pip install -U pip setuptools cython numpy pytest twine cibuildwheel
 script:
-  - |
-    if [ "$BUILD_SOURCE_DISTRIBUTION" = "true" ]
-    then
-        python setup.py install
-        pytest
-        python setup.py sdist
-        export UPLOAD_FILES=dist/*.tar.gz
-    else
-        export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
-        export CIBW_TEST_REQUIRES="pytest numpy"
-        export CIBW_TEST_COMMAND="pytest {project}"
-        python -m cibuildwheel --output-dir wheelhouse .
-        export UPLOAD_FILES=wheelhouse/*.whl
-    fi
-
+- |
+  if [ "$BUILD_SOURCE_DISTRIBUTION" = "true" ]
+  then
+      python setup.py install
+      pytest
+      pushd ..
+      python -c "import primesieve;print(primesieve.n_primes(10))"
+      popd
+      python setup.py sdist
+      export UPLOAD_FILES=dist/*.tar.gz
+  else
+      export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
+      export CIBW_TEST_REQUIRES="pytest numpy"
+      export CIBW_TEST_COMMAND='pytest {project} && python -c "import primesieve;print(primesieve.n_primes(10))"'
+      python -m cibuildwheel --output-dir wheelhouse .
+      export UPLOAD_FILES=wheelhouse/*.whl
+  fi
 after_success:
-  - python -m twine upload --skip-existing --verbose --repository-url https://test.pypi.org/legacy/ $UPLOAD_FILES;
-  - if [[ $TRAVIS_TAG ]]; then python -m twine upload --skip-existing --verbose $UPLOAD_FILES; fi
+- python -m twine upload -p $TEST_TOKEN --repository-url https://test.pypi.org/legacy/ --non-interactive --skip-existing --verbose $UPLOAD_FILES;
+- if [[ $TRAVIS_TAG ]]; then python -m twine upload -p $PYPI_TOKEN --non-interactive --skip-existing --verbose $UPLOAD_FILES; fi
