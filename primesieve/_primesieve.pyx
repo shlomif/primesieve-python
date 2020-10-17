@@ -52,19 +52,20 @@ cdef c_to_array_array(void* ptr, size_t N):
     arr = array.array(arr_type, (<char*>ptr)[:(N*item_size)])
     return arr
 
-cpdef primes(uint64_t a, uint64_t b = 0) except +:
-    """Generate a primes array."""
-    a = max(a, 0)
-    b = max(b, 0)
-    if b == 0:
-        (a,b) = (0,a)
+cpdef primes(uint64_t from_limit, uint64_t to_limit = 0) except +:
+    """Generate a primes array from from_limit to to_limit (or up to
+    from_limit if to_limit is unspecified or 0.)"""
+    from_limit = max(from_limit, 0)
+    to_limit = max(to_limit, 0)
+    if to_limit == 0:
+        (from_limit,to_limit) = (0,from_limit)
 
     # Rest errno
     global errno
     errno = 0
 
     cdef size_t size = 0
-    cdef void* c_primes = cpp_primesieve.primesieve_generate_primes(a, b, &size, primes_type)
+    cdef void* c_primes = cpp_primesieve.primesieve_generate_primes(from_limit, to_limit, &size, primes_type)
 
     if errno != 0:
         raise RuntimeError("Failed to generate primes, most likely due to insufficient memory.")
