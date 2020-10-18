@@ -48,7 +48,7 @@ cdef size_t item_size = (sizeof(unsigned long long) if is_py3 else sizeof(unsign
 cdef int primes_type = (ULONGLONG_PRIMES if is_py3 else ULONG_PRIMES)
 
 cdef c_to_array_array(void* ptr, size_t N):
-    """Create python array from c array."""
+    """Create a python array from a C array."""
     arr = array.array(arr_type, (<char*>ptr)[:(N*item_size)])
     return arr
 
@@ -96,77 +96,78 @@ cpdef uint64_t nth_prime(int64_t n, uint64_t start = 0) except +:
     """Find the nth prime > start"""
     return cpp_primesieve.nth_prime(n, start)
 
-cpdef uint64_t count_primes(uint64_t a, uint64_t b = 0) except +:
-    """Count prime numbers"""
-    if b == 0:
-        (a,b) = (0,a)
-    return cpp_primesieve.count_primes(a, b)
+cpdef uint64_t count_primes(uint64_t from_limit, uint64_t to_limit = 0) except +:
+    """Count the prime numbers from from_limit to to_limit (or up to
+        from_limit if to_limit is unspecified or 0.)"""
+    if to_limit == 0:
+        (from_limit,to_limit) = (0,from_limit)
+    return cpp_primesieve.count_primes(from_limit, to_limit)
 
-cpdef uint64_t count_twins(uint64_t a, uint64_t b = 0) except +:
+cpdef uint64_t count_twins(uint64_t from_limit, uint64_t to_limit = 0) except +:
     """Count twin primes """
-    if b == 0:
-        (a,b) = (0,a)
-    return cpp_primesieve.count_twins(a, b)
+    if to_limit == 0:
+        (from_limit,to_limit) = (0,from_limit)
+    return cpp_primesieve.count_twins(from_limit, to_limit)
 
-cpdef uint64_t count_triplets(uint64_t a, uint64_t b = 0) except +:
+cpdef uint64_t count_triplets(uint64_t from_limit, uint64_t to_limit = 0) except +:
     """Count prime triplets """
-    if b == 0:
-        (a,b) = (0,a)
-    return cpp_primesieve.count_triplets(a, b)
+    if to_limit == 0:
+        (from_limit,to_limit) = (0,from_limit)
+    return cpp_primesieve.count_triplets(from_limit, to_limit)
 
-cpdef uint64_t count_quadruplets(uint64_t a, uint64_t b = 0) except +:
+cpdef uint64_t count_quadruplets(uint64_t from_limit, uint64_t to_limit = 0) except +:
     """Count prime quadruplets """
-    if b == 0:
-        (a,b) = (0,a)
-    return cpp_primesieve.count_quadruplets(a, b)
+    if to_limit == 0:
+        (from_limit,to_limit) = (0,from_limit)
+    return cpp_primesieve.count_quadruplets(from_limit, to_limit)
 
-cpdef uint64_t count_quintuplets(uint64_t a, uint64_t b = 0) except +:
+cpdef uint64_t count_quintuplets(uint64_t from_limit, uint64_t to_limit = 0) except +:
     """Count prime quintuplets """
-    if b == 0:
-        (a,b) = (0,a)
-    return cpp_primesieve.count_quintuplets(a, b)
+    if to_limit == 0:
+        (from_limit,to_limit) = (0,from_limit)
+    return cpp_primesieve.count_quintuplets(from_limit, to_limit)
 
-cpdef uint64_t count_sextuplets(uint64_t a, uint64_t b = 0) except +:
+cpdef uint64_t count_sextuplets(uint64_t from_limit, uint64_t to_limit = 0) except +:
     """Count prime sextuplets """
-    if b == 0:
-        (a,b) = (0,a)
-    return cpp_primesieve.count_sextuplets(a, b)
+    if to_limit == 0:
+        (from_limit,to_limit) = (0,from_limit)
+    return cpp_primesieve.count_sextuplets(from_limit, to_limit)
 
-cpdef void print_primes(uint64_t a, uint64_t b = 0) except +:
+cpdef void print_primes(uint64_t from_limit, uint64_t to_limit = 0) except +:
     """Print prime numbers to stdout"""
-    if b == 0:
-        (a,b) = (0,a)
-    cpp_primesieve.print_primes(a, b)
+    if to_limit == 0:
+        (from_limit,to_limit) = (0,from_limit)
+    cpp_primesieve.print_primes(from_limit, to_limit)
 
-cpdef void print_twins(uint64_t a, uint64_t b = 0) except +:
+cpdef void print_twins(uint64_t from_limit, uint64_t to_limit = 0) except +:
     """Print twin primes to stdout"""
-    if b == 0:
-        (a,b) = (0,a)
-    cpp_primesieve.print_twins(a, b)
+    if to_limit == 0:
+        (from_limit,to_limit) = (0,from_limit)
+    cpp_primesieve.print_twins(from_limit, to_limit)
 
-cpdef void print_triplets(uint64_t a, uint64_t b = 0) except +:
+cpdef void print_triplets(uint64_t from_limit, uint64_t to_limit = 0) except +:
     """Print prime triplets to stdout"""
-    if b == 0:
-        (a,b) = (0,a)
-    cpp_primesieve.print_triplets(a, b)
+    if to_limit == 0:
+        (from_limit,to_limit) = (0,from_limit)
+    cpp_primesieve.print_triplets(from_limit, to_limit)
 
-cpdef void print_quadruplets(uint64_t a, uint64_t b = 0) except +:
+cpdef void print_quadruplets(uint64_t from_limit, uint64_t to_limit = 0) except +:
     """Print prime quadruplets to stdout"""
-    if b == 0:
-        (a,b) = (0,a)
-    cpp_primesieve.print_quadruplets(a, b)
+    if to_limit == 0:
+        (from_limit,to_limit) = (0,from_limit)
+    cpp_primesieve.print_quadruplets(from_limit, to_limit)
 
-cpdef void print_quintuplets(uint64_t a, uint64_t b = 0) except +:
+cpdef void print_quintuplets(uint64_t from_limit, uint64_t to_limit = 0) except +:
     """Print prime quintuplets to stdout"""
-    if b == 0:
-        (a,b) = (0,a)
-    cpp_primesieve.print_quintuplets(a, b)
+    if to_limit == 0:
+        (from_limit,to_limit) = (0,from_limit)
+    cpp_primesieve.print_quintuplets(from_limit, to_limit)
 
-cpdef void print_sextuplets(uint64_t a, uint64_t b = 0) except +:
+cpdef void print_sextuplets(uint64_t from_limit, uint64_t to_limit = 0) except +:
     """Print prime sextuplets to stdout"""
-    if b == 0:
-        (a,b) = (0,a)
-    cpp_primesieve.print_sextuplets(a, b)
+    if to_limit == 0:
+        (from_limit,to_limit) = (0,from_limit)
+    cpp_primesieve.print_sextuplets(from_limit, to_limit)
 
 cpdef uint64_t get_max_stop() except +:
     """Returns the largest valid stop number for primesieve. 2^64-1 (UINT64_MAX)"""
