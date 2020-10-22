@@ -174,7 +174,7 @@ except ImportError:
 
 if module_file_ext == 'pyx':
     ext_modules = cythonize(  # type: ignore
-        extensions, include_path=include_dirs)
+        extensions, include_path=include_dirs, compiler_directives={'embedsignature': True,})
 else:
     ext_modules = extensions
 
