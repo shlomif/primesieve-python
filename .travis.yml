@@ -1,41 +1,57 @@
+# Our .travis.yml is a slightly modified version of:
+# https://github.com/joerick/cibuildwheel#example-setup
+
 language: python
 jobs:
   include:
+  # perform a linux build
   - services: docker
     env:
     - BUILD_SOURCE_DISTRIBUTION="true"
   - services: docker
+  # and a mac build
   - os: osx
+    # PyPy 7.3.2 needs macOS >= 10.14
+    osx_image: xcode10.2
     language: shell
+  # and a windows build  
   - os: windows
     language: shell
     before_install:
-    - choco install python --version 3.8.1
-    - export PATH="/c/Python38:/c/Python$38/Scripts:$PATH"
+      - choco install python --version 3.8.0
+      - export PATH="/c/Python38:/c/Python38/Scripts:$PATH"
+      # make sure it's on PATH as 'python3'
+      - ln -s /c/Python38/python.exe /c/Python38/python3.exe
+
 env:
   global:
   - export CIBW_BUILD="cp3*"
   - export TWINE_USERNAME=__token__
+  # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
+
 install:
-- python -m pip install -U pip setuptools cython numpy pytest twine cibuildwheel
+- python3 -m pip install -U pip setuptools cython numpy pytest twine cibuildwheel==1.6.4
+
 script:
 - |
   if [ "$BUILD_SOURCE_DISTRIBUTION" = "true" ]
   then
-      python setup.py install
+      python3 setup.py install
       pytest
       pushd ..
-      python -c "import primesieve;print(primesieve.n_primes(10))"
+      python3 -c "import primesieve;print(primesieve.n_primes(10))"
       popd
-      python setup.py sdist
+      python3 setup.py sdist
       export UPLOAD_FILES=dist/*.tar.gz
   else
-      export CIBW_BEFORE_BUILD="python -m pip install -U cython numpy"
+      export CIBW_BEFORE_BUILD="python3 -m pip install -U cython numpy"
       export CIBW_TEST_REQUIRES="pytest numpy"
-      export CIBW_TEST_COMMAND='pytest {project} && python -c "import primesieve;print(primesieve.n_primes(10))"'
-      python -m cibuildwheel --output-dir wheelhouse .
+      export CIBW_TEST_COMMAND='pytest {project} && python3 -c "import primesieve;print(primesieve.n_primes(10))"'
+      python3 -m cibuildwheel --output-dir wheelhouse .
       export UPLOAD_FILES=wheelhouse/*.whl
   fi
+
 after_success:
-- python -m twine upload -p $TEST_TOKEN --repository-url https://test.pypi.org/legacy/ --skip-existing --verbose $UPLOAD_FILES;
-- if [[ $TRAVIS_TAG ]]; then python -m twine upload -p $PYPI_TOKEN --skip-existing --verbose $UPLOAD_FILES; fi
+# if the release was tagged, upload them to PyPI
+- python3 -m twine upload -p $TEST_TOKEN --repository-url https://test.pypi.org/legacy/ --skip-existing --verbose $UPLOAD_FILES;
+- if [[ $TRAVIS_TAG ]]; then python3 -m twine upload -p $PYPI_TOKEN --skip-existing --verbose $UPLOAD_FILES; fi
