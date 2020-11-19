@@ -45,8 +45,6 @@ script:
       python3 setup.py sdist
       export UPLOAD_FILES=dist/*.tar.gz
   else
-      export CIBW_BEFORE_BUILD="python3 -m pip install -U cython numpy"
-      export CIBW_TEST_REQUIRES="pytest numpy"
       export CIBW_TEST_COMMAND='pytest {project} && python3 -c "import primesieve;print(primesieve.n_primes(10))"'
       python3 -m cibuildwheel --output-dir wheelhouse .
       export UPLOAD_FILES=wheelhouse/*.whl
