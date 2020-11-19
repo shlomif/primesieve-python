@@ -31,7 +31,7 @@ env:
   # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
 
 install:
-- python3 -m pip install setuptools cython numpy pytest cibuildwheel==1.6.4
+- python3 -m pip install --upgrade setuptools cython numpy pytest cibuildwheel==1.6.4
 
 script:
 - |
@@ -44,9 +44,11 @@ script:
       popd
       python3 setup.py sdist
       export UPLOAD_FILES=dist/*.tar.gz
-  else
+  else      
+      export CIBW_BEFORE_BUILD="pip install --upgrade setuptools cython numpy"
+      export CIBW_TEST_REQUIRES="pytest numpy"
       export CIBW_TEST_COMMAND='pytest {project} && python3 -c "import primesieve;print(primesieve.n_primes(10))"'
-      python3 -m cibuildwheel --output-dir wheelhouse .
+      python3 -m cibuildwheel --output-dir wheelhouse
       export UPLOAD_FILES=wheelhouse/*.whl
   fi
 
