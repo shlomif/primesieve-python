@@ -25,8 +25,8 @@ jobs:
 
 env:
   global:
-  # Skip building on Python 2.7 on all platforms
-  - export CIBW_SKIP="cp27-* pp27*"
+  # Skip building Python 2.7 and PyPy (jit)
+  - export CIBW_SKIP="cp27-* pp*"
   - export TWINE_USERNAME=__token__
   # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
 
@@ -57,3 +57,4 @@ after_success:
 - python3 -m pip install twine
 - python3 -m twine upload -p $TEST_TOKEN --repository-url https://test.pypi.org/legacy/ --skip-existing --verbose $UPLOAD_FILES;
 - if [[ $TRAVIS_TAG ]]; then python3 -m twine upload -p $PYPI_TOKEN --skip-existing --verbose $UPLOAD_FILES; fi
+p
