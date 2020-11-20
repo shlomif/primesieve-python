@@ -174,5 +174,5 @@ pytest
 * Update the supported Python versions in ```setup.py``` (we support the same versions as [cibuildwheel](https://pypi.org/project/cibuildwheel)).
 * Compare ```.travis.yml``` with [cibuildwheel#example-setup](https://github.com/joerick/cibuildwheel#example-setup) and update ```.travis.yml``` if needed.
 * Check if all primesieve wheels (Windows, macOS, Linux) have been uploaded correctly to [https://test.pypi.org](https://test.pypi.org/project/primesieve/#files).
-* If not, read the [TravisCI logs](https://travis-ci.org/github/kimwalisch/primesieve-python) and fix the bugs.
+* If not, read the [Travis CI logs](https://travis-ci.org/github/kimwalisch/primesieve-python) and fix the bugs.
 * Finally, do a new release on GitHub.
