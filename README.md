@@ -168,7 +168,7 @@ pytest
 
 # How to do a new release
 
-* You need to be a maintainer of the ```primesieve-python``` repo.
+* You need to be a maintainer of the [primesieve-python](https://github.com/kimwalisch/primesieve-python) repo.
 * You need to be a maintainer of the [primesieve pypi](https://pypi.org/project/primesieve) project.
 * Increment the primesieve-python version in ```setup.py```
 * Update the supported Python versions in ```setup.py``` (we support the same versions as [cibuildwheel](https://pypi.org/project/cibuildwheel)).
