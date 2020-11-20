@@ -13,7 +13,7 @@ jobs:
   - os: osx
     # PyPy 7.3.2 needs macOS >= 10.14
     osx_image: xcode10.2
-    language: shell
+    lang0uage: shell
   # and a windows build  
   - os: windows
     language: shell
@@ -26,8 +26,8 @@ jobs:
 env:
   global:
   # Skip building Python 2.7 and PyPy (jit)
-  - export CIBW_SKIP="cp27-* pp*"
-  - export TWINE_USERNAME=__token__
+  - CIBW_SKIP="cp27-* pp*"
+  - TWINE_USERNAME=__token__
   # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
 
 install:
