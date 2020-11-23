@@ -14,7 +14,7 @@ jobs:
     # PyPy 7.3.2 needs macOS >= 10.14
     osx_image: xcode10.2
     language: shell
-  # and a windows build  
+  # and a windows build
   - os: windows
     language: shell
     before_install:
@@ -44,7 +44,7 @@ script:
       popd
       python3 setup.py sdist
       export UPLOAD_FILES=dist/*.tar.gz
-  else      
+  else
       export CIBW_BEFORE_BUILD="pip install --upgrade cython numpy"
       export CIBW_TEST_REQUIRES="pytest numpy"
       export CIBW_TEST_COMMAND='pytest {project} && python3 -c "import primesieve;print(primesieve.n_primes(10))"'
@@ -54,6 +54,6 @@ script:
 
 after_success:
 # if the release was tagged, upload them to PyPI
-- python3 -m pip install twine
+- python3 -m pip install twine keyring==21.4.0
 - python3 -m twine upload -p $TEST_TOKEN --repository-url https://test.pypi.org/legacy/ --skip-existing --verbose $UPLOAD_FILES;
 - if [[ $TRAVIS_TAG ]]; then python3 -m twine upload -p $PYPI_TOKEN --skip-existing --verbose $UPLOAD_FILES; fi
