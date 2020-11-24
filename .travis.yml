@@ -27,15 +27,11 @@ env:
   global:
   # Skip building Python 2.7 and PyPy (jit)
   - CIBW_SKIP="cp27-* pp*"
+  # TWINE_PASSWORD is set to a PyPI API token in Travis settings
   - TWINE_USERNAME=__token__
-  # Note: TWINE_PASSWORD is set to a PyPI API token in Travis settings
 
 install:
   - python3 -m pip install --upgrade setuptools cython numpy pytest cibuildwheel==1.6.4
-  # Because of a bug in Travis we have to pin keyring here,
-  # see: https://github.com/kimwalisch/primesieve-python/issues/44.
-  # Try removing this workaround in 2022 (remove "keyring==21.4.0").
-  - python3 -m pip install twine keyring==21.4.0
 
 script:
   - |
@@ -62,8 +58,13 @@ script:
 # build to fail, see https://github.com/travis-ci/travis-ci/issues/758.
 # I think we could switch to "deploy:" to get the desired behavior.
 after_success:
+  # Because of a bug in Travis we have to pin keyring here,
+  # see: https://github.com/kimwalisch/primesieve-python/issues/44.
+  # Try removing this workaround in 2022 (remove "keyring==21.4.0").
+  - python3 -m pip install twine keyring==21.4.0
+  
   # All commits are uploaded to https://test.pypi.org in order to
-  # ensure that releases will be uploaded to PyPi without any issues.
+  # ensure that releases will be uploaded to PyPI without any issues.
   - python3 -m twine upload -p $TEST_TOKEN --repository-url https://test.pypi.org/legacy/ --verbose $UPLOAD_FILES;
   
   # If the release was tagged, upload to PyPI.
