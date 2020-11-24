@@ -45,6 +45,8 @@ script:
       python3 setup.py sdist
       export UPLOAD_FILES=dist/*.tar.gz
   else
+      # For the CIBW environment variables we need to use python instead of python3.
+      # This way we use the CIBW python version.
       export CIBW_BEFORE_BUILD="python -m pip install --upgrade cython numpy"
       export CIBW_TEST_REQUIRES="pytest numpy"
       export CIBW_TEST_COMMAND='pytest {project} && python -c "import primesieve;print(primesieve.n_primes(10))"'
