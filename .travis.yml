@@ -64,7 +64,7 @@ script:
 after_success:
   # All commits are uploaded to https://test.pypi.org in order to
   # ensure that releases will be uploaded to PyPi without any issues.
-  - python3 -m twine upload -p $TEST_TOKEN --repository-url https://test.pypi.org/legacy/ --skip-existing --verbose $UPLOAD_FILES;
+  - python3 -m twine upload -p $TEST_TOKEN --repository-url https://test.pypi.org/legacy --verbose $UPLOAD_FILES;
   
   # If the release was tagged, upload to PyPI.
-  - if [[ $TRAVIS_TAG ]]; then python3 -m twine upload -p $PYPI_TOKEN --skip-existing --verbose $UPLOAD_FILES; fi
+  - if [[ $TRAVIS_TAG ]]; then python3 -m twine upload -p $PYPI_TOKEN --verbose $UPLOAD_FILES; fi
