@@ -170,9 +170,9 @@ pytest
 
 * You need to be a maintainer of the [primesieve-python](https://github.com/kimwalisch/primesieve-python) repo.
 * You need to be a maintainer of the [primesieve pypi](https://pypi.org/project/primesieve) project.
-* Increment the primesieve-python version in ```setup.py```
-* Update the supported Python versions in ```setup.py``` (we support the same versions as [cibuildwheel](https://pypi.org/project/cibuildwheel)).
 * Compare ```.travis.yml``` with [cibuildwheel#example-setup](https://github.com/joerick/cibuildwheel#example-setup) and update ```.travis.yml``` if needed.
+* Update the supported Python versions in ```setup.py``` (we support the same versions as [cibuildwheel](https://pypi.org/project/cibuildwheel)).
+* Increment the primesieve-python version in ```setup.py```. Ideally this should be the last commit before the release as this uploads the new primesieve wheels to [https://test.pypi.org](https://test.pypi.org/project/primesieve/#files).
 * Check if all primesieve wheels (Windows, macOS, Linux) have been uploaded to [https://test.pypi.org](https://test.pypi.org/project/primesieve/#files).
 * If not, read the [Travis CI logs](https://travis-ci.org/github/kimwalisch/primesieve-python) and fix the bugs.
 * Finally, do a new release on GitHub.
