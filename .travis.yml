@@ -45,7 +45,7 @@ script:
       python3 setup.py sdist
       export UPLOAD_FILES=dist/*.tar.gz
   else
-      export CIBW_BEFORE_BUILD="python3 -m pip install --upgrade cython numpy"
+      export CIBW_BEFORE_BUILD="python -m pip install --upgrade cython numpy"
       export CIBW_TEST_REQUIRES="pytest numpy"
       export CIBW_TEST_COMMAND="pytest {project}"
       python3 -m cibuildwheel --output-dir wheelhouse
