@@ -1,6 +1,6 @@
 # cython: language_level=3
 
-from libc.stdint cimport int64_t
+from libc.stdint cimport uint64_t
 
 import numpy as np
 cimport numpy as np
@@ -21,11 +21,11 @@ cdef extern from 'errno.h':
 
 cdef c_to_numpy_array(void* ptr, np.npy_intp N, int t):
     """Bind C array allocated using malloc to NumPy ndarray"""
-    cdef np.ndarray[np.int64_t, ndim=1] arr = np.PyArray_SimpleNewFromData(1, &N, t, ptr)
+    cdef np.ndarray[np.uint64_t, ndim=1] arr = np.PyArray_SimpleNewFromData(1, &N, t, ptr)
     PyArray_ENABLEFLAGS(arr, np.NPY_OWNDATA)
     return arr
 
-cpdef np.ndarray[np.int64_t, ndim=1] primes(int64_t a, int64_t b = 0):
+cpdef np.ndarray[np.uint64_t, ndim=1] primes(uint64_t a, uint64_t b = 0):
     """Generate a numpy primes array"""
     a = max(a, 0)
     b = max(b, 0)
@@ -42,10 +42,10 @@ cpdef np.ndarray[np.int64_t, ndim=1] primes(int64_t a, int64_t b = 0):
     if errno != 0:
         raise RuntimeError("Failed to generate primes, most likely due to insufficient memory.")
 
-    primes = c_to_numpy_array(c_primes, size, np.NPY_INT64)
+    primes = c_to_numpy_array(c_primes, size, np.NPY_UINT64)
     return primes
 
-cpdef np.ndarray[np.int64_t, ndim=1] n_primes(int64_t n, int64_t start = 0):
+cpdef np.ndarray[np.uint64_t, ndim=1] n_primes(uint64_t n, uint64_t start = 0):
     """Generate a numpy array with the next n primes"""
     n = max(n, 0)
     start = max(start, 0)
@@ -59,5 +59,5 @@ cpdef np.ndarray[np.int64_t, ndim=1] n_primes(int64_t n, int64_t start = 0):
     if errno != 0:
         raise RuntimeError("Failed to generate primes, most likely due to insufficient memory.")
 
-    primes = c_to_numpy_array(c_primes, n, np.NPY_INT64)
+    primes = c_to_numpy_array(c_primes, n, np.NPY_UINT64)
     return primes

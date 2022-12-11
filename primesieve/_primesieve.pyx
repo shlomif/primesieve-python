@@ -1,7 +1,7 @@
 # cython: language_level=3
 
 import array
-from libc.stdint cimport uint64_t, int64_t
+from libc.stdint cimport uint64_t
 from libcpp.string cimport string
 import sys
 
@@ -92,7 +92,7 @@ cpdef n_primes(uint64_t n, uint64_t start = 0) except +:
     cpp_primesieve.primesieve_free(c_primes)
     return primes
 
-cpdef uint64_t nth_prime(int64_t n, uint64_t start = 0) except +:
+cpdef uint64_t nth_prime(uint64_t n, uint64_t start = 0) except +:
     """Find the nth prime > start"""
     return cpp_primesieve.nth_prime(n, start)
 
@@ -197,8 +197,8 @@ cdef class Iterator:
     cdef cpp_primesieve.iterator _iterator
     def __cinit__(self):
         self._iterator = cpp_primesieve.iterator()
-    cpdef void skipto(self, uint64_t start, uint64_t stop_hint = 2**62) except +:
-        self._iterator.skipto(start, stop_hint)
+    cpdef void jump_to(self, uint64_t start, uint64_t stop_hint = 2**62) except +:
+        self._iterator.jump_to(start, stop_hint)
     cpdef uint64_t next_prime(self) except +:
         return self._iterator.next_prime()
     cpdef uint64_t prev_prime(self) except +:

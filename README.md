@@ -108,7 +108,7 @@ while prime < 10000:
     prime = it.next_prime()
 
 # Set iterator start number to 100
-it.skipto(100)
+it.jump_to(100)
 prime = it.prev_prime()
 
 # Iterate backwards over the primes below 100
