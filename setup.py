@@ -22,10 +22,15 @@ else:
 
 # --------------------- Initialization ------------------------------
 
+def is_mswindows():
+    """docstring for is_mswindows"""
+    return sys.platform.startswith('win')
+
+
 extensions = []
 extra_compile_args = []
 extra_link_args = []
-if not sys.platform.startswith('win'):
+if not is_mswindows():
     extra_compile_args.append('-std=c++11')
     extra_link_args.append('-lprimesieve')
 include_dirs = []
