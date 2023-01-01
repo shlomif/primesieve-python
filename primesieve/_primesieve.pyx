@@ -198,7 +198,7 @@ cdef class Iterator:
     def __cinit__(self):
         self._iterator = cpp_primesieve.iterator()
     cpdef void skipto(self, uint64_t start, uint64_t stop_hint = 2**62) except +:
-        self._iterator.skipto(start, stop_hint)
+        cpp_primesieve.iterator_jumpto(self._iterator, start+1, stop_hint)
     cpdef uint64_t next_prime(self) except +:
         return self._iterator.next_prime()
     cpdef uint64_t prev_prime(self) except +:
