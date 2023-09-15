@@ -31,6 +31,7 @@ __all__ = [
      'print_twins',
      'set_num_threads',
      'set_sieve_size',
+     'primes_range',
 ]
 
 cdef extern from "primesieve.h":
@@ -203,3 +204,22 @@ cdef class Iterator:
         return self._iterator.next_prime()
     cpdef uint64_t prev_prime(self) except +:
         return self._iterator.prev_prime()
+
+def primes_range(*args:int):
+    """
+    Generate prime numbers between S and N.
+    """
+    if len(args) == 2:
+        N = args[1]
+        S = args[0] - 1
+    elif len(args) == 1:
+        N = args[0]
+        S = 1
+    else:
+        raise RuntimeError("These function only takes 1 or 2 args")
+    cdef Iterator it = Iterator()
+    it.skipto(S)
+    cdef int prime = it.next_prime()
+    while prime < N:
+        yield prime
+        prime = it.next_prime()
