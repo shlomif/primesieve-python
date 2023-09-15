@@ -97,7 +97,7 @@ with the primes it is also possible to simply iterate over the primes
 which uses less memory.
 
 ```Python
->>> import primesieve
+""">>> import primesieve
 
 it = primesieve.Iterator()
 prime = it.next_prime()
@@ -114,7 +114,17 @@ prime = it.prev_prime()
 # Iterate backwards over the primes below 100
 while prime > 0:
     print prime
-    prime = it.prev_prime()
+    prime = it.prev_prime()"""
+
+from primesieve import primes_range
+
+# iterate over the primes in range between 100 and 10^7
+# 100 < prime <= 10^7
+for prime in primes_range(100,10e7):
+    
+    # do something with the prime
+    ...
+
 ```
 
 # NumPy support
