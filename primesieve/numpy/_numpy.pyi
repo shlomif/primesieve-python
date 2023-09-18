@@ -1,4 +1,3 @@
-from typing import List
 import numpy as np
 
 def primes(a: int, b: int = 0) -> np.ndarray[np.int64_t]:
