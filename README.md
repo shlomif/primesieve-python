@@ -97,7 +97,7 @@ with the primes it is also possible to simply iterate over the primes
 which uses less memory.
 
 ```Python
-"""
+
 from primesieve import primes_range
 
 # iterate over the primes in range between 100 and 10^7
