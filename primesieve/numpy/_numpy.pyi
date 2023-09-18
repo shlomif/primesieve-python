@@ -1,22 +1,22 @@
-import types
+from typing import List
 import numpy as np
 
-def primes() -> np.ndarray:
+def primes(a: int, b: int = 0) -> np.ndarray[np.int64_t]:
     """
-    ### funciton to genrate a array of primes numpers less than the inputed argumnt
+    Generate a numpy array of prime numbers between a and b (or up to a if b is unspecified or 0).
 
-    input: int
-    returns: numpy array 'ndarray'
+    :param a: The lower limit for prime generation.
+    :param b: The upper limit for prime generation (optional, default is 0).
+    :return: A numpy array containing prime numbers.
     """
-    pass
+    ...
 
-def n_primes() -> np.ndarray:
+def n_primes(n: int, start: int = 0) -> np.ndarray[np.int64_t]:
     """
-    ### function to genreate a array of prime numpers with the size of input N
+    Generate a numpy array with the next n prime numbers starting from the specified start value.
 
-    input: int
-    returns: numpy array 'ndarray'
+    :param n: The number of prime numbers to generate.
+    :param start: The starting point for generating prime numbers (optional, default is 0).
+    :return: A numpy array containing the next n prime numbers.
     """
-    pass
-
-
+    ...
