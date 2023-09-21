@@ -98,15 +98,20 @@ which uses less memory.
 
 ```Python
 
-from primesieve import primes_range
+>>>from primesieve import primes_range
 
-# iterate over the primes in range between 100 and 10^7
-# 100 < prime <= 10^7
-for prime in primes_range(100,10e7):
-    
-    # do something with the prime
-    ...
-
+>>> for prime in primes_range(10):
+...     print(prime, end=' ')
+...
+2 3 5 7
+>>> for prime in primes_range(10, 20):
+...     print(prime, end=' ')
+...
+11 13 17 19
+>>> for prime in primes_range(95, 10, -1):
+...     print(prime, end=' ')
+...
+89 83 79 73 71 67 61 59 53 47 43 41 37 31 29 23 19 13 11
 ```
 
 # NumPy support
