@@ -205,21 +205,43 @@ cdef class Iterator:
     cpdef uint64_t prev_prime(self) except +:
         return self._iterator.prev_prime()
 
-def primes_range(*args:int):
-    """
-    Generate prime numbers between S and N.
-    """
-    if len(args) == 2:
-        N = args[1]
-        S = args[0] - 1
+def primes_range(*args):
+
+    if len(args) == 3:
+        D = args[2]
+        
+        if D not in [-1, 1]:
+            raise ValueError("Invalid D value. D must be -1 or 1.")
+        start, end = args[0] , args[1]
+
+    elif len(args) == 2:
+        D = 1
+        start, end = args[0], args[1]
     elif len(args) == 1:
-        N = args[0]
-        S = 1
+        D = 1
+        start, end = 1, args[0]
     else:
-        raise RuntimeError("These function only takes 1 or 2 args")
+        raise ValueError("Invalid number of arguments.")
+
+
     cdef Iterator it = Iterator()
-    it.skipto(S)
-    cdef int prime = it.next_prime()
-    while prime < N:
-        yield prime
+    
+
+    if D == 1:
+        it.skipto(start - 1)
         prime = it.next_prime()
+        while prime < end:
+            yield prime
+            prime = it.next_prime()
+    elif D == -1:
+        it.skipto(end)
+        prime = it.prev_prime()
+
+        # these is handing a range bug.
+        if prime >= end:
+            prime = it.prev_prime()
+
+        
+        while prime >= start:
+            yield prime
+            prime = it.prev_prime()
