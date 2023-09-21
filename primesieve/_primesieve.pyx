@@ -31,6 +31,7 @@ __all__ = [
      'print_twins',
      'set_num_threads',
      'set_sieve_size',
+     'primes_range',
 ]
 
 cdef extern from "primesieve.h":
@@ -203,3 +204,44 @@ cdef class Iterator:
         return self._iterator.next_prime()
     cpdef uint64_t prev_prime(self) except +:
         return self._iterator.prev_prime()
+
+def primes_range(*args):
+
+    if len(args) == 3:
+        D = args[2]
+        
+        if D not in [-1, 1]:
+            raise ValueError("Invalid D value. D must be -1 or 1.")
+        start, end = args[0] , args[1]
+
+    elif len(args) == 2:
+        D = 1
+        start, end = args[0], args[1]
+    elif len(args) == 1:
+        D = 1
+        start, end = 1, args[0]
+    else:
+        raise ValueError("Invalid number of arguments.")
+
+
+    cdef Iterator it = Iterator()
+    
+
+    if D == 1:
+        it.skipto(start - 1)
+        prime = it.next_prime()
+        while prime < end:
+            yield prime
+            prime = it.next_prime()
+    elif D == -1:
+        it.skipto(end)
+        prime = it.prev_prime()
+
+        # these is handing a range bug.
+        if prime >= end:
+            prime = it.prev_prime()
+
+        
+        while prime >= start:
+            yield prime
+            prime = it.prev_prime()

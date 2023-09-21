@@ -194,6 +194,8 @@ setup(
     maintainer_email='kim.walisch@gmail.com',
     license='MIT',
     packages=['primesieve', 'primesieve.numpy'],
+    package_data={'primesieve': ['primesieve.pyi'],
+                  'primesieve.numpy':['primesieve_numpy.pyi']},
     ext_modules=ext_modules,
     classifiers=[
         'Programming Language :: Python :: 3',

@@ -97,24 +97,21 @@ with the primes it is also possible to simply iterate over the primes
 which uses less memory.
 
 ```Python
->>> import primesieve
 
-it = primesieve.Iterator()
-prime = it.next_prime()
+>>>from primesieve import primes_range
 
-# Iterate over the primes below 10000
-while prime < 10000:
-    print prime
-    prime = it.next_prime()
-
-# Set iterator start number to 100
-it.skipto(100)
-prime = it.prev_prime()
-
-# Iterate backwards over the primes below 100
-while prime > 0:
-    print prime
-    prime = it.prev_prime()
+>>> for prime in primes_range(10):
+...     print(prime, end=' ')
+...
+2 3 5 7
+>>> for prime in primes_range(10, 20):
+...     print(prime, end=' ')
+...
+11 13 17 19
+>>> for prime in primes_range(95, 10, -1):
+...     print(prime, end=' ')
+...
+89 83 79 73 71 67 61 59 53 47 43 41 37 31 29 23 19 13 11
 ```
 
 # NumPy support
