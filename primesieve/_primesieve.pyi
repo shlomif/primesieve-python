@@ -211,56 +211,74 @@ def count_primes(from_limit: int, to_limit: int) -> int:
     """
     ...
 
-def count_twins(from_limit: int, to_limit: int = 0) -> int:
+def count_twins(from_limit: int, to_limit: int) -> int:
+    """Count the number of twin primes in the given range."""
     ...
 
-def count_triplets(from_limit: int, to_limit: int = 0) -> int:
+def count_triplets(from_limit: int, to_limit: int) -> int:
+    """Count the number of triplet primes in the given range."""
     ...
 
-def count_quadruplets(from_limit: int, to_limit: int = 0) -> int:
+def count_quadruplets(from_limit: int, to_limit: int) -> int:
+    """Count the number of quadruplet primes in the given range."""
     ...
 
-def count_quintuplets(from_limit: int, to_limit: int = 0) -> int:
+def count_quintuplets(from_limit: int, to_limit: int) -> int:
+    """Count the number of quintuplet primes in the given range."""
     ...
 
-def count_sextuplets(from_limit: int, to_limit: int = 0) -> int:
+def count_sextuplets(from_limit: int, to_limit: int) -> int:
+    """Count the number of sextuplet primes in the given range."""
     ...
 
-def print_primes(from_limit: int, to_limit: int = 0) -> None:
+def print_primes(from_limit: int, to_limit: int) -> None:
+    """Print all prime numbers in the given range."""
     ...
 
-def print_twins(from_limit: int, to_limit: int = 0) -> None:
+def print_twins(from_limit: int, to_limit: int) -> None:
+    """Print all twin primes in the given range."""
     ...
 
-def print_triplets(from_limit: int, to_limit: int = 0) -> None:
+def print_triplets(from_limit: int, to_limit: int) -> None:
+    """Print all triplet primes in the given range."""
     ...
 
-def print_quadruplets(from_limit: int, to_limit: int = 0) -> None:
+def print_quadruplets(from_limit: int, to_limit: int) -> None:
+    """Print all quadruplet primes in the given range."""
     ...
 
-def print_quintuplets(from_limit: int, to_limit: int = 0) -> None:
+def print_quintuplets(from_limit: int, to_limit: int) -> None:
+    """Print all quintuplet primes in the given range."""
     ...
 
-def print_sextuplets(from_limit: int, to_limit: int = 0) -> None:
+def print_sextuplets(from_limit: int, to_limit: int) -> None:
+    """Print all sextuplet primes in the given range."""
     ...
 
 def get_max_stop() -> int:
+    """Get the maximum stop limit for prime calculations."""
     ...
 
 def get_sieve_size() -> int:
+    """Get the current sieve size used for prime calculations."""
     ...
 
 def get_num_threads() -> int:
+    """Get the number of threads used for parallel prime calculations."""
     ...
 
 def set_sieve_size(sieve_size: int) -> None:
+    """Set the sieve size for prime calculations."""
     ...
 
 def set_num_threads(threads: int) -> None:
+    """Set the number of threads to use for parallel prime calculations."""
     ...
 
 def primesieve_version() -> str:
+    """Get the version of the primesieve library being used."""
     ...
+
 
 def primes_range(*args: int) -> Iterator[int]:
     """
