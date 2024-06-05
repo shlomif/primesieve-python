@@ -27,6 +27,7 @@ extra_compile_args = []
 if not sys.platform.startswith('win'):
     extra_compile_args.append('-std=c++11')
 extra_link_args = []
+extra_link_args.append('-lprimesieve')
 include_dirs = []
 
 # ------------- Check if compiler supports -pthread -----------------
@@ -197,4 +198,5 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
     ],
+    # test_suite='tests/test_primesieve.py',
 )

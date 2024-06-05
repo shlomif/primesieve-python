@@ -31,6 +31,6 @@ cdef extern from "primesieve/iterator.hpp" namespace "primesieve":
     cdef cppclass iterator:
         iterator()
         iterator(uint64_t start, uint64_t stop_hint)
-        void skipto(uint64_t start, uint64_t stop_hint)
+        void jump_to(uint64_t start, uint64_t stop_hint)
         uint64_t next_prime()
         uint64_t prev_prime()
