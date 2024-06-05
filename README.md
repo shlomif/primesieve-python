@@ -18,6 +18,10 @@ Generates primes orders of magnitude faster than any pure Python code!
 * Multi-threaded for counting primes and finding the nth prime
 * NumPy support
 
+# Temporary build command
+
+python3 -m pip install --requirement requirements.txt --no-build-isolation . |& tee ~/y0.txt
+
 # Prerequisites
 
 We provide primesieve wheels (distribution packages) for Windows, macOS
