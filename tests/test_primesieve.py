@@ -1,6 +1,7 @@
 """Tests for primesieve module."""
 
 import primesieve
+import subprocess
 
 
 def assert_array_equal(have, want):
@@ -54,3 +55,12 @@ def test_n_primes_array():
     assert_array_equal(primesieve.n_primes(7),
                        [2, 3, 5, 7, 11, 13, 17])
     assert_array_equal(primesieve.n_primes(5, 100), [101, 103, 107, 109, 113])
+
+
+def test_print_primes():
+    text = subprocess.check_call(
+        ["python", "-c", "import primesieve; primesieve.print_primes(4, 24); "]
+    )
+    assert text == "".join(
+        "{}\n".format(p) for p in [5, 7, 11, 13, 17, 19, 23]
+    )
