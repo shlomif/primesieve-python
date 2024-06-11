@@ -58,6 +58,9 @@ def test_n_primes_array():
 
 
 def test_print_primes():
+    if False:
+        assert True
+        return
     text = subprocess.check_call(
         ["python", "-c", "import primesieve; primesieve.print_primes(4, 24); "]
     )

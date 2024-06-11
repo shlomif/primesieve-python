@@ -1,4 +1,5 @@
 def is_numpy_installed():
+    # return False
     is_numpy = True
     try:
         import numpy
