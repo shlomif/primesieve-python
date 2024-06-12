@@ -2,6 +2,7 @@
 
 import unittest
 
+
 def is_numpy_installed():
     # return False
     is_numpy = True
@@ -11,14 +12,16 @@ def is_numpy_installed():
         is_numpy = False
     return is_numpy
 
+
 if is_numpy_installed():
-    from primesieve.numpy import *
     from numpy.testing import assert_array_equal
+    from primesieve.numpy import n_primes
+    from primesieve.numpy import primes
 
     class TestPrimeSieve(unittest.TestCase):
 
         def test_primes_numpy(self):
-            assert_array_equal(primes(10), [2,3,5,7])
+            assert_array_equal(primes(10), [2, 3, 5, 7])
             assert_array_equal(primes(10, 20), [11,13,17,19])
 
         def test_n_primes_numpy(self):
@@ -33,4 +36,4 @@ else:
             self.assertTrue(True, "rudimentary; no numpy")
 
 if __name__ == '__main__':
-    unitest.main()
+    unittest.main()

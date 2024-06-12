@@ -20,7 +20,14 @@ Generates primes orders of magnitude faster than any pure Python code!
 
 # Temporary build command
 
-python3 -m pip install --requirement requirements.txt --no-build-isolation . |& tee ~/y0.txt
+The normal commands:
+
+    python3 setup.py test  && \
+    python3 setup.py install --user
+
+Ought to work now, but you may need to fallback on:
+
+    python3 -m pip install --requirement requirements.txt --no-build-isolation . |& tee ~/y0.txt
 
 # Prerequisites
 

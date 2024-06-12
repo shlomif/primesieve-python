@@ -1,7 +1,5 @@
 """Setup file for primesieve Python bindings."""
 
-import Cython
-import Cython.Build
 import distutils.ccompiler
 from glob import glob
 import os
