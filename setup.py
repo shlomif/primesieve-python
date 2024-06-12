@@ -181,7 +181,7 @@ else:
 
 setup(
     name='primesieve',
-    version='2.3.0',
+    version='2.3.1',
     url='https://github.com/kimwalisch/primesieve-python',
     long_description=open('README.md', "rb").read().decode('utf8'),
     long_description_content_type='text/markdown',
