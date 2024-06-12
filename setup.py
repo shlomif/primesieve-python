@@ -200,5 +200,5 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
     ],
-    test_suite=" ".join(glob('tests/test_primesieve')),
+    test_suite='tests/test_primesieve.py',
 )
