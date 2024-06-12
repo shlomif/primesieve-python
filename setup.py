@@ -200,5 +200,5 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
     ],
-    test_suite='tests/test_primesieve.py',
+    # test_suite='tests/test_primesieve.py',
 )
