@@ -21,3 +21,4 @@ if False:
 container = client.containers.run('fedora:40', detach=True)
 listt = client.containers.list()
 print(listt)
+assert len(listt) > 0
