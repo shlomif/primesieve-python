@@ -18,7 +18,11 @@ images = client.images
 if False:
     image = images.pull('fedora:40')
     images.prune(image)
-container = client.containers.run('fedora:40', detach=True)
+container = client.containers.run(
+    'fedora:40',
+    "bash -c 'set -x ; sleep 10'",
+    detach=True,
+)
 listt = client.containers.list()
 print(listt)
 assert len(listt) > 0
