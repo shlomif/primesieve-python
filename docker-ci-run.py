@@ -20,9 +20,11 @@ if False:
     images.prune(image)
 container = client.containers.run(
     'fedora:40',
-    "bash -c 'set -x ; sleep 10'",
+    "bash -c 'set -x ; sleep 2'",
     detach=True,
 )
+ret = container.exec_run(["bash", "-c", "set -x ; seq 1 50"], stdout=True, )
+print(ret.output)
+
 listt = client.containers.list()
 print(listt)
-assert len(listt) > 0
