@@ -18,11 +18,6 @@ images = client.images
 if False:
     image = images.pull('fedora:40')
     images.prune(image)
-container = client.containers.run(
-    'fedora:40',
-    "bash -c 'set -x ; sleep 2'",
-    detach=True,
-)
 bash_code = """
 set -e -x
 # sudo -H bash -e -x -c 'dnf install -y git'
@@ -31,7 +26,17 @@ expr 12 + 12
 dnf install -y git
 git clone https://github.com/shlomif/primesieve-python
 """
-ret = container.exec_run(["bash", "-c", bash_code], stdout=True, stderr=True, )
+if True:
+    ret = client.containers.run(
+        'fedora:40',
+        ["bash", "-c", bash_code, ],
+        detach=False,
+        stream=True,
+    )
+else:
+    pass
+    # ret = container.exec_run(
+    # ["bash", "-c", bash_code], stdout=True, stderr=True, )
 print(ret.output.decode('utf-8'))
 print(ret)
 
