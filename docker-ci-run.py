@@ -23,8 +23,17 @@ container = client.containers.run(
     "bash -c 'set -x ; sleep 2'",
     detach=True,
 )
-ret = container.exec_run(["bash", "-c", "set -x ; seq 1 50"], stdout=True, )
-print(ret.output)
+bash_code = """
+set -e -x
+# sudo -H bash -e -x -c 'dnf install -y git'
+seq 1 10
+expr 12 + 12
+dnf install -y git
+git clone https://github.com/shlomif/primesieve-python
+"""
+ret = container.exec_run(["bash", "-c", bash_code], stdout=True, stderr=True, )
+print(ret.output.decode('utf-8'))
+print(ret)
 
 listt = client.containers.list()
 print(listt)
