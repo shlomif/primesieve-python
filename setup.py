@@ -179,11 +179,16 @@ if module_file_ext == 'pyx':
 else:
     ext_modules = extensions
 
+with open('README.md', "rb") as fh:
+    binary_long_description = fh.read()
+
+text_long_description = binary_long_description.decode('utf8')
+
 setup(
     name='primesieve',
     version='2.3.3',
     url='https://github.com/kimwalisch/primesieve-python',
-    long_description=open('README.md', "rb").read().decode('utf8'),
+    long_description=text_long_description,
     long_description_content_type='text/markdown',
     maintainer='Kim Walisch',
     maintainer_email='kim.walisch@gmail.com',
