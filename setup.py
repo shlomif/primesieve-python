@@ -186,12 +186,12 @@ text_long_description = binary_long_description.decode('utf8')
 
 setup(
     name='primesieve',
-    version='2.3.3',
-    url='https://github.com/kimwalisch/primesieve-python',
+    version='2.3.4',
+    url='https://github.com/shlomif/primesieve-python',
     long_description=text_long_description,
     long_description_content_type='text/markdown',
-    maintainer='Kim Walisch',
-    maintainer_email='kim.walisch@gmail.com',
+    maintainer='Shlomi Fish',
+    maintainer_email='shlomif@cpan.org',
     license='MIT',
     packages=['primesieve', 'primesieve.numpy'],
     ext_modules=ext_modules,
@@ -202,6 +202,9 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
+        'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
     ],
     # test_suite='tests/test_primesieve.py',
 )
